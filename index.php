@@ -7,6 +7,6 @@
     <base href="/">
 </head>
 <body>
-    
+    <p>Miguel</p>
 </body>
 </html>
