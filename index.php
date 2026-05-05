@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
+<ad>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/lading_page.css">
     <title>Lading page</title>
     <base href="/">
-</head>
+</ad>
 
 <body>
     <header>
