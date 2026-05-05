@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/lading_page.css">
+    <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <title>Lading page</title>
     <base href="/">
 </head>
@@ -31,21 +32,42 @@
 
     <!-- este apartado sera la primera parte de la pagina lo primero que ve el cliente al entrar en esta misma,
     le puse hero pues asi es llamada comunmente -->
+
     <section class="hero-section">
         <div class="hero-contenido">
-            <h1>Una moderna estructura para aquellas universidades que innovan</h1>
-            <p>Demo abierta completamente gratis para aquellos que quieran probar nuestro producto</p>
-            <a class="btn-empezar" href="#">
-                Empieza ya
-            </a>
+            <h1>
+                Una estructura estitca para
+                <span>universidades que innovan</span>
+            </h1>
+            <div>
+                <p>Demo abierta completamente gratis para aquellos que quieran probar nuestro producto</p>
+                <a class="btn-demo" href="#">
+                    Demo gratis
+                </a>
+            </div>
         </div>
+        
         <div class="hero-img">
             <img src="img/Aristoteles-removebg-preview.png" alt="hero-img">
+            <div>
+                <p>Demo abierta completamente gratis para aquellos que quieran probar nuestro producto</p>
+                <a class="btn-demo" href="#">
+                    Demo gratis
+                </a>
+            </div>
         </div>
     </section>
 
-    <section>
+    <!-- seccion de informacion general sobre DOA   -->
 
+    <section class="section-sobre-nosotros">
+        <div class="sobre-nosotros-div-pregunta">
+
+        </div>
+
+        <div class="sobre-nosotros-div-informacion">
+
+        </div>
     </section>
 
     <section>
