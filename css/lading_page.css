@@ -4,11 +4,19 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+/* 
+
+CSS del headre de la pagina 
+
+*/
+
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: 60px;
   padding: 5px;
+  margin: 5px;
   position: relative;
 }
 
@@ -17,9 +25,9 @@ header::after {
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 80%;
+  width: 90%;
   height: 1px;
-  background-color: #FFCE74;
+  background-color: #ffce74;
   transform: translateX(-50%);
 }
 
@@ -40,13 +48,57 @@ header::after {
 }
 
 nav {
-  width: 300px;
+  width: 320px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 nav a {
   color: black;
   text-decoration: none;
   font-size: 16px;
+  padding: 10px;
+  border-radius: 30px;
 }
+
+nav a:hover {
+  background-color: #ffe2ab;
+  box-shadow: 0 0 18px 8px #ffe2ab;
+}
+
+nav a:focus{
+    background-color: #fdd994;
+  box-shadow: 0 0 18px 8px #fdd994;
+}
+
+.btn-empezar {
+  width: 120px;
+  height: 40px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #ffce74;
+  border-radius: 50px;
+  background-color: #ffffff;
+  color: #000000;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-empezar:hover {
+    background-color: #493b0c;
+    color: #ffffff;
+    border: 2px solid #493b0c;
+    box-shadow: 0 0 18px 8px #dfa335;
+}
+
+/*
+
+comienzo del apartado hero en el CSS 
+
+*/
+
