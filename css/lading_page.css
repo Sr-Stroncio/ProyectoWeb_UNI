@@ -200,9 +200,13 @@ comienzo del apartado sobre nosotros en el CSS
 
 */
 
+.section-sobre-nosotros{
+  display: flex;
+}
 
-
-
+.sobre-nosotros-div-informacion{
+  
+}
 
 
 

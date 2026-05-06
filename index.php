@@ -36,7 +36,7 @@
     <section class="hero-section">
         <div class="hero-contenido">
             <h1>
-                Una estructura estitca para
+                Una estructura estetica para
                 <span>universidades que innovan</span>
             </h1>
             <div>
@@ -46,7 +46,7 @@
                 </a>
             </div>
         </div>
-        
+
         <div class="hero-img">
             <img src="img/Aristoteles-removebg-preview.png" alt="hero-img">
             <div>
@@ -61,11 +61,38 @@
     <!-- seccion de informacion general sobre DOA   -->
 
     <section class="section-sobre-nosotros">
-        <div class="sobre-nosotros-div-pregunta">
 
+        <div class="sobre-nosotros-div-pregunta">
+            <h2>Que es DOA?</h2>
+            <img src="img/atlas.jpg" alt="Atlas-img">
         </div>
 
         <div class="sobre-nosotros-div-informacion">
+            <div>
+                <h3>Centraliza la gestion academica</h3>
+                <p>
+                    Organiza recursos, procesos y seguimientos 
+                    en un solo lugar con DOA.
+                </p>
+                <img src="" alt="">
+            </div>
+
+            <div>
+                <h3>Mejora la comunicacion</h3>
+                <p>
+                    Facilita la conexion entre instutucion, profesorado y alumno
+                    con una experiencia clara, accesible y ordenada.
+                </p>
+                <img src="" alt="">
+            </div>
+
+            <div>
+                <h3>Una experiencia estetica</h3>
+                <p>
+                    Proyecta orden, innovacion y confiaza desde el primer vistazo.
+                </p>
+                <img src="" alt="">
+            </div>
 
         </div>
     </section>
