@@ -1,0 +1,362 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* 
+
+CSS del headre de la pagina 
+
+*/
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 5px;
+  margin: 5px;
+  position: relative;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 90%;
+  height: 1px;
+  background-color: #ffce74;
+  transform: translateX(-50%);
+}
+
+.div-logos {
+  display: flex;
+}
+
+.GTI_logo {
+  height: 60px;
+  width: auto;
+}
+
+.DOA_logo {
+  height: 30px;
+  width: auto;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+nav {
+  width: 320px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+nav a:hover {
+  background-color: #ffe2ab;
+  box-shadow: 0 0 18px 8px #ffe2ab;
+}
+
+nav a:focus {
+  background-color: #fdd994;
+  box-shadow: 0 0 18px 8px #fdd994;
+}
+
+.btn-empezar {
+  width: 120px;
+  height: 40px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  background-color: #ffce74;
+  color: #000000;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-empezar:hover {
+  font-size: 17px;
+  box-shadow: 0 0 18px 8px #ffce74;
+}
+
+
+/*
+
+comienzo del apartado hero en el CSS 
+
+*/
+
+
+.hero-section {
+  margin-top: 30px;
+  height: 700px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.hero-contenido {
+  width: 35%;
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.hero-contenido h1 {
+  text-align: center;
+  font-size: 38px;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -1px;
+  margin: 0;
+  color: #111111;
+  max-width: 500px;
+}
+
+.hero-contenido h1 span {
+  display: block;
+  margin-top: 8px;
+  color: #d99a25;
+  font-weight: 900;
+}
+
+.hero-contenido div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+}
+
+.hero-contenido p {
+  text-align: center;
+  margin: 0;
+  max-width: 360px;
+}
+
+.btn-demo {
+  width: 140px;
+  height: 50px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  background-color: #ffce74;
+  color: #000000;
+  text-decoration: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.btn-demo:hover {
+  font-size: 18px;
+  box-shadow: 0 0 18px 8px #dfa335;
+}
+
+.hero-img {
+  width: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-img img {
+  width: 700px;
+  height: auto;
+  z-index: 1;
+  filter: drop-shadow(0 24px 28px rgba(0, 0, 0, 0.25));
+  transition:
+    transform 0.4s ease,
+    filter 0.4s ease;
+}
+
+.hero-img img:hover {
+  filter: drop-shadow(0px 40px 46px rgba(150, 149, 111));
+}
+
+.hero-img div {
+  display: none;
+}
+
+
+/*
+
+
+comienzo del apartado sobre nosotros en el CSS 
+
+
+*/
+
+
+
+
+
+
+
+/* 
+
+
+diseño responsive de la pagina
+
+
+*/
+
+
+
+@media (max-width: 930px) {
+  /* 
+
+
+diseño responsive del header 
+
+
+*/
+
+  .div-logos {
+    display: flex;
+  }
+
+  .GTI_logo {
+    height: 50px;
+    width: auto;
+  }
+
+  .DOA_logo {
+    display: none;
+  }
+
+  nav {
+    width: 320px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  nav a {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  nav a:hover {
+    background-color: #ffe2ab;
+    box-shadow: 0 0 14px 7px #ffe2ab;
+  }
+
+  nav a:focus {
+    background-color: #fdd994;
+    box-shadow: 0 0 14px 7px #fdd994;
+  }
+
+  .btn-empezar {
+    width: 100px;
+    height: 40px;
+    margin-right: 0px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background-color: #ffce74;
+    color: #000000;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-empezar:hover {
+    font-size: 14px;
+    box-shadow: 0 0 14px 7px #ffce74;
+  }
+
+  /*
+
+
+diseño resposive de la seccion hero 
+
+
+*/
+
+  .hero-section {
+    margin-top: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 680px;
+  }
+
+  .hero-contenido {
+    margin-top: 40px;
+    width: 100%;
+  }
+  .hero-contenido div {
+    display: none;
+  }
+
+  .hero-contenido h1 {
+    font-size: 32px;
+  }
+
+  .hero-img {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-img img {
+    margin-top: 50px;
+    width: 80%;
+    margin-bottom: 50px;
+  }
+
+  .hero-img div {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+  }
+
+  .hero-img p {
+    text-align: center;
+    margin: 0;
+    max-width: 360px;
+    margin-bottom: 20px;
+  }
+}
+
+/*
+
+
+diseño resposive para telfonos pequeños
+
+
+*/
+
+@media (max-width: 530px) {
+  .btn-empezar {
+    display: none;
+  }
+
+  .hero-contenido h1 {
+    margin-top: 0;
+    font-size: 25px;
+  }
+
+  .hero-img p {
+    font-size: 12px;
+    text-align: center;
+    margin: 0;
+    max-width: 360px;
+    margin-bottom: 20px;
+  }
+}
