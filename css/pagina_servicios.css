@@ -1,6 +1,7 @@
 html {
     scroll-behavior: smooth;
 }
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -23,7 +24,7 @@ html {
     padding: 10px 10px;
 }
 
-.caja_plan{
+.caja{
     display:flex;
     white-space: pre-line;
     flex-wrap: wrap;
@@ -32,10 +33,26 @@ html {
     justify-content: flex-start;
     border: 1px solid#000;
     background-color: #ffdea6;
-    margin: 10px    ;
+    margin: 10px;
     padding: 10px;
     border-radius: 5px;
-    height: 300px;
+}
+
+.caja-compra{
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    box-sizing: border-box;
+    display:flex;
+    flex-wrap: wrap;
+    flex: 1 1 200px;
+    flex-direction: column;
+    justify-content: flex-start;
+    border: 1px solid#000;
+    background-color: #ffdea6;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
 }
 .boton-seleccionar-plan{
     background-color:  #ffcc74;
@@ -44,9 +61,24 @@ html {
     margin: 0 auto;
     padding: 10px;
     justify-content: flex-start;
-
+    border-radius: 10px;
+}
+.boton-compra{
+    background-color:  #ffcc74;
+    border: 1px solid#000;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 10px;
+    justify-content: flex-start;
+    border-radius: 10px;
 }
 .boton-seleccionar-plan:hover{
+    cursor: pointer;
+    background-color: #ffcc74;
+
+}
+.boton-compra:hover{
     cursor: pointer;
     background-color: #ffcc74;
 
@@ -54,4 +86,8 @@ html {
 .titulo_dos{
     margin-top: 70px;
     text-align: center;
+}
+.caja-compra input{
+    width: 100%;
+    box-sizing: border-box;
 }
