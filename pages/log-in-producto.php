@@ -1,0 +1,187 @@
+<?php
+/*
+ ==============================================
+  IMAGENES — cambia las rutas aquí si hace falta
+
+  Logo cabecera (pequeño, sobre fondo blanco):
+    ../assets/DoA color.svg
+
+  Logo panel izquierdo (grande, sobre fondo oscuro):
+    ../assets/DoA invertido.svg
+
+  Si los archivos se llaman diferente o están
+  en otra carpeta, cámbialo aquí abajo en el HTML
+ ==============================================
+*/
+session_start();
+
+/* Cuentas predefinidas */
+$usuarios = [
+    'alumno@gti.doa.edu'   => ['password' => 'alumno1234',  'rol' => 'alumno',   'nombre' => 'Laura García'],
+    'profesor@gti.doa.edu' => ['password' => 'profe1234',   'rol' => 'profesor', 'nombre' => 'Prof. García'],
+    'admin@doa.edu'        => ['password' => 'admin1234',   'rol' => 'admin',    'nombre' => 'Administrador'],
+];
+
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $correo   = htmlspecialchars(trim($_POST['correo'] ?? ''));
+    $password = $_POST['password'] ?? '';
+
+    if (isset($usuarios[$correo])) {
+        if ($usuarios[$correo]['password'] === $password) {
+            $_SESSION['usuario'] = $correo;
+            $_SESSION['rol']     = $usuarios[$correo]['rol'];
+            $_SESSION['nombre']  = $usuarios[$correo]['nombre'];
+
+            if ($usuarios[$correo]['rol'] === 'admin') {
+                header('Location: ../pages/dashboard-admin.php');
+            } elseif ($usuarios[$correo]['rol'] === 'profesor') {
+                header('Location: ../pages/dashboard-profesor.php');
+            } else {
+                header('Location: ../pages/dashboard-alumno.php');
+            }
+            exit;
+        } else {
+            $error = 'Contraseña incorrecta.';
+        }
+    } else {
+        $error = 'No existe una cuenta con ese correo.';
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOA — Accede a tu cuenta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/estilos-login.css">
+</head>
+<body>
+
+    <!-- CABECERA -->
+    <header class="cabecera">
+
+        <img src="../assets/DoA color.svg" alt="DOA" class="logo-cabecera">
+
+        <div class="nav-cabecera">
+            <a href="#" class="texto-nav">Precios</a>
+            <a href="#" class="texto-nav">Contacto</a>
+            <button class="boton-borde">Iniciar sesión</button>
+            <button class="boton-amarillo">Empezar gratis</button>
+        </div>
+
+    </header>
+
+    <!-- CUERPO: panel oscuro izquierda + formulario derecha -->
+    <div class="cuerpo">
+
+        <!-- PANEL IZQUIERDO -->
+        <div class="panel-oscuro">
+
+            <img src="../assets/DoA color.svg" alt="DOA" class="logo-panel">
+
+            <h1 class="titulo-panel">La plataforma académica de GTI</h1>
+
+            <p class="descripcion-panel">
+                Gestión de calificaciones, comunicación y
+                recursos académicos en un solo lugar.
+            </p>
+
+            <div class="lista-caracteristicas">
+
+                <div class="ventaja">
+                    <span class="circulo">&#10003;</span>
+                    <p class="texto-ventaja">Calendarios y entregas unificados</p>
+                </div>
+
+                <div class="ventaja">
+                    <span class="circulo">&#10003;</span>
+                    <p class="texto-ventaja">Comunicación directa con profesores</p>
+                </div>
+
+                <div class="ventaja">
+                    <span class="circulo">&#10003;</span>
+                    <p class="texto-ventaja">Acceso desde cualquier dispositivo</p>
+                </div>
+
+            </div>
+
+            <p class="texto-pie">
+                ¿No tienes cuenta? <a href="#">Ver planes →</a>
+            </p>
+
+        </div>
+
+        <!-- PANEL DERECHO con el formulario -->
+        <div class="panel-formulario">
+
+            <p class="texto-bienvenido">BIENVENIDO</p>
+
+            <h2 class="titulo-formulario">Accede a tu cuenta</h2>
+
+            <p class="subtitulo-formulario">Portal de clientes DOA</p>
+
+            <?php
+/*
+ ==============================================
+  IMAGENES — cambia las rutas aquí si hace falta
+
+  Logo cabecera (pequeño, sobre fondo blanco):
+    ../assets/DoA color.svg
+
+  Logo panel izquierdo (grande, sobre fondo oscuro):
+    ../assets/DoA invertido.svg
+
+  Si los archivos se llaman diferente o están
+  en otra carpeta, cámbialo aquí abajo en el HTML
+ ==============================================
+*/ if ($error !== ''): ?>
+                <p class="texto-error"><?= $error ?></p>
+            <?php
+/*
+ ==============================================
+  IMAGENES — cambia las rutas aquí si hace falta
+
+  Logo cabecera (pequeño, sobre fondo blanco):
+    ../assets/DoA color.svg
+
+  Logo panel izquierdo (grande, sobre fondo oscuro):
+    ../assets/DoA invertido.svg
+
+  Si los archivos se llaman diferente o están
+  en otra carpeta, cámbialo aquí abajo en el HTML
+ ==============================================
+*/ endif; ?>
+
+            <form method="POST" action="">
+
+                <p class="texto-campo">Correo institucional</p>
+                <input class="caja-input" type="email" name="correo"
+                    placeholder="correo@institución.es"
+                    value="<?= htmlspecialchars($_POST['correo'] ?? '') ?>">
+
+                <p class="texto-campo">Contraseña</p>
+                <input class="caja-input" type="password" name="password"
+                    placeholder="••••••••">
+
+                <p class="olvide">
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </p>
+
+                <button type="submit" class="boton-entrar">ENTRAR</button>
+
+            </form>
+
+            <p class="texto-planes">
+                ¿Aún no eres cliente? <a href="#">Ver planes</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
