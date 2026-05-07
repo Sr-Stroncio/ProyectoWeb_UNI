@@ -1,0 +1,57 @@
+html {
+    scroll-behavior: smooth;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+.separador {
+    border: none;
+    height: 1px;
+    background-color: #000;
+    margin: 20px 0;
+}
+.seleccionar_plan{
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+}
+
+.caja_plan{
+    display:flex;
+    white-space: pre-line;
+    flex-wrap: wrap;
+    flex: 1 1 200px;
+    flex-direction: column;
+    justify-content: flex-start;
+    border: 1px solid#000;
+    background-color: #ffdea6;
+    margin: 10px    ;
+    padding: 10px;
+    border-radius: 5px;
+    height: 300px;
+}
+.boton-seleccionar-plan{
+    background-color:  #ffcc74;
+    border: 1px solid#000;
+    display: flex;
+    margin: 0 auto;
+    padding: 10px;
+    justify-content: flex-start;
+
+}
+.boton-seleccionar-plan:hover{
+    cursor: pointer;
+    background-color: #ffcc74;
+
+}
+.titulo_dos{
+    margin-top: 70px;
+    text-align: center;
+}
