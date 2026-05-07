@@ -13,7 +13,9 @@ section {
 
 /* 
 
+
 CSS del headre de la pagina 
+
 
 */
 
@@ -108,7 +110,9 @@ nav a:focus {
 
 /*
 
+
 comienzo del apartado hero en el CSS 
+
 
 */
 
@@ -288,6 +292,92 @@ comienzo del apartado sobre nosotros en el CSS
   flex-shrink: 0;
 }
 
+/*
+
+
+comienzo last section en el CSS 
+
+
+*/
+
+.last-section {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 40px;
+  padding: 80px 60px;
+}
+
+.last-img {
+  width: 250px;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.last-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.last-content {
+  width: 520px;
+  min-height: 420px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+  padding: 0 20px;
+}
+
+.last-text {
+  margin-top: 20px;
+}
+
+.last-text h3 {
+  font-size: 38px;
+  margin: 0 0 60px 0;
+  color: #111111;
+  font-weight: 500;
+}
+
+.last-text p {
+  font-size: 17px;
+  line-height: 1.25;
+  margin: 0 auto;
+  color: #111111;
+  max-width: 560px;
+}
+
+.last-btn {
+  width: 335px;
+  height: 74px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 22px;
+  background-color: rgba(255, 206, 116, 0.9);
+
+  color: #000000;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 400;
+
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+}
+
+.last-btn:hover {
+  transform: translateY(-3px);
+  background-color: #ffce74;
+  box-shadow: 0 8px 20px rgba(255, 206, 116, 0.7);
+}
+
 /* 
 
 
@@ -451,7 +541,7 @@ diseño resposive de la seccion hero
   /* 
 
   
-  como responsive para section de informacion 
+  diseño responsive para section de informacion 
   
   
   */
