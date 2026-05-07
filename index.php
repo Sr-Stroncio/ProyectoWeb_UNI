@@ -19,39 +19,39 @@
 
         <nav>
             <a href="#">Servicios</a>
-            <a href="#">Home</a>
-            <a href="#">Sobre nosotros</a>
+            <a href="#home">Home</a>
+            <a href="#sobre-nosotros">Sobre nosotros</a>
         </nav>
 
         <!-- redireccion hacia la pagina de servicios -->
         <a class="btn-empezar" href="#">
-            Empieza ya
+            Inicia sesion
         </a>
     </header>
 
     <!-- este apartado sera la primera parte de la pagina lo primero que ve el cliente al entrar en esta misma,
     le puse hero pues asi es llamada comunmente -->
 
-    <section class="hero-section">
+    <section id="home" class="hero-section">
         <div class="hero-contenido">
             <h1>
-                Una estructura estitca para
+                Una estructura estetica para
                 <span>universidades que innovan</span>
             </h1>
             <div>
-                <p>Demo abierta completamente gratis para aquellos que quieran probar nuestro producto</p>
-                <a class="btn-demo" href="#">
-                    Demo gratis
+                <p>Registrate para probar nuestra demo abierta completamente gratis</p>
+                <a class="btn-demo" href="pages/registro_lading.php">
+                    Resgistro
                 </a>
             </div>
         </div>
-        
+
         <div class="hero-img">
-            <img src="img/Aristoteles-removebg-preview.png" alt="hero-img">
+            <img src="img/hero-img.jpg" alt="hero-img">
             <div>
-                <p>Demo abierta completamente gratis para aquellos que quieran probar nuestro producto</p>
+                <p>Registrate para probar nuestra demo abierta completamente gratis</p>
                 <a class="btn-demo" href="#">
-                    Demo gratis
+                    Resgistro
                 </a>
             </div>
         </div>
@@ -59,12 +59,48 @@
 
     <!-- seccion de informacion general sobre DOA   -->
 
-    <section class="section-sobre-nosotros">
-        <div class="sobre-nosotros-div-pregunta">
+    <section id="sobre-nosotros" class="section-sobre-nosotros">
 
+        <div class="sobre-nosotros-div-pregunta">
+            <h2>Que es <span>DOA?</span></h2>
+            <img class="atlas-informacion" src="img/atlas.jpg" alt="Atlas-img">
         </div>
 
         <div class="sobre-nosotros-div-informacion">
+
+            <div class="div-informativo">
+                <div>
+                    <h3>Centraliza la gestion academica</h3>
+                    <p>
+                        Organiza recursos, procesos y seguimientos 
+                        en un solo lugar con DOA.
+                    </p>
+                </div>
+                <img src="img/nivel.jpg" alt="">
+            </div>
+
+
+            <div class="div-informativo">
+                <div>
+                    <h3>Mejora la comunicacion</h3>
+                    <p>
+                        Facilita la conexion entre instutucion, profesorado y alumno 
+                        con una experiencia clara, accesible y ordenada.
+                    </p>
+                </div>
+                <img src="img/comunicacion.jpg" alt="">
+            </div>
+
+
+            <div class="div-informativo">
+                <div>
+                    <h3>Una experiencia estetica</h3>
+                    <p>
+                        Proyecta orden, innovacion y confiaza desde el primer vistazo.
+                    </p>
+                </div>
+                <img src="img/estetica.jpg" alt="">
+            </div>
 
         </div>
     </section>
@@ -76,6 +112,7 @@
     <footer>
 
     </footer>
+    
 </body>
 
 </html>
