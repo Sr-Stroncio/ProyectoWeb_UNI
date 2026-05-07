@@ -1,18 +1,5 @@
 <?php
-/*
- ==============================================
-  IMAGENES — cambia las rutas aquí si hace falta
 
-  Logo cabecera (pequeño, sobre fondo blanco):
-    ../assets/DoA color.svg
-
-  Logo panel izquierdo (grande, sobre fondo oscuro):
-    ../assets/DoA invertido.svg
-
-  Si los archivos se llaman diferente o están
-  en otra carpeta, cámbialo aquí abajo en el HTML
- ==============================================
-*/
 session_start();
 
 /* Cuentas predefinidas */
@@ -125,36 +112,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="subtitulo-formulario">Portal de clientes DOA</p>
 
             <?php
-/*
- ==============================================
-  IMAGENES — cambia las rutas aquí si hace falta
 
-  Logo cabecera (pequeño, sobre fondo blanco):
-    ../assets/DoA color.svg
-
-  Logo panel izquierdo (grande, sobre fondo oscuro):
-    ../assets/DoA invertido.svg
-
-  Si los archivos se llaman diferente o están
-  en otra carpeta, cámbialo aquí abajo en el HTML
- ==============================================
-*/ if ($error !== ''): ?>
+ if ($error !== ''): ?>
                 <p class="texto-error"><?= $error ?></p>
             <?php
-/*
- ==============================================
-  IMAGENES — cambia las rutas aquí si hace falta
-
-  Logo cabecera (pequeño, sobre fondo blanco):
-    ../assets/DoA color.svg
-
-  Logo panel izquierdo (grande, sobre fondo oscuro):
-    ../assets/DoA invertido.svg
-
-  Si los archivos se llaman diferente o están
-  en otra carpeta, cámbialo aquí abajo en el HTML
- ==============================================
-*/ endif; ?>
+ endif; ?>
 
             <form method="POST" action="">
 
