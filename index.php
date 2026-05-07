@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-<ad>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/lading_page.css">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <title>Lading page</title>
     <base href="/">
-</ad>
+</head>
 
 <body>
     <!-- barra de navegacion dentro de la lading page-->
