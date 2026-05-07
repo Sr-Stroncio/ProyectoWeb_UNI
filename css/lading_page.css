@@ -1,7 +1,14 @@
+html {
+  scroll-behavior: smooth;
+}
 body {
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif;
+}
+
+section {
+  scroll-margin-top: 90px;
 }
 
 /* 
@@ -15,9 +22,17 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  padding: 5px;
-  margin: 5px;
-  position: relative;
+  padding: 5px 15px;
+  margin: 0;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+  box-sizing: border-box;
 }
 
 header::after {
@@ -91,16 +106,14 @@ nav a:focus {
   box-shadow: 0 0 18px 8px #ffce74;
 }
 
-
 /*
 
 comienzo del apartado hero en el CSS 
 
 */
 
-
 .hero-section {
-  margin-top: 30px;
+  margin-top: 130px;
   height: 700px;
   display: flex;
   justify-content: space-evenly;
@@ -111,13 +124,13 @@ comienzo del apartado hero en el CSS
   display: flex;
   margin-top: 20px;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 }
 
 .hero-contenido h1 {
   text-align: center;
-  font-size: 38px;
+  font-size: 32px;
   line-height: 1.15;
   font-weight: 600;
   letter-spacing: -1px;
@@ -174,7 +187,7 @@ comienzo del apartado hero en el CSS
 }
 
 .hero-img img {
-  width: 700px;
+  width: 900px;
   height: auto;
   z-index: 1;
   filter: drop-shadow(0 24px 28px rgba(0, 0, 0, 0.25));
@@ -191,7 +204,6 @@ comienzo del apartado hero en el CSS
   display: none;
 }
 
-
 /*
 
 
@@ -200,11 +212,81 @@ comienzo del apartado sobre nosotros en el CSS
 
 */
 
+.section-sobre-nosotros {
+  display: flex;
+  margin-top: 150px;
+  margin-bottom: 100px;
+}
 
+.sobre-nosotros-div-pregunta {
+  width: 35%;
+  height: 580px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 100px;
+}
 
+.sobre-nosotros-div-pregunta h2 {
+  text-align: center;
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -1px;
+  margin: 0;
+  color: #111111;
+  max-width: 500px;
+}
 
+.sobre-nosotros-div-pregunta span {
+  margin-top: 8px;
+  color: #d99a25;
+  font-weight: 900;
+}
 
+.atlas-informacion {
+  height: 450px;
+  margin-top: 80px;
+  width: auto;
+}
 
+.sobre-nosotros-div-informacion {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 80px;
+  margin-right: 50px;
+  background-color: rgba(255, 206, 116, 0.3);
+}
+
+.div-informativo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  margin: 5px;
+  padding: 0 50px;
+}
+
+.div-informativo div {
+  flex: 1;
+}
+
+.div-informativo h3 {
+  font-size: 24px;
+}
+
+.div-informativo p {
+  font-size: 18px;
+}
+
+.div-informativo img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
 
 /* 
 
@@ -214,16 +296,46 @@ diseño responsive de la pagina
 
 */
 
+@media (max-width: 1265px) {
+  .hero-contenido h1 {
+    font-size: 28px;
+  }
 
+  .hero-img img {
+    width: 600px;
+  }
 
-@media (max-width: 930px) {
+  /* diseño responsive de informacion */
+
+  .section-sobre-nosotros {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+  }
+
+  .sobre-nosotros-div-pregunta {
+    display: none;
+  }
+
+  .sobre-nosotros-div-informacion {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 80px;
+    margin-right: 0px;
+    background-color: rgba(255, 206, 116, 0.3);
+  }
+}
+
+@media (max-width: 1000px) {
   /* 
 
 
-diseño responsive del header 
+    diseño responsive del header 
 
 
-*/
+  */
 
   .div-logos {
     display: flex;
@@ -289,10 +401,10 @@ diseño resposive de la seccion hero
 */
 
   .hero-section {
-    margin-top: 0;
+    margin-top: 50px;
     flex-direction: column;
     justify-content: flex-start;
-    height: 680px;
+    height: auto;
   }
 
   .hero-contenido {
@@ -324,6 +436,9 @@ diseño resposive de la seccion hero
     flex-direction: column;
     align-items: center;
     gap: 35px;
+    padding: 15px;
+    background-color: rgba(255, 206, 116, 0.3);
+    border-radius: 30px;
   }
 
   .hero-img p {
@@ -332,8 +447,73 @@ diseño resposive de la seccion hero
     max-width: 360px;
     margin-bottom: 20px;
   }
-}
 
+  /* 
+
+  
+  como responsive para section de informacion 
+  
+  
+  */
+
+  .section-sobre-nosotros {
+    margin-bottom: 100px;
+  }
+
+  .sobre-nosotros-div-informacion {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-right: 0;
+    background-color: #ffffff;
+    box-sizing: border-box;
+  }
+
+  .div-informativo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 30px;
+    margin: 5px auto;
+    padding: 0;
+
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .div-informativo div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .div-informativo h3 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .div-informativo p {
+    font-size: 16px;
+    text-align: center;
+    max-width: 330px;
+    margin: 0 auto;
+    line-height: 1.4;
+  }
+
+  .div-informativo img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    object-fit: cover;
+    flex-shrink: 1;
+  }
+}
 /*
 
 
