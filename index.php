@@ -91,7 +91,9 @@
         </div>
     </section>
 
-    <section class="last-section">
+    <!-- ultimo apartado de la pagina -->
+
+    <section id="servicios" class="last-section">
         <div class="last-img">
             <img src="img/footer-img_2.jpg" alt="footer-img-2">
         </div>
