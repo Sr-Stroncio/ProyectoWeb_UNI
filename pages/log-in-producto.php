@@ -5,11 +5,11 @@ codigo php para manejar el inicio de sesion permisos roles etc...
 
 
 -->
-
 <?php
 // codigo php para manejar el inicio de sesion permisos roles etc...
 // codigo php para manejar el inicio de sesion permisos roles etc...
-session_start();
+
+include '../utils/check-empresa.php';
 
 $usuarios = [
     'l.simdre@epsg.upv.es' => [
@@ -59,18 +59,6 @@ $usuarios = [
         'rol' => 'admin',
         'nombre' => 'Brooke Malimoe Thomerson'
     ],
-
-    // 'dapasa@har.upv.es' => [
-    //     'password' => '1234',
-    //     'rol' => 'admin',
-    //     'nombre' => 'Daniel Palacio'
-    // ],
-
-    // 'jogilo@upvnet.upv.es' => [
-    //     'password' => '4567',
-    //     'rol' => 'admin',
-    //     'nombre' => 'José Luis Gimenez'
-    // ],
 ];
 $error = $_SESSION['error_login'] ?? '';
 $correo_guardado = $_SESSION['correo_login'] ?? '';

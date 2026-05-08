@@ -2,7 +2,7 @@
 // codigo php para manejar el inicio de sesion permisos roles etc...
 session_start();
 
-$usuarios = [
+$usuarios_app = [
     'dapasa@har.upv.es' => [
         'password' => '1234',
         'rol' => 'admin',
@@ -26,12 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $correo = trim($_POST['correo'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if (isset($usuarios[$correo]) && $usuarios[$correo]['password'] === $password) {
-        $_SESSION['usuario'] = $correo;
-        $_SESSION['rol'] = $usuarios[$correo]['rol'];
-        $_SESSION['nombre'] = $usuarios[$correo]['nombre'];
+    if (isset($usuarios_app[$correo]) && $usuarios_app[$correo]['password'] === $password) {
+        $_SESSION['empresa_usuario'] = $correo;
+        $_SESSION['empresa_rol'] = $usuarios_app[$correo]['rol'];
+        $_SESSION['empresa_nombre'] = $usuarios_app[$correo]['nombre'];
 
-        header('Location: /pages/dashboard-admin.php');
+        header('Location: /index.php');
         exit;
     }
 

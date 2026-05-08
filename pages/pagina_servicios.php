@@ -1,3 +1,6 @@
+
+<?php include '../utils/check-empresa.php'; ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
