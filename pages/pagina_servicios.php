@@ -33,8 +33,7 @@
                     Prueba nuestra plataforma y experimenta de primera mano cómo simplifica la enseñanza. Accede a las funcionalidades clave y comprueba todo lo que puedes hacer antes de elegir un plan de compra.
 
                     Prueba DOA!</p>
-                <a href="/pages/log-in-producto.php" class="boton-seleccionar-plan">
-                    Ir a la prueba
+                <a href="/pages/log-in-producto.php" class="boton-seleccionar-plan">Ir a la prueba
                 </a>
             </div>
             <!-- caja plan estandar -->
