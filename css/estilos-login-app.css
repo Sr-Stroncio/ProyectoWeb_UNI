@@ -1,0 +1,240 @@
+/* pagina centrada verticalmente */
+
+.contenedor-tarjeta {
+    height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F5F3EE;
+    padding: 20px;
+}
+
+/* la tarjeta blanca con los dos paneles */
+
+.tarjeta {
+    display: flex;
+    width: 100%;
+    max-width: 820px;
+    border: 1px solid #D4CFC6;
+    background-color: white;
+}
+
+/* panel izquierdo — info de la institucion */
+
+.panel-institucion {
+    width: 40%;
+    border-right: 1px solid #D4CFC6;
+    padding: 44px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.logo-gti-grande {
+    height: 60px;
+    margin-bottom: 16px;
+}
+
+.nombre-grado {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1C1C1A;
+    margin-bottom: 6px;
+}
+
+.campus {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #6B6860;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+.separador {
+    width: 60%;
+    height: 1px;
+    background-color: #D4CFC6;
+    margin-bottom: 18px;
+}
+
+.texto-credenciales {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #6B6860;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.caja-instancia {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: #F5F3EE;
+    border: 1px solid #D4CFC6;
+    text-align: center;
+}
+
+.label-instancia {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    color: #6B6860;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.valor-instancia {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1C1C1A;
+}
+
+/* panel derecho — formulario */
+
+.panel-form {
+    width: 60%;
+    padding: 44px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.texto-acceso {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #b89a30;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.titulo-form {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1C1C1A;
+    margin-bottom: 24px;
+}
+
+.texto-error {
+    background-color: #fdecea;
+    border: 1px solid #f5c6c6;
+    padding: 10px 14px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    color: #D32F2F;
+    margin-bottom: 16px;
+}
+
+.texto-campo {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6B6860;
+    margin-bottom: 6px;
+}
+
+.caja-input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #D4CFC6;
+    background-color: #FAFAF8;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #1C1C1A;
+    padding-left: 14px;
+    margin-bottom: 14px;
+}
+
+.fila-opciones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.label-recordar {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #6B6860;
+    display: flex;
+    align-items: center;
+}
+
+.label-recordar input {
+    margin-right: 6px;
+}
+
+.fila-opciones a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #1C1C1A;
+}
+
+.boton-entrar {
+    width: 100%;
+    height: 48px;
+    background-color: #FFCE74;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1C1C1A;
+    margin-bottom: 20px;
+}
+
+.texto-soporte {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #6B6860;
+}
+
+.texto-soporte a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #1C1C1A;
+    font-weight: 700;
+}
+
+/* responsive movil */
+
+@media (max-width: 768px) {
+
+    .tarjeta {
+        flex-direction: column;
+    }
+
+    /* panel institucion se achica arriba */
+    .panel-institucion {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #D4CFC6;
+        padding: 24px 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        text-align: left;
+        align-items: center;
+    }
+
+    /* escondemos lo que no cabe en movil */
+    .separador,
+    .texto-credenciales,
+    .caja-instancia {
+        display: none;
+    }
+
+    .logo-gti-grande {
+        height: 40px;
+        margin-bottom: 0;
+        margin-right: 12px;
+    }
+
+    .panel-form {
+        width: 100%;
+        padding: 28px 20px;
+    }
+
+}

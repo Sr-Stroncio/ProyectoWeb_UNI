@@ -8,6 +8,7 @@ codigo php para manejar el inicio de sesion permisos roles etc...
 
 <?php
 // codigo php para manejar el inicio de sesion permisos roles etc...
+// codigo php para manejar el inicio de sesion permisos roles etc...
 session_start();
 
 $usuarios = [
@@ -78,6 +79,7 @@ unset($_SESSION['error_login']);
 unset($_SESSION['correo_login']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $correo = trim($_POST['correo'] ?? '');
     $correo = trim($_POST['correo'] ?? '');
     $password = $_POST['password'] ?? '';
 
