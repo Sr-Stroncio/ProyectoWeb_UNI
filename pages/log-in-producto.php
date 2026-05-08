@@ -1,45 +1,105 @@
 <?php
+// codigo php para manejar el inicio de sesion permisos roles etc...
 session_start();
 
 $usuarios = [
-    'alumno@gti.doa.edu'   => ['password' => 'alumno1234',  'rol' => 'alumno',   'nombre' => 'Laura García'],
-    'profesor@gti.doa.edu' => ['password' => 'profe1234',   'rol' => 'profesor', 'nombre' => 'Prof. García'],
-    'admin@doa.edu'        => ['password' => 'admin1234',   'rol' => 'admin',    'nombre' => 'Administrador'],
+    'l.simdre@epsg.upv.es' => [
+        'password' => '9218611',
+        'rol' => 'alumno',
+        'nombre' => 'Lief'
+    ],
+
+    'm.kirkam@epsg.upv.es' => [
+        'password' => '1320191',
+        'rol' => 'alumno',
+        'nombre' => 'Merline'
+    ],
+
+    'd.rawabc@epsg.upv.es' => [
+        'password' => '9971924',
+        'rol' => 'alumno',
+        'nombre' => 'Debora'
+    ],
+
+    'k.poumai@upv.es' => [
+        'password' => '4525956',
+        'rol' => 'profesor',
+        'nombre' => 'Kevan'
+    ],
+
+    'l.prista@upv.es' => [
+        'password' => '6055365',
+        'rol' => 'profesor',
+        'nombre' => 'Luelle'
+    ],
+
+    'e.mermiz@upv.es' => [
+        'password' => '6738133',
+        'rol' => 'profesor',
+        'nombre' => 'Eolande'
+    ],
+
+    'o.breshe@upv.es' => [
+        'password' => '1316390',
+        'rol' => 'pas',
+        'nombre' => 'Ondrea'
+    ],
+
+    'b.maltho@upv.es' => [
+        'password' => '1970980',
+        'rol' => 'pas',
+        'nombre' => 'Brooke'
+    ],
 ];
 
-$error = '';
+$error = $_SESSION['error_login'] ?? '';
+$correo_guardado = $_SESSION['correo_login'] ?? '';
+
+unset($_SESSION['error_login']);
+unset($_SESSION['correo_login']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $correo   = htmlspecialchars(trim($_POST['correo'] ?? ''));
+    $correo = trim($_POST['correo'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if (isset($usuarios[$correo])) {
-        if ($usuarios[$correo]['password'] === $password) {
-            $_SESSION['usuario'] = $correo;
-            $_SESSION['rol']     = $usuarios[$correo]['rol'];
-            $_SESSION['nombre']  = $usuarios[$correo]['nombre'];
+    if (isset($usuarios[$correo]) && $usuarios[$correo]['password'] === $password) {
+        $_SESSION['usuario'] = $correo;
+        $_SESSION['rol'] = $usuarios[$correo]['rol'];
+        $_SESSION['nombre'] = $usuarios[$correo]['nombre'];
 
-            if ($usuarios[$correo]['rol'] === 'admin') {
-                // TODO: cambiar cuando este lista la pagina
-                header('Location: ../pages/dashboard-admin.php');
-            } elseif ($usuarios[$correo]['rol'] === 'profesor') {
-                // TODO: cambiar cuando este lista la pagina
-                header('Location: ../pages/dashboard-profesor.php');
-            } else {
-                // TODO: cambiar cuando este lista la pagina
-                header('Location: ../pages/dashboard-alumno.php');
-            }
+        if ($_SESSION['rol'] === 'admin') {
+            header('Location: /pages/dashboard-admin.php');
             exit;
-        } else {
-            $error = 'Contraseña incorrecta.';
         }
-    } else {
-        $error = 'No existe una cuenta con ese correo.';
+
+        if ($_SESSION['rol'] === 'profesor') {
+            header('Location: /pages/dashboard-profesor.php');
+            exit;
+        }
+
+        if ($_SESSION['rol'] === 'pas') {
+            header('Location: /pages/dashboard-pas.php');
+            exit;
+        }
+
+        header('Location: /pages/dashboard-alumno.php');
+        exit;
     }
+
+    $_SESSION['error_login'] = 'Correo o contraseña incorrectos.';
+    $_SESSION['correo_login'] = $correo;
+
+    header('Location: /pages/log-in-producto.php');
+    exit;
 }
+
 ?>
+
+<!-- comienzo del html -->
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,26 +107,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/lading_page.css">
     <link rel="stylesheet" href="../css/estilos-login.css">
+    <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
+    <base href="/">
 </head>
+
 <body>
-
-    <header>
-        <div class="div-logos">
-            <img class="GTI_logo" src="../assets/logoGTI.svg" alt="GTI Logo">
-            <img class="DOA_logo" src="../assets/DoA color.svg" alt="DOA Logo">
-        </div>
-
-        <nav>
-            <a href="#">Servicios</a>
-            <a href="#home">Home</a>
-            <a href="#sobre-nosotros">Sobre nosotros</a>
-        </nav>
-
-        <!-- redireccion hacia la pagina de login -->
-        <a class="btn-empezar" href="#">
-            Inicia sesion
-        </a>
-    </header>
+    <?php include '../components/header.php'; ?>
 
     <div class="cuerpo">
 
@@ -109,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="texto-campo">Correo institucional</p>
                 <input class="caja-input" type="email" name="correo"
                     placeholder="correo@institución.es"
-                    value="<?= htmlspecialchars($_POST['correo'] ?? '') ?>">
+                    value="<?= htmlspecialchars($correo_guardado) ?>">
 
                 <p class="texto-campo">Contraseña</p>
                 <input class="caja-input" type="password" name="password"
@@ -123,11 +169,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
 
             <p class="texto-planes">
-                ¿Aún no eres cliente? <a href="#">Ver planes</a>
+                ¿Aún no eres cliente? <a href="pages/pagina_servicios.php">Ver planes</a>
             </p>
         </div>
 
     </div>
 
+    <script>
+        const mensajeError = document.querySelector(".texto-error");
+
+        if (mensajeError) {
+            setTimeout(() => {
+                mensajeError.style.display = "none";
+            }, 2000);
+        }
+    </script>
 </body>
+
 </html>
