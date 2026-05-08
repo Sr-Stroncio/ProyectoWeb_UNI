@@ -1,4 +1,13 @@
+<!-- 
+
+
+codigo php para manejar el inicio de sesion permisos roles etc... 
+
+
+-->
+
 <?php
+// codigo php para manejar el inicio de sesion permisos roles etc...
 // codigo php para manejar el inicio de sesion permisos roles etc...
 session_start();
 
@@ -41,14 +50,26 @@ $usuarios = [
 
     'o.breshe@upv.es' => [
         'password' => '1316390',
-        'rol' => 'pas',
+        'rol' => 'admin',
         'nombre' => 'Ondrea'
     ],
 
     'b.maltho@upv.es' => [
         'password' => '1970980',
-        'rol' => 'pas',
+        'rol' => 'admin',
         'nombre' => 'Brooke'
+    ],
+
+    'dapasa@har.upv.es' => [
+        'password' => '1234',
+        'rol' => 'admin',
+        'nombre' => 'Daniel'
+    ],
+
+    'jogilo@upvnet.upv.es' => [
+        'password' => '4567',
+        'rol' => 'admin',
+        'nombre' => 'José'
     ],
 ];
 
@@ -59,6 +80,7 @@ unset($_SESSION['error_login']);
 unset($_SESSION['correo_login']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $correo = trim($_POST['correo'] ?? '');
     $correo = trim($_POST['correo'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -74,11 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($_SESSION['rol'] === 'profesor') {
             header('Location: /pages/dashboard-profesor.php');
-            exit;
-        }
-
-        if ($_SESSION['rol'] === 'pas') {
-            header('Location: /pages/dashboard-pas.php');
             exit;
         }
 
@@ -112,6 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <!-- include del header general (se usa en las paginas de producto) -->
     <?php include '../components/header.php'; ?>
 
     <div class="cuerpo">

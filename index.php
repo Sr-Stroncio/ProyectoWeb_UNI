@@ -11,7 +11,9 @@
 </head>
 
 <body>
+    
     <!-- barra de navegacion dentro de la lading page-->
+    <?php include 'components/header.php'; ?>
 
     <!-- este apartado sera la primera parte de la pagina lo primero que ve el cliente al entrar en esta misma,
     le puse hero pues asi es llamada comunmente -->
@@ -56,7 +58,7 @@
                 <div>
                     <h3>Centraliza la gestion academica</h3>
                     <p>
-                        Organiza recursos, procesos y seguimientos 
+                        Organiza recursos, procesos y seguimientos
                         en un solo lugar con DOA.
                     </p>
                 </div>
@@ -68,7 +70,7 @@
                 <div>
                     <h3>Mejora la comunicacion</h3>
                     <p>
-                        Facilita la conexion entre instutucion, profesorado y alumno 
+                        Facilita la conexion entre instutucion, profesorado y alumno
                         con una experiencia clara, accesible y ordenada.
                     </p>
                 </div>
@@ -89,14 +91,29 @@
         </div>
     </section>
 
-    <section>
+    <!-- ultimo apartado de la pagina -->
 
+    <section id="servicios" class="last-section">
+        <div class="last-img">
+            <img src="img/footer-img_2.jpg" alt="footer-img-2">
+        </div>
+
+        <div class="last-content">
+            <div class="last-text">
+                <h3>No esperes más</h3>
+                <p>
+                    Descubre todo lo que nuestra plataforma puede hacer por tu centro,
+                    accede a la demo y elige el plan que mejor se adapte a ti.
+                </p>
+            </div>
+            <a class="last-btn" href="pages/pagina_servicios.php">Página de servicios</a>
+        </div>
+
+        <div class="last-img">
+            <img src="img/footer-img.jpg" alt="footer-img-1">
+        </div>
     </section>
 
-    <footer>
-
-    </footer>
-    
 </body>
 
 </html>
