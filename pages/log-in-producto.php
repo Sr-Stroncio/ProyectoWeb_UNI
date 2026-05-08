@@ -142,9 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="texto-ventaja">Acceso desde cualquier dispositivo</p>
                 </div>
             </div>
-            <p class="texto-pie">
-                ¿No tienes cuenta? <a href="#">Ver planes →</a>
-            </p>
+
         </div>
 
         <div class="panel-formulario">
@@ -172,7 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <button type="submit" class="boton-entrar">ENTRAR</button>
             </form>
-
             <p class="texto-planes">
                 ¿Aún no eres cliente? <a href="pages/pagina_servicios.php">Ver planes</a>
             </p>
