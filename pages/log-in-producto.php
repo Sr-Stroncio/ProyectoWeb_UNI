@@ -15,64 +15,63 @@ $usuarios = [
     'l.simdre@epsg.upv.es' => [
         'password' => '9218611',
         'rol' => 'alumno',
-        'nombre' => 'Lief'
+        'nombre' => 'Lief Simants Dredge'
     ],
 
     'm.kirkam@epsg.upv.es' => [
         'password' => '1320191',
         'rol' => 'alumno',
-        'nombre' => 'Merline'
+        'nombre' => 'Merline Kirdsch Kampshell'
     ],
 
     'd.rawabc@epsg.upv.es' => [
         'password' => '9971924',
         'rol' => 'alumno',
-        'nombre' => 'Debora'
+        'nombre' => 'Debora Rawstorne'
     ],
 
     'k.poumai@upv.es' => [
         'password' => '4525956',
         'rol' => 'profesor',
-        'nombre' => 'Kevan'
+        'nombre' => 'Kevan Pounds Mainston'
     ],
 
     'l.prista@upv.es' => [
         'password' => '6055365',
         'rol' => 'profesor',
-        'nombre' => 'Luelle'
+        'nombre' => 'Luelle Pridmore Starsmeare'
     ],
 
     'e.mermiz@upv.es' => [
         'password' => '6738133',
         'rol' => 'profesor',
-        'nombre' => 'Eolande'
+        'nombre' => 'Eolande Merriton Mizzi'
     ],
 
     'o.breshe@upv.es' => [
         'password' => '1316390',
         'rol' => 'admin',
-        'nombre' => 'Ondrea'
+        'nombre' => 'Ondrea Brezlaw Sherwill'
     ],
 
     'b.maltho@upv.es' => [
         'password' => '1970980',
         'rol' => 'admin',
-        'nombre' => 'Brooke'
+        'nombre' => 'Brooke Malimoe Thomerson'
     ],
 
-    'dapasa@har.upv.es' => [
-        'password' => '1234',
-        'rol' => 'admin',
-        'nombre' => 'Daniel'
-    ],
+    // 'dapasa@har.upv.es' => [
+    //     'password' => '1234',
+    //     'rol' => 'admin',
+    //     'nombre' => 'Daniel Palacio'
+    // ],
 
-    'jogilo@upvnet.upv.es' => [
-        'password' => '4567',
-        'rol' => 'admin',
-        'nombre' => 'José'
-    ],
+    // 'jogilo@upvnet.upv.es' => [
+    //     'password' => '4567',
+    //     'rol' => 'admin',
+    //     'nombre' => 'José Luis Gimenez'
+    // ],
 ];
-
 $error = $_SESSION['error_login'] ?? '';
 $correo_guardado = $_SESSION['correo_login'] ?? '';
 
@@ -90,12 +89,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['nombre'] = $usuarios[$correo]['nombre'];
 
         if ($_SESSION['rol'] === 'admin') {
-            header('Location: /pages/dashboard-admin.php');
+            header('Location: /pages/dashboard-alumno.php');
             exit;
         }
 
         if ($_SESSION['rol'] === 'profesor') {
-            header('Location: /pages/dashboard-profesor.php');
+            header('Location: /pages/dashboard-alumno.php');
             exit;
         }
 
