@@ -4,7 +4,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 section {
@@ -14,7 +14,9 @@ section {
 /* 
 
 
-CSS del headre de la pagina 
+
+CSS del header de la pagina 
+
 
 
 */
@@ -106,6 +108,55 @@ nav a:focus {
 .btn-empezar:hover {
   font-size: 17px;
   box-shadow: 0 0 18px 8px #ffce74;
+}
+
+.header-empresa {
+  min-width: 230px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.nombre-empresa {
+  margin: 0;
+  padding: 8px 14px;
+
+  border-radius: 999px;
+  background-color: rgba(255, 206, 116, 0.35);
+  border: 1px solid rgba(255, 206, 116, 0.9);
+
+  color: #7a5200;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.btn-logout-empresa {
+  height: 38px;
+  padding: 0 14px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50px;
+  border: 1px solid #d6d6d6;
+  background-color: #ffffff;
+
+  color: #111111;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: all 0.3s ease;
+}
+
+.btn-logout-empresa:hover {
+  background-color: #fdecea;
+  border-color: #f5c6c6;
+  color: #d32f2f;
+  transform: translateY(-2px);
 }
 
 /*
@@ -427,6 +478,20 @@ diseño responsive de la pagina
 
   */
 
+  header {
+    justify-content: center;
+  }
+
+  .header-empresa {
+    min-width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+  }
+  .header-empresa a {
+    font-size: 12px;
+  }
   .div-logos {
     display: flex;
   }
@@ -443,8 +508,9 @@ diseño responsive de la pagina
   nav {
     width: 320px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    margin: 0;
   }
 
   nav a {
@@ -480,6 +546,10 @@ diseño responsive de la pagina
   .btn-empezar:hover {
     font-size: 14px;
     box-shadow: 0 0 14px 7px #ffce74;
+  }
+
+  .empresa-info {
+    display: none;
   }
 
   /*
@@ -603,7 +673,73 @@ diseño resposive de la seccion hero
     object-fit: cover;
     flex-shrink: 1;
   }
+
+  /* 
+  
+
+  ultima secction resposive 
+  
+  
+  */
+
+  .last-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    gap: 0;
+  }
+
+  .last-img {
+    display: none;
+  }
+
+  .last-content {
+    width: 100%;
+    max-width: 420px;
+    min-height: auto;
+    margin: 0 auto;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .last-text {
+    width: 100%;
+    margin: 0;
+  }
+
+  .last-text h3 {
+    font-size: 32px;
+    margin: 0 0 30px 0;
+  }
+
+  .last-text p {
+    font-size: 16px;
+    line-height: 1.4;
+    max-width: 340px;
+    margin: 0 auto 40px auto;
+  }
+
+  .last-btn {
+    width: 100%;
+    max-width: 320px;
+    height: 60px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+    border-radius: 20px;
+  }
 }
+
 /*
 
 
