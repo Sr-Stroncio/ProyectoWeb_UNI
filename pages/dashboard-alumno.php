@@ -12,10 +12,10 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 // Si el usuario existe, pero no es alumno, vuelve al login
-if ($_SESSION['rol'] !== 'alumno') {
-    header('Location: /pages/log-in-producto.php');
-    exit;
-}
+// if ($_SESSION['rol'] !== 'alumno') {
+//     header('Location: /pages/log-in-producto.php');
+//     exit;
+// }
 
 ?>
 
@@ -26,37 +26,54 @@ if ($_SESSION['rol'] !== 'alumno') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
+    <link rel="stylesheet" href="css/dashboard-principal.css">
     <title>Dashboard alumno</title>
 </head>
 
 <body>
 
     <header>
-
-        <div>
-
+        <div class="div-izquierdo">
+            <div class="div-logos">
+                <img class="DOA_logo" src="assets/DoA color.svg" alt="DOA Logo">
+                <img class="GTI_logo" src="assets/logoGTI.svg" alt="GTI Logo">
+            </div>
+            <h2>Dashboard</h2>
         </div>
 
-        <div>
-            <h1>Dashboard alumno</h1>
 
-            <p>Bienvenido/a, <?= $_SESSION['nombre'] ?></p>
-            <p>Rol: <?= $_SESSION['rol'] ?></p>
+        <!-- redireccion hacia la pagina de servicios -->
+        <div class="div-nav">
+            <div class="perfil">
+                <div class="perfil-info">
+                    <p class="perfil-saludo">Bienvenido/a, <?= $_SESSION['nombre'] ?></p>
+                    <span class="perfil-rol"><?= $_SESSION['rol'] ?></span>
+                </div>
 
-            <a href="/utils/logout-producto.php">Cerrar sesión</a>
+                <a class="btn-logout" href="/utils/logout-producto.php">Cerrar sesión</a>
+            </div>
         </div>
-
     </header>
 
-    <aside>
+    <section class="section-principal">
+        <aside>
 
-    </aside>
+            <div>
 
-    <main>
+            </div>
 
-    </main>
+            <div>
 
+            </div>
+
+        </aside>
+
+        <main>
+
+        </main>
+    </section>
 
 </body>
 
