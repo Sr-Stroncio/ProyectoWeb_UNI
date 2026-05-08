@@ -1,33 +1,23 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/lading_page.css">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
-    <title>Lading page</title>
+    <title>Landing page</title>
     <base href="/">
 </head>
 
 <body>
+
     <!-- barra de navegacion dentro de la lading page-->
-    <header>
-        <div class="div-logos">
-            <img class="GTI_logo" src="assets/logoGTI.svg" alt="GTI Logo">
-            <img class="DOA_logo" src="assets/DoA color.svg" alt="DOA Logo">
-        </div>
-
-        <nav>
-            <a href="#">Servicios</a>
-            <a href="#home">Home</a>
-            <a href="#sobre-nosotros">Sobre nosotros</a>
-        </nav>
-
-        <!-- redireccion hacia la pagina de servicios -->
-        <a class="btn-empezar" href="#">
-            Inicia sesion
-        </a>
-    </header>
+    <?php include 'components/header.php'; ?>
 
     <!-- este apartado sera la primera parte de la pagina lo primero que ve el cliente al entrar en esta misma,
     le puse hero pues asi es llamada comunmente -->
@@ -40,9 +30,15 @@
             </h1>
             <div>
                 <p>Registrate para probar nuestra demo abierta completamente gratis</p>
-                <a class="btn-demo" href="pages/registro_lading.php">
-                    Resgistro
-                </a>
+                <?php if (isset($_SESSION['empresa_usuario'])): ?>
+                    <a class="btn-demo" href="/pages/log-in-producto.php">
+                        Demo
+                    </a>
+                <?php else: ?>
+                    <a class="btn-demo" href="/pages/registro.php">
+                        Registro
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -50,9 +46,15 @@
             <img src="img/hero-img.jpg" alt="hero-img">
             <div>
                 <p>Registrate para probar nuestra demo abierta completamente gratis</p>
-                <a class="btn-demo" href="#">
-                    Resgistro
-                </a>
+                <?php if (isset($_SESSION['empresa_usuario'])): ?>
+                    <a class="btn-demo" href="/pages/log-in-producto.php">
+                        Demo
+                    </a>
+                <?php else: ?>
+                    <a class="btn-demo" href="/pages/registro.php">
+                        Registro
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -105,7 +107,9 @@
         </div>
     </section>
 
-    <section class="last-section">
+    <!-- ultimo apartado de la pagina -->
+
+    <section id="servicios" class="last-section">
         <div class="last-img">
             <img src="img/footer-img_2.jpg" alt="footer-img-2">
         </div>
@@ -118,17 +122,13 @@
                     accede a la demo y elige el plan que mejor se adapte a ti.
                 </p>
             </div>
-            <a class="last-btn" href="">Página de servicios</a>
+            <a class="last-btn" href="pages/pagina_servicios.php">Página de servicios</a>
         </div>
 
         <div class="last-img">
             <img src="img/footer-img.jpg" alt="footer-img-1">
         </div>
     </section>
-
-    <footer>
-        
-    </footer>
 
 </body>
 
