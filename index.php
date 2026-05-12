@@ -12,7 +12,7 @@ session_start();
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <title>Landing page</title>
     <base href="/">
-</head>
+</head> 
 
 <body>
 
@@ -25,8 +25,8 @@ session_start();
     <section id="home" class="hero-section">
         <div class="hero-contenido">
             <h1>
-                Una estructura estetica para
-                <span>universidades que innovan</span>
+                Productos esteticos para
+                <span>aquellos que innovan</span>
             </h1>
             <div>
                 <p>Registrate para probar nuestra demo abierta completamente gratis</p>
@@ -64,7 +64,7 @@ session_start();
     <section id="sobre-nosotros" class="section-sobre-nosotros">
 
         <div class="sobre-nosotros-div-pregunta">
-            <h2>Que es <span>DOA?</span></h2>
+            <h2>Que es <span>GTI</span></h2>
             <img class="atlas-informacion" src="img/atlas.jpg" alt="Atlas-img">
         </div>
 
@@ -119,10 +119,10 @@ session_start();
                 <h3>No esperes más</h3>
                 <p>
                     Descubre todo lo que nuestra plataforma puede hacer por tu centro,
-                    accede a la demo y elige el plan que mejor se adapte a ti.
+                    elige el producto que mejor se adapte a ti y accede a la demo .
                 </p>
             </div>
-            <a class="last-btn" href="pages/pagina_servicios.php">Página de servicios</a>
+            <a class="last-btn" href="pages/pagina_servicios.php">Página de productos</a>
         </div>
 
         <div class="last-img">
