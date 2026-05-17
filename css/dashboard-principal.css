@@ -44,9 +44,9 @@ header::after {
 .div-izquierdo h2 {
   display: flex;
   margin: 0px;
+  margin-left: 50px;
   align-items: center;
   justify-content: center;
-  margin-left: 10px;
   font-size: 24px;
 }
 
@@ -62,7 +62,7 @@ header::after {
 }
 
 .DOA_logo {
-  height: 35px;
+  height: 30px;
   width: auto;
   margin-top: 15px;
   margin-left: 10px;
@@ -144,7 +144,7 @@ header::after {
 }
 
 aside {
-  width: 290px;
+  width: 280px;
   min-height: calc(100vh - 65px);
 }
 
