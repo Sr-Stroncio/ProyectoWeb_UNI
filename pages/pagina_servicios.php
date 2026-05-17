@@ -33,38 +33,22 @@
                     Prueba nuestra plataforma y experimenta de primera mano cómo simplifica la enseñanza. Accede a las funcionalidades clave y comprueba todo lo que puedes hacer antes de elegir un plan de compra.
 
                     Prueba DOA!</p>
-                <a href="/pages/log-in-producto.php" class="boton-seleccionar-plan">
-                    Ir a la prueba
+                <a href="/pages/log-in-producto.php" class="btn-demo">Ir a la prueba
                 </a>
             </div>
             <!-- caja plan estandar -->
             <div class="caja">
-                <h3>Plan de estandar (5000€)</h3>
+                <img class="GTI_logo" src="assets/DoA color.svg" alt="DOA">
+                <h2>(5000€)</h2>
                 <p>Todo lo que necesitas para el día a día educativo, en un solo lugar.
 
-
                     Llena de funciones como:
-                    -Anuncios
-                    -Calendario
-                    -Asignaturas con: calificaciones, tareas, recursos y examenes.
-
+                    -Distintos roles en la applicación(Alumno, Profesor, Administrador) para una mejor organización con distintas acciones por cada rol.
+                    -Cada rol tiene diversas funciones como: Anuncios,Calendario,Asignaturas con: calificaciones, tareas, recursos y examenes, para crear un ecosistema online en donde alumnos y docentes se actualizen sin necesitar de ser presencialmente.
+                    -Recomendado para instituciones que quieran ayudar a sus alumnos a mantenerse al dia.
                     ¡Todo esto, solo en DOA.!</p>
 
-                <button type="button" class="boton-seleccionar-plan">Seleccionar plan</button>
-            </div>
-            <!-- caja plan profesional -->
-            <div class="caja">
-                <h3>Plan profesional (8000€)</h3>
-                <p>Diseñado para instituciones que buscan una experiencia completa y sin límites.
-
-                    -Todas las funciones del Plan Estándar
-                    -Soporte premium durante 12 meses
-                    -Atención prioritaria
-                    -Configuración y ayuda personalizada
-                    -Herramientas avanzadas para docentes y administración
-                    -Máximo rendimiento y estabilidad
-
-                    ¡Con este plan, no te quedaras atrás!</p><button type="button" class="boton-seleccionar-plan">Seleccionar plan</button>
+                <a class="btn-demo" onclick="seleccionarPlan('Plan estándar (5000€)')" >Seleccionar plan</a>
             </div>
         </div>
     </section>
@@ -74,9 +58,18 @@
             <input type="text" placeholder="Nombre institución" required>
             <input type="email" placeholder="Correo electrónico" required>
             <input type="text" placeholder="Subdominio(Solo letras y números)" required>
+            <p id="plan-seleccionado"></p>
             <button type="button" class="boton-compra">Confirmar compra</button>
         </div>
     </section>
+    <script>
+        function seleccionarPlan(nombre) {
+            const el = document.getElementById('plan-seleccionado');
+            el.textContent = 'Plan seleccionado: ' + nombre;
+            el.style.display = 'block';
+            document.querySelector('.formulario_compra').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 
 </html>
