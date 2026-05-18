@@ -1,4 +1,4 @@
-// sidebar movil y chevrons
+// sidebar movil
 
 var sidebar = document.getElementById('sidebar');
 var btnMenu = document.getElementById('btnMenu');

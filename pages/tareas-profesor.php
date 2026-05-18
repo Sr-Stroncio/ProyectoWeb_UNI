@@ -5,6 +5,9 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: /pages/log-in-producto.php');
     exit;
 }
+
+$tituloPagina = 'Tareas';
+
 ?>
 
 <!DOCTYPE html>
@@ -14,39 +17,13 @@ if (!isset($_SESSION['usuario'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
+    <link rel="stylesheet" href="css/header-profesor.css">
     <link rel="stylesheet" href="css/tareas-profesor.css">
     <title>Tareas — Profesor</title>
 </head>
 <body>
 
-<header>
-    <div class="div-izquierdo">
-        <button class="btn-menu" id="btnMenu">
-            <img src="assets/icons/menu.svg" alt="menu">
-        </button>
-        <div class="div-logos">
-            <img class="DOA_logo" src="assets/DoA color.svg" alt="DOA Logo">
-            <img class="GTI_logo" src="assets/logoGTI.svg" alt="GTI Logo">
-        </div>
-        <h2>Tareas</h2>
-    </div>
-
-    <div class="div-centro">
-        <button class="btn-nuevo" id="btnNuevaTarea">+ Nueva tarea</button>
-    </div>
-
-    <div class="div-nav">
-        <div class="perfil">
-            <div class="perfil-info">
-                <p class="perfil-saludo">Bienvenido/a, <?= $_SESSION['nombre'] ?></p>
-                <span class="perfil-rol"><?= $_SESSION['rol'] ?></span>
-            </div>
-            <a class="btn-logout" href="/utils/logout-producto.php">Cerrar sesión</a>
-        </div>
-    </div>
-</header>
-
-<div class="overlay" id="overlay"></div>
+<?php include '../components/dashboard-profesor/header-profesor.php'; ?>
 
 <div class="modal-fondo" id="modalFondo">
     <div class="modal">
@@ -95,15 +72,16 @@ if (!isset($_SESSION['usuario'])) {
 
 <section class="section-principal">
 
-    <?php include '../components/sidebar-profesor.php'; ?>
-
-    <main>
+    <?php include '../components/dashboard-profesor/sidebar-profesor.php'; ?>
 
     <main>
         <div class="main-cabecera">
-            <h2>Tareas</h2>
-            <p class="main-sub">Todas las asignaturas</p>
-        </div>
+    <div>
+        <h2>Tareas</h2>
+        <p class="main-sub">Todas las asignaturas</p>
+    </div>
+    <button class="btn-nuevo" id="btnNuevaTarea">+ Nueva tarea</button>
+</div>
 
         <div class="filtros">
             <button class="filtro activo" data-filtro="todas">Todas</button>
@@ -127,7 +105,7 @@ if (!isset($_SESSION['usuario'])) {
 
 </section>
 
-<script src="js/dashboard-profesor.js"></script>
+<script src="js/header-profesor.js"></script>
 <script src="js/tareas-profesor.js"></script>
 </body>
 </html>

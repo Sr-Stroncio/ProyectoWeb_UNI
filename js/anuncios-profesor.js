@@ -65,6 +65,7 @@ var inputTipo = document.getElementById('inputTipo');
 var btnBorrar = document.getElementById('btnBorrarAnuncio');
 var btnGuardar = document.getElementById('btnGuardar');
 
+
 function renderLista() {
     listaAnuncios.innerHTML = '';
 
@@ -74,9 +75,10 @@ function renderLista() {
         var tagClase = anuncio.tipo === 'mios' ? 'tag-asignatura' : 'tag-general';
         var tagTexto = anuncio.tipo === 'mios' ? 'Asignatura' : 'General';
 
-        var btnEditar = anuncio.propio
-            ? '<button class="btn-editar-anuncio"><img src="assets/icons/edit.svg" alt="editar"></button>'
-            : '';
+        var btnEditar = '';
+        if (anuncio.propio) {
+            btnEditar = '<button class="btn-editar-anuncio"><img src="assets/icons/edit.svg" alt="editar"></button>';
+        }
 
         var card = document.createElement('div');
         card.className = 'anuncio-card' + (anuncio.propio ? ' propio' : '');
@@ -197,9 +199,12 @@ modalFondo.addEventListener('click', function(e) {
     if (e.target === modalFondo) cerrarModal();
 });
 
+// botones de filtro
 document.querySelectorAll('.filtro').forEach(function(btn) {
     btn.addEventListener('click', function() {
-        document.querySelectorAll('.filtro').forEach(function(b) { b.classList.remove('activo'); });
+        document.querySelectorAll('.filtro').forEach(function(b) {
+            b.classList.remove('activo');
+        });
         btn.classList.add('activo');
         filtroActivo = btn.getAttribute('data-filtro');
         renderLista();

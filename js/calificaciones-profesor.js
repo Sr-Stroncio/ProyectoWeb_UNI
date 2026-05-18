@@ -39,19 +39,24 @@ var inputFinal = document.getElementById('inputFinal');
 var mediaPreview = document.getElementById('mediaPreview');
 var btnBorrar = document.getElementById('btnBorrarAlumno');
 
-// calcula la media solo con las notas que existen
+
 function calcularMedia(p1, p2, final) {
     var notas = [];
     if (p1 !== null && p1 !== '') notas.push(parseFloat(p1));
     if (p2 !== null && p2 !== '') notas.push(parseFloat(p2));
     if (final !== null && final !== '') notas.push(parseFloat(final));
     if (notas.length === 0) return null;
-    var suma = notas.reduce(function(a, b) { return a + b; }, 0);
+
+    var suma = 0;
+    for (var i = 0; i < notas.length; i++) {
+        suma = suma + notas[i];
+    }
     return Math.round((suma / notas.length) * 10) / 10;
 }
 
 function mostrarNota(val) {
-    return (val === null || val === '') ? '—' : val;
+    if (val === null || val === '') return '—';
+    return val;
 }
 
 function renderTabla() {
@@ -176,13 +181,12 @@ function exportarCSV() {
 
     lista.forEach(function(alumno) {
         var media = calcularMedia(alumno.p1, alumno.p2, alumno.final);
-        filas.push([
-            alumno.nombre,
-            mostrarNota(alumno.p1),
-            mostrarNota(alumno.p2),
-            mostrarNota(alumno.final),
-            media !== null ? media : '—'
-        ].join(','));
+        var linea = alumno.nombre + ',' +
+                    mostrarNota(alumno.p1) + ',' +
+                    mostrarNota(alumno.p2) + ',' +
+                    mostrarNota(alumno.final) + ',' +
+                    (media !== null ? media : '—');
+        filas.push(linea);
     });
 
     var contenido = filas.join('\n');
@@ -223,7 +227,9 @@ modalFondo.addEventListener('click', function(e) {
 
 document.querySelectorAll('.pill').forEach(function(pill) {
     pill.addEventListener('click', function() {
-        document.querySelectorAll('.pill').forEach(function(p) { p.classList.remove('activo'); });
+        document.querySelectorAll('.pill').forEach(function(p) {
+            p.classList.remove('activo');
+        });
         pill.classList.add('activo');
         asigActiva = pill.getAttribute('data-asig');
         document.getElementById('subtitulo').textContent = subtitulos[asigActiva];

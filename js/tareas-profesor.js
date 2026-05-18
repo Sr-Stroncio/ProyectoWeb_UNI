@@ -56,8 +56,9 @@ var inputDesc = document.getElementById('inputDesc');
 var inputEstado = document.getElementById('inputEstado');
 var btnBorrar = document.getElementById('btnBorrarTarea');
 
-// convierte 2025-05-15 a "15 may"
+
 function formatearFecha(fechaStr) {
+    // formato: 2025-05-15 -> "15 may"
     var meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
     var partes = fechaStr.split('-');
     var dia = parseInt(partes[2]);
@@ -71,7 +72,10 @@ function renderTabla() {
     tareas.forEach(function(tarea) {
         if (filtroActivo !== 'todas' && tarea.estado !== filtroActivo) return;
 
-        var porcentaje = tarea.total > 0 ? Math.round((tarea.entregas / tarea.total) * 100) : 0;
+        var porcentaje = 0;
+        if (tarea.total > 0) {
+            porcentaje = Math.round((tarea.entregas / tarea.total) * 100);
+        }
 
         var fila = document.createElement('div');
         fila.className = 'tabla-fila';
@@ -191,7 +195,9 @@ modalFondo.addEventListener('click', function(e) {
 
 document.querySelectorAll('.filtro').forEach(function(btn) {
     btn.addEventListener('click', function() {
-        document.querySelectorAll('.filtro').forEach(function(b) { b.classList.remove('activo'); });
+        document.querySelectorAll('.filtro').forEach(function(b) {
+            b.classList.remove('activo');
+        });
         btn.classList.add('activo');
         filtroActivo = btn.getAttribute('data-filtro');
         renderTabla();
