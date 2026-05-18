@@ -1,4 +1,5 @@
-// boton de menu para movil
+// sidebar movil y chevrons
+
 var sidebar = document.getElementById('sidebar');
 var btnMenu = document.getElementById('btnMenu');
 var overlay = document.getElementById('overlay');
@@ -13,7 +14,7 @@ overlay.addEventListener('click', function() {
     overlay.classList.remove('activo');
 });
 
-// submenus de cada asignatura
+// abrir y cerrar submenus de asignaturas
 var asigs = document.querySelectorAll('.nav-asig');
 
 asigs.forEach(function(item) {
@@ -21,7 +22,7 @@ asigs.forEach(function(item) {
         var id = item.getAttribute('data-id');
         var sub = document.getElementById('sub-' + id);
 
-        // cierra los que no son este
+        // cierra los otros
         document.querySelectorAll('.submenu').forEach(function(s) {
             if (s !== sub) s.classList.remove('visible');
         });

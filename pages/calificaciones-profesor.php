@@ -1,16 +1,10 @@
 <?php
 session_start();
 
-// si no hay sesion activa, vuelve al login
 if (!isset($_SESSION['usuario'])) {
     header('Location: /pages/log-in-producto.php');
     exit;
 }
-
-// if ($_SESSION['rol'] !== 'profesor') {
-//     header('Location: /pages/log-in-producto.php');
-//     exit;
-// }
 ?>
 
 <!DOCTYPE html>
@@ -98,89 +92,7 @@ if (!isset($_SESSION['usuario'])) {
 
 <section class="section-principal">
 
-    <aside id="sidebar">
-        <div class="sidebar-grupo">
-            <p class="sidebar-label">PRINCIPAL</p>
-            <ul class="sidebar-nav">
-                <li class="nav-item">
-                    <img src="assets/icons/home.svg" alt="" class="nav-icon">
-                    Inicio
-                </li>
-                <li class="nav-item">
-                    <img src="assets/icons/calendar.svg" alt="" class="nav-icon">
-                    Calendario
-                </li>
-            </ul>
-        </div>
-
-        <hr class="separador">
-
-        <div class="sidebar-grupo">
-            <p class="sidebar-label">UTILIDADES</p>
-            <ul class="sidebar-nav">
-                <li class="nav-item activo">
-                    <img src="assets/icons/grade.svg" alt="" class="nav-icon">
-                    Calificaciones
-                </li>
-                <li class="nav-item">
-                    <img src="assets/icons/task.svg" alt="" class="nav-icon">
-                    Tareas
-                </li>
-                <li class="nav-item">
-                    <img src="assets/icons/announcement.svg" alt="" class="nav-icon">
-                    Anuncios
-                </li>
-                <li class="nav-item">
-                    <img src="assets/icons/chat.svg" alt="" class="nav-icon">
-                    Chats
-                </li>
-            </ul>
-        </div>
-
-        <hr class="separador">
-
-        <div class="sidebar-grupo">
-            <p class="sidebar-label">MIS ASIGNATURAS</p>
-            <ul class="sidebar-nav">
-                <li class="nav-item nav-asig" data-id="prog">
-                    <img src="assets/icons/book.svg" alt="" class="nav-icon">
-                    Programación
-                    <span class="chevron">&#8250;</span>
-                </li>
-                <ul class="submenu" id="sub-prog">
-                    <li class="nav-item nav-sub">Recursos</li>
-                    <li class="nav-item nav-sub">Exámenes</li>
-                    <li class="nav-item nav-sub">Tareas</li>
-                </ul>
-
-                <li class="nav-item nav-asig" data-id="bd">
-                    <img src="assets/icons/book.svg" alt="" class="nav-icon">
-                    Bases de Datos
-                    <span class="chevron">&#8250;</span>
-                </li>
-                <ul class="submenu" id="sub-bd">
-                    <li class="nav-item nav-sub">Recursos</li>
-                    <li class="nav-item nav-sub">Exámenes</li>
-                    <li class="nav-item nav-sub">Tareas</li>
-                </ul>
-
-                <li class="nav-item nav-asig" data-id="hci">
-                    <img src="assets/icons/book.svg" alt="" class="nav-icon">
-                    HCI
-                    <span class="chevron">&#8250;</span>
-                </li>
-                <ul class="submenu" id="sub-hci">
-                    <li class="nav-item nav-sub">Recursos</li>
-                    <li class="nav-item nav-sub">Exámenes</li>
-                    <li class="nav-item nav-sub">Tareas</li>
-                </ul>
-            </ul>
-        </div>
-
-        <div class="sidebar-img">
-            <img src="img/sidebar-img.png" alt="imagen">
-        </div>
-    </aside>
+    <?php include '../components/sidebar-profesor.php'; ?>
 
     <main>
         <div class="main-cabecera">
