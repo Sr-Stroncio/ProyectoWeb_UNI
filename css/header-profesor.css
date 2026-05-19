@@ -1,0 +1,246 @@
+/* header fijo arriba */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+    padding: 5px 15px;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: 1px solid #d6d6d6;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.div-izquierdo {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.div-izquierdo h2 {
+    margin: 0;
+    margin-left: 16px;
+    font-size: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.div-logos {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #d6d6d6;
+    padding-right: 16px;
+}
+
+.GTI_logo {
+    height: 50px;
+    width: auto;
+    display: block;
+}
+
+.DOA_logo {
+    height: 32px;
+    width: auto;
+    margin-right: 10px;
+    display: block;
+}
+
+.btn-menu {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    padding: 4px;
+}
+
+.btn-menu img {
+    width: 22px;
+    height: 22px;
+}
+
+.div-nav {
+    display: flex;
+    align-items: center;
+}
+
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.perfil-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.perfil-saludo {
+    margin: 0;
+    font-size: 14px;
+    color: #222222;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+}
+
+.perfil-rol {
+    padding: 4px 12px;
+    border-radius: 50px;
+    background-color: #ff9e00;
+    color: #222222;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.btn-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 16px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #d6d6d6;
+    color: #222222;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+}
+
+.btn-logout:hover {
+    background-color: #ffce74;
+    border-color: #ffce74;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* overlay para el sidebar en movil */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 500;
+}
+
+.overlay.activo {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    aside {
+        position: fixed;
+        top: 65px;
+        left: -220px;
+        width: 220px;
+        height: calc(100vh - 65px);
+        z-index: 600;
+        overflow-y: auto;
+    }
+
+    aside.abierto {
+        left: 0;
+    }
+}
+
+/* tablet */
+@media (max-width: 900px) {
+    .btn-menu {
+        display: flex;
+    }
+
+    .div-izquierdo h2 {
+        display: none;
+    }
+
+    .div-logos {
+        padding-right: 12px;
+    }
+
+    .GTI_logo {
+        height: 42px;
+    }
+
+    .DOA_logo {
+        height: 28px;
+    }
+
+    .perfil-saludo {
+        max-width: 140px;
+        font-size: 13px;
+    }
+}
+
+/* movil */
+@media (max-width: 600px) {
+    header {
+        padding: 5px 10px;
+    }
+
+    .perfil-saludo,
+    .GTI_logo {
+        display: none;
+    }
+
+    .div-logos {
+        border-right: none;
+        padding-right: 0;
+    }
+
+    .DOA_logo {
+        height: 30px;
+    }
+
+    .perfil {
+        gap: 8px;
+    }
+
+    .perfil-rol {
+        font-size: 11px;
+        padding: 3px 9px;
+    }
+
+    .btn-logout {
+        padding: 7px 12px;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+}
+
+/* movil pequeño */
+@media (max-width: 380px) {
+    .perfil-rol {
+        display: none;
+    }
+
+    .btn-logout {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+}
+
+.nav-item-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.nav-item-link:visited {
+    color: inherit;
+}
