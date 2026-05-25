@@ -1,5 +1,8 @@
+<?php
 
-<?php include '../utils/check-empresa.php'; ?>
+session_start();
+
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -48,7 +51,7 @@
                     -Recomendado para instituciones que quieran ayudar a sus alumnos a mantenerse al dia.
                     ¡Todo esto, solo en DOA.!</p>
 
-                <a class="btn-demo" onclick="seleccionarPlan('Plan estándar (5000€)')" >Seleccionar plan</a>
+                <a class="btn-demo" onclick="seleccionarPlan('Plan estándar (5000€)')">Seleccionar plan</a>
             </div>
         </div>
     </section>
@@ -67,7 +70,6 @@
             const el = document.getElementById('plan-seleccionado');
             el.textContent = 'Plan seleccionado: ' + nombre;
             el.style.display = 'block';
-            document.querySelector('.formulario_compra').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>

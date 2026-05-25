@@ -1,20 +1,8 @@
 <?php
-// codigo php para manejar el inicio de sesion permisos roles etc...
+
 session_start();
 
-$usuarios_app = [
-    'dapasa@har.upv.es' => [
-        'password' => '1234',
-        'rol' => 'admin',
-        'nombre' => 'Daniel'
-    ],
-
-    'jogilo@upvnet.upv.es' => [
-        'password' => '4567',
-        'rol' => 'admin',
-        'nombre' => 'José'
-    ],
-];
+require_once __DIR__ . "/../database/conexion.php";
 
 $error = $_SESSION['error_login'] ?? '';
 $correo_guardado = $_SESSION['correo_login'] ?? '';
@@ -23,16 +11,40 @@ unset($_SESSION['error_login']);
 unset($_SESSION['correo_login']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $correo = trim($_POST['correo'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if (isset($usuarios_app[$correo]) && $usuarios_app[$correo]['password'] === $password) {
-        $_SESSION['empresa_usuario'] = $correo;
-        $_SESSION['empresa_rol'] = $usuarios_app[$correo]['rol'];
-        $_SESSION['empresa_nombre'] = $usuarios_app[$correo]['nombre'];
+    $sql = "SELECT ID, Rol, Nombre, Email, Password
+            FROM Usuario
+            WHERE Email = ?
+            AND Rol = 'cliente'
+            LIMIT 1";
 
-        header('Location: /index.php');
-        exit;
+    $stmt = mysqli_prepare($conexion, $sql);
+
+    if (!$stmt) {
+        die("Error preparando la consulta: " . mysqli_error($conexion));
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $correo);
+
+    mysqli_stmt_execute($stmt);
+
+    $resultado = mysqli_stmt_get_result($stmt);
+
+    if ($usuario = mysqli_fetch_assoc($resultado)) {
+
+        if ($usuario['Password'] === $password) {
+
+            $_SESSION['empresa_id'] = $usuario['ID'];
+            $_SESSION['empresa_usuario'] = $usuario['Email'];
+            $_SESSION['empresa_rol'] = $usuario['Rol'];
+            $_SESSION['empresa_nombre'] = $usuario['Nombre'];
+
+            header('Location: /index.php');
+            exit;
+        }
     }
 
     $_SESSION['error_login'] = 'Correo o contraseña incorrectos.';
@@ -93,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
 
                 <form method="POST" action="">
-                    <p class="texto-campo">Usuario / correo</p>
+                    <p class="texto-campo">correo</p>
                     <input class="caja-input" type="text" name="correo"
                         placeholder="usuario@gti.doa.edu"
                         value="<?= htmlspecialchars($correo_guardado) ?>">
@@ -114,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
 
                 <p class="texto-soporte">
-                    ¿Problemas de acceso? <a href="#">Contacta con soporte</a>
+                    ¿No tienes cuenta? <a href="/pages/registro.php">Registrate</a>
                 </p>
             </div>
 
