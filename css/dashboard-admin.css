@@ -1,0 +1,298 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* ─── Layout principal ────────────────────────────────────────── */
+
+.section-principal {
+  display: flex;
+  min-height: 100vh;
+  /* Empuja el contenido por debajo del header fijo.
+     Ajusta este valor si tu header tiene otra altura. */
+  margin-top: 60px;
+}
+
+/* ─── Aside / Sidebar ─────────────────────────────────────────── */
+
+aside {
+  width: 200px;
+  min-height: calc(100vh - 60px);
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  padding: 20px 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.sidebar-grupo {
+  padding: 6px 0;
+}
+
+.sidebar-label {
+  margin: 0 0 4px 16px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #999999;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #444444;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 2px 8px;
+}
+
+.nav-item:hover {
+  background-color: #f4f4f4;
+}
+
+.nav-item.activo {
+  background-color: #fff5e0;
+  color: #9a6500;
+  font-weight: 600;
+}
+
+.nav-item.activo .nav-icon {
+  opacity: 1;
+}
+
+/* enlaces dentro de nav-item */
+.nav-item-link-wrap {
+  padding: 0;
+}
+
+.nav-item-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #444444;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.nav-item-link:hover {
+  color: #444444;
+}
+
+.separador {
+  border: none;
+  border-top: 1px solid #e8e8e8;
+  margin: 6px 16px;
+}
+
+.sidebar-img {
+  margin-top: auto;
+  padding: 16px;
+}
+
+.sidebar-img img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* ─── Main ────────────────────────────────────────────────────── */
+
+main {
+  flex: 1;
+  background-color: #dddcd2;
+  padding: 32px 28px;
+  box-sizing: border-box;
+}
+
+/* ─── Bloques ─────────────────────────────────────────────────── */
+
+.bloque {
+  margin-bottom: 32px;
+}
+
+.bloque-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.bloque-cabecera h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #222222;
+  background-color: #cccbc1;
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+/* ─── Vista General – stat cards ─────────────────────────────── */
+
+.stats-fila {
+  display: flex;
+}
+
+.stat-card {
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  padding: 20px 24px;
+}
+
+.stat-card:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+.stat-card:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+.stat-label {
+  margin: 0 0 10px 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #888888;
+}
+
+.stat-num {
+  margin: 0 0 6px 0;
+  font-size: 38px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.stat-sub {
+  margin: 0;
+  font-size: 12px;
+  color: #888888;
+}
+
+/* ─── Gestión – grid de accesos rápidos ──────────────────────── */
+
+.gestion-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.gestion-card {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  gap: 16px;
+}
+
+.gestion-card:hover {
+  border-color: #ff9e00;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.gestion-icono {
+  width: 44px;
+  height: 44px;
+  background-color: #fff5e0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gestion-icono img {
+  width: 22px;
+  height: 22px;
+  opacity: 0.75;
+}
+
+.gestion-info {
+  flex: 1;
+}
+
+.gestion-titulo {
+  margin: 0 0 4px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.gestion-desc {
+  margin: 0;
+  font-size: 12px;
+  color: #888888;
+  line-height: 1.5;
+}
+
+.gestion-flecha {
+  font-size: 22px;
+  color: #cccccc;
+  flex-shrink: 0;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.gestion-card:hover .gestion-flecha {
+  color: #ff9e00;
+  transform: translateX(3px);
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .gestion-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 20px 16px;
+  }
+
+  .stats-fila {
+    flex-direction: column;
+  }
+
+  .stat-card:first-child {
+    border-radius: 12px 12px 0 0;
+  }
+
+  .stat-card:last-child {
+    border-radius: 0 0 12px 12px;
+  }
+
+  .gestion-grid {
+    grid-template-columns: 1fr;
+  }
+}
