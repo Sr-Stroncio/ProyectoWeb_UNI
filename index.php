@@ -12,7 +12,7 @@ session_start();
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <title>Landing page</title>
     <base href="/">
-</head> 
+</head>
 
 <body>
 
@@ -72,10 +72,10 @@ session_start();
 
             <div class="div-informativo">
                 <div>
-                    <h3>Centraliza la gestion academica</h3>
+                    <h3>Soluciones web para diferentes sectores</h3>
                     <p>
-                        Organiza recursos, procesos y seguimientos
-                        en un solo lugar con DOA.
+                        En GTI desarrollamos aplicaciones web adaptadas a las necesidades
+                        de empresas, instituciones y organizaciones.
                     </p>
                 </div>
                 <img src="img/nivel.jpg" alt="">
@@ -84,10 +84,10 @@ session_start();
 
             <div class="div-informativo">
                 <div>
-                    <h3>Mejora la comunicacion</h3>
+                    <h3>Tecnología pensada para cada proyecto</h3>
                     <p>
-                        Facilita la conexion entre instutucion, profesorado y alumno
-                        con una experiencia clara, accesible y ordenada.
+                        Creamos herramientas digitales para optimizar procesos,
+                        mejorar la organización y facilitar la gestión diaria.
                     </p>
                 </div>
                 <img src="img/comunicacion.jpg" alt="">
@@ -96,9 +96,10 @@ session_start();
 
             <div class="div-informativo">
                 <div>
-                    <h3>Una experiencia estetica</h3>
+                    <h3>Diseño funcional y experiencia clara</h3>
                     <p>
-                        Proyecta orden, innovacion y confiaza desde el primer vistazo.
+                        Nuestras aplicaciones combinan utilidad, accesibilidad y una interfaz cuidada
+                        para ofrecer una experiencia sencilla desde el primer uso.
                     </p>
                 </div>
                 <img src="img/estetica.jpg" alt="">
@@ -118,8 +119,8 @@ session_start();
             <div class="last-text">
                 <h3>No esperes más</h3>
                 <p>
-                    Descubre todo lo que nuestra plataforma puede hacer por tu centro,
-                    elige el producto que mejor se adapte a ti y accede a la demo .
+                    Descubre todo lo que nuestra plataforma puede hacer por tu empresa,
+                    elige el producto que mejor se adapte a ti y accede a la demo.
                 </p>
             </div>
             <a class="last-btn" href="pages/pagina_servicios.php">Página de productos</a>
