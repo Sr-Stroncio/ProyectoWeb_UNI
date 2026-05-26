@@ -10,10 +10,15 @@ $nombre_guardado = $_SESSION['registro_nombre'] ?? '';
 $correo_guardado = $_SESSION['registro_correo'] ?? '';
 $nif_guardado = $_SESSION['registro_nif'] ?? '';
 
+// Borramos todas las sesion que habian antes luego de guardarlas para mostrarlas en los input
+// y asi que el usuario no tenga que escribir todo de nuevo cuando cometa un error en el registro
+
+
 unset($_SESSION['error_registro']);
 unset($_SESSION['registro_nombre']);
 unset($_SESSION['registro_correo']);
 unset($_SESSION['registro_nif']);
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -24,13 +29,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password_confirmar = $_POST['password_confirmar'] ?? '';
 
     // Convertimos el NIF a mayúscula y quitamos espacios y guiones
+    // el strtoupper combierte un string en mayuscula y aqui tomo la variable de nif 
+    // para pasar la primera letra a mayuscula si no la enviaron asi y quitar los espacios y los "-"
+
     $nif = strtoupper($nif);
     $nif = str_replace([' ', '-'], '', $nif);
 
-    // Guardamos datos para que no se borren si hay error
+    // Guardamos datos para que no se borren si hay error y luego ponerlas en las bariables de arriba
+    // y repetir esto cada que se ponga un campo erroneo
+
     $_SESSION['registro_nombre'] = $nombre_institucion;
     $_SESSION['registro_correo'] = $correo_institucion;
     $_SESSION['registro_nif'] = $nif;
+
+    // apartir de aqui todos estos IF son de validaciones del formulario
+    // cosas como que no esten los campos vacios, que las contrasenas sean iguales etc...
 
     // 1. Validar campos vacíos
     if (
@@ -79,11 +92,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nif = mysqli_real_escape_string($conexion, $nif);
     $password = mysqli_real_escape_string($conexion, $password);
 
-    // 6. Comprobar si ya existe el correo
+    // 6. Comprobar si ya existe el correo, aqui pongo limit 1 porque si ya existe uno no cumple con la 
+    // validacion
+
     $sql_email = "SELECT ID 
-                  FROM Usuario 
-                  WHERE Email = '$correo_institucion'
-                  LIMIT 1";
+                    FROM Usuario 
+                    WHERE Email = '$correo_institucion'
+                    LIMIT 1";
+
+
+    // aqui hago la llamda a la consulta que guarte arriba en sql_email
 
     $resultado_email = mysqli_query($conexion, $sql_email);
 
@@ -97,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // 7. Comprobar si ya existe el NIF
+    // 7. Comprobar si ya existe el NIF (hago lo mismo que con email)
     $sql_nif = "SELECT ID_user 
                 FROM Cliente 
                 WHERE NIF = '$nif'
@@ -132,6 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 9. Obtener el ID del usuario creado
     $id_usuario_nuevo = mysqli_insert_id($conexion);
 
+    
     // 10. Insertar en Cliente
     $sql_cliente = "INSERT INTO Cliente (ID_user, NIF)
                     VALUES ($id_usuario_nuevo, '$nif')";
