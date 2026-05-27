@@ -1,0 +1,243 @@
+.bloque {
+  margin-bottom: 32px;
+}
+
+.bloque-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.bloque-cabecera h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222222;
+  background-color: #cccbc1;
+  padding: 7px 16px;
+  border-radius: 8px;
+}
+
+/* 
+
+
+
+  ANUNCIOS
+
+
+
+
+*/
+
+.contenedor-anuncios {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.contenedor-anuncios a{
+  text-decoration: none;
+}
+
+.anuncio-card {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+
+  min-height: 130px;
+  max-height: 130px;
+  gap: 24px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 22px 26px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.anuncio-info {
+  border-right: 1px solid #eeeeee;
+  padding-right: 20px;
+  min-width: 0;
+}
+
+.anuncio-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+
+  margin-bottom: 12px;
+}
+
+.anuncio-asig {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9a6500;
+  background-color: #fff3d6;
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+.anuncio-global {
+  color: #284b7a;
+  background-color: #e8f1ff;
+}
+
+.anuncio-tiempo {
+  font-size: 12px;
+  color: #888888;
+}
+
+.anuncio-titulo {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #222222;
+  line-height: 1.35;
+}
+
+.anuncio-contenido {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.anuncio-desc {
+  margin: 0;
+  font-size: 14px;
+  color: #555555;
+  line-height: 1.7;
+  white-space: normal;
+  word-break: break-word;
+  overflow: hidden;
+}
+
+/* Cuando no hay anuncios */
+
+.anuncio-vacio {
+  background-color: #ffffff;
+  border: 1px dashed #cfcfcf;
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  color: #777777;
+}
+
+.anuncio-vacio p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* 
+
+
+
+CSS del Pomedio y de las tareas sin entregar
+
+
+
+*/
+
+.resumen-inicio {
+  display: grid;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.resumen-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 24px 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.resumen-label {
+  margin: 0 0 6px 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #888888;
+  text-transform: uppercase;
+}
+
+.resumen-titulo {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.resumen-numero {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 600;
+  color: #284b7a;
+}
+
+.resumen-numero.rojo {
+  color: #c62828;
+}
+
+/* 
+
+
+
+responsive 
+
+
+
+*/
+
+@media (max-width: 768px) {
+  .anuncio-card {
+    grid-template-columns: 1fr;
+    gap: 12px;
+
+    min-height: 190px;
+    max-height: 190px;
+
+    overflow: hidden;
+  }
+
+  .anuncio-info {
+    border-right: none;
+    border-bottom: 1px solid #eeeeee;
+    padding-right: 0;
+    padding-bottom: 10px;
+  }
+
+  .anuncio-contenido {
+    overflow: hidden;
+  }
+
+  .anuncio-desc {
+    overflow: hidden;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .resumen-label {
+    display: none;
+  }
+
+  .resumen-titulo {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .resumen-card {
+    padding: 18px;
+  }
+
+  .resumen-numero {
+    font-size: 28px;
+  }
+}
