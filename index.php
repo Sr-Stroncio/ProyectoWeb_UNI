@@ -25,8 +25,8 @@ session_start();
     <section id="home" class="hero-section">
         <div class="hero-contenido">
             <h1>
-                Una estructura estetica para
-                <span>universidades que innovan</span>
+                Productos esteticos para
+                <span>aquellos que innovan</span>
             </h1>
             <div>
                 <p>Registrate para probar nuestra demo abierta completamente gratis</p>
@@ -64,7 +64,7 @@ session_start();
     <section id="sobre-nosotros" class="section-sobre-nosotros">
 
         <div class="sobre-nosotros-div-pregunta">
-            <h2>Que es <span>DOA?</span></h2>
+            <h2>Que es <span>GTI</span></h2>
             <img class="atlas-informacion" src="img/atlas.jpg" alt="Atlas-img">
         </div>
 
@@ -72,10 +72,10 @@ session_start();
 
             <div class="div-informativo">
                 <div>
-                    <h3>Centraliza la gestion academica</h3>
+                    <h3>Soluciones web para diferentes sectores</h3>
                     <p>
-                        Organiza recursos, procesos y seguimientos
-                        en un solo lugar con DOA.
+                        En GTI desarrollamos aplicaciones web adaptadas a las necesidades
+                        de empresas, instituciones y organizaciones.
                     </p>
                 </div>
                 <img src="img/nivel.jpg" alt="">
@@ -84,10 +84,10 @@ session_start();
 
             <div class="div-informativo">
                 <div>
-                    <h3>Mejora la comunicacion</h3>
+                    <h3>Tecnología pensada para cada proyecto</h3>
                     <p>
-                        Facilita la conexion entre instutucion, profesorado y alumno
-                        con una experiencia clara, accesible y ordenada.
+                        Creamos herramientas digitales para optimizar procesos,
+                        mejorar la organización y facilitar la gestión diaria.
                     </p>
                 </div>
                 <img src="img/comunicacion.jpg" alt="">
@@ -96,9 +96,10 @@ session_start();
 
             <div class="div-informativo">
                 <div>
-                    <h3>Una experiencia estetica</h3>
+                    <h3>Diseño funcional y experiencia clara</h3>
                     <p>
-                        Proyecta orden, innovacion y confiaza desde el primer vistazo.
+                        Nuestras aplicaciones combinan utilidad, accesibilidad y una interfaz cuidada
+                        para ofrecer una experiencia sencilla desde el primer uso.
                     </p>
                 </div>
                 <img src="img/estetica.jpg" alt="">
@@ -118,11 +119,11 @@ session_start();
             <div class="last-text">
                 <h3>No esperes más</h3>
                 <p>
-                    Descubre todo lo que nuestra plataforma puede hacer por tu centro,
-                    accede a la demo y elige el plan que mejor se adapte a ti.
+                    Descubre todo lo que nuestra plataforma puede hacer por tu empresa,
+                    elige el producto que mejor se adapte a ti y accede a la demo.
                 </p>
             </div>
-            <a class="last-btn" href="pages/pagina_servicios.php">Página de servicios</a>
+            <a class="last-btn" href="pages/pagina_servicios.php">Página de productos</a>
         </div>
 
         <div class="last-img">
