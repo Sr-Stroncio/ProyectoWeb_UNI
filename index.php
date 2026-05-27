@@ -29,12 +29,13 @@ session_start();
                 <span>aquellos que innovan</span>
             </h1>
             <div>
-                <p>Registrate para probar nuestra demo abierta completamente gratis</p>
+
                 <?php if (isset($_SESSION['empresa_usuario'])): ?>
-                    <a class="btn-demo" href="/pages/log-in-producto.php">
-                        Demo
+                    <a class="btn-demo" href="/pages/pagina_servicios.php">
+                        Productos
                     </a>
                 <?php else: ?>
+                    <p>Registrate para probar nuestras demos abiertas completamente gratis</p>
                     <a class="btn-demo" href="/pages/registro.php">
                         Registro
                     </a>
@@ -45,12 +46,12 @@ session_start();
         <div class="hero-img">
             <img src="img/hero-img.jpg" alt="hero-img">
             <div>
-                <p>Registrate para probar nuestra demo abierta completamente gratis</p>
                 <?php if (isset($_SESSION['empresa_usuario'])): ?>
-                    <a class="btn-demo" href="/pages/log-in-producto.php">
-                        Demo
+                    <a class="btn-demo" href="/pages/pagina_servicios.php">
+                        Productos
                     </a>
                 <?php else: ?>
+                    <p>Registrate para probar nuestras demos abiertas completamente gratis</p>
                     <a class="btn-demo" href="/pages/registro.php">
                         Registro
                     </a>
