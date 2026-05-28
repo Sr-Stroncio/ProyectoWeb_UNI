@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once '../utils/db.php';
+require_once '../database/conexion.php';
 
 if (!isset($_SESSION['usuario'])) {
     header('Location: /pages/log-in-producto.php');
