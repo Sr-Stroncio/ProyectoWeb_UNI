@@ -1,5 +1,5 @@
 <?php
-$stmt = $conn->prepare("SELECT ID, Nombre FROM Grado WHERE ID = ?");
+$stmt = $conexion->prepare("SELECT ID, Nombre FROM Grado WHERE ID = ?");
 $stmt->bind_param("i", $id_grado);
 $stmt->execute();
 $res = $stmt->get_result();
@@ -11,7 +11,7 @@ if (!$grado) {
     return;
 }
 
-$stmt = $conn->prepare("SELECT ID, Nombre FROM Curso WHERE ID_grado = ? ORDER BY Nombre ASC");
+$stmt = $conexion->prepare("SELECT ID, Nombre FROM Curso WHERE ID_grado = ? ORDER BY Nombre ASC");
 $stmt->bind_param("i", $id_grado);
 $stmt->execute();
 $cursos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -26,7 +26,7 @@ $asignaturas = [];
 if (count($ids_cursos) > 0) {
     $ids_str = implode(',', $ids_cursos);
 
-    $res = $conn->query("
+    $res = $conexion->query("
         SELECT DISTINCT u.ID, u.Nombre, u.Apellido, u.Email
         FROM Usuario u
         JOIN Alumno a ON a.ID_user = u.ID
@@ -37,7 +37,7 @@ if (count($ids_cursos) > 0) {
     ");
     $alumnos = $res->fetch_all(MYSQLI_ASSOC);
 
-    $res = $conn->query("
+    $res = $conexion->query("
         SELECT DISTINCT u.ID, u.Nombre, u.Apellido, u.Email
         FROM Usuario u
         JOIN Profesor p ON p.ID_user = u.ID
@@ -48,7 +48,7 @@ if (count($ids_cursos) > 0) {
     ");
     $profesores = $res->fetch_all(MYSQLI_ASSOC);
 
-    $res = $conn->query("
+    $res = $conexion->query("
         SELECT asig.ID, asig.Nombre, c.Nombre AS nombre_curso
         FROM Asignatura asig
         JOIN Curso c ON c.ID = asig.ID_curso

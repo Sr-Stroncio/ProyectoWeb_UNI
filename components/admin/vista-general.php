@@ -1,11 +1,11 @@
 <?php
-$res = $conn->query("SELECT COUNT(*) AS total FROM Alumno");
+$res = $conexion->query("SELECT COUNT(*) AS total FROM Alumno");
 $totalAlumnos = $res->fetch_assoc()['total'];
 
-$res = $conn->query("SELECT COUNT(*) AS total FROM Profesor");
+$res = $conexion->query("SELECT COUNT(*) AS total FROM Profesor");
 $totalProfesores = $res->fetch_assoc()['total'];
 
-$res = $conn->query("SELECT COUNT(*) AS total FROM Grado");
+$res = $conexion->query("SELECT COUNT(*) AS total FROM Grado");
 $totalGrados = $res->fetch_assoc()['total'];
 ?>
 

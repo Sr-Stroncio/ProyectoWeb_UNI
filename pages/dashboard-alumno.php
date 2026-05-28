@@ -38,6 +38,7 @@ if (!$resultado_asignaturas) {
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/dashboard-alumno.css">
     <link rel="stylesheet" href="css/inicio-alumno.css">
+    <link rel="stylesheet" href="css/calificaciones-alumno.css">
     <title>Dashboard alumno</title>
 </head>
 
@@ -57,7 +58,7 @@ if (!$resultado_asignaturas) {
             } elseif ($seccion === 'calificaciones') {
                 include '../components/dashboard-alumno/calificaciones-alumno.php';
             } elseif ($seccion === 'anuncios') {
-                include '../components/dashboard-alumno/inicio-alumno.php';
+                include '../components/dashboard-alumno/anuncios-alumno.php';
             } elseif ($seccion === 'calendario') {
                 include '../components/dashboard-alumno/inicio-alumno.php';
             } elseif ($seccion === 'asignatura') {

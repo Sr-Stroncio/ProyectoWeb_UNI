@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once '../utils/db.php';
+
 if (!isset($_SESSION['usuario'])) {
     header('Location: /pages/log-in-producto.php');
     exit;
@@ -19,7 +21,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
     exit;
 }
 
-require_once '../utils/db.php';
+
 
 $seccion = isset($_GET['seccion']) ? $_GET['seccion'] : null;
 $id_grado = isset($_GET['id']) ? intval($_GET['id']) : null;
