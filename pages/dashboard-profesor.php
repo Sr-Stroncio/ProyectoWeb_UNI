@@ -1,13 +1,19 @@
 <?php
-// session_start();
+include '../utils/check-usuario.php';
+comprobarUsuario('profesor');
 
-// if (!isset($_SESSION['usuario'])) {
-//     header('Location: /pages/log-in-producto.php');
-//     exit;
-// }
+require_once __DIR__ . "/../database/conexion.php";
 
-$tituloPagina = 'Dashboard';
+// se obtienen los datos del profesor de la sesion
+$id_profesor = (int)$_SESSION['usuario_id'];
+$nombre_profesor = $_SESSION['usuario_nombre_completo'];
 
+$seccion = 'inicio';
+$anuncios_js = [];
+$tareas_js = [];
+$calificaciones_js = [];
+
+include '../components/dashboard-profesor/datos.php';
 ?>
 
 <!DOCTYPE html>
@@ -17,9 +23,8 @@ $tituloPagina = 'Dashboard';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
-    <link rel="stylesheet" href="css/header-profesor.css">
     <link rel="stylesheet" href="css/dashboard-profesor.css">
-    <title>Dashboard profesor</title>
+    <title>Dashboard — Profesor</title>
 </head>
 <body>
 
@@ -29,196 +34,35 @@ $tituloPagina = 'Dashboard';
 
     <?php include '../components/dashboard-profesor/sidebar-profesor.php'; ?>
 
-    <main>
-        <!-- anuncios -->
-        <div class="bloque">
-            <div class="bloque-cabecera">
-                <h3>Anuncios</h3>
-                <a class="btn-nuevo" href="/pages/anuncios-profesor.php">+ Nuevo anuncio</a>
-            </div>
+    <div id="sec-inicio" class="seccion-panel" style="display: none; flex: 1;">
+        <?php include '../components/dashboard-profesor/inicio.php'; ?>
+    </div>
 
-            <div class="anuncio-card">
-                <div class="anuncio-top">
-                    <span class="anuncio-asig">Programación</span>
-                    <span class="anuncio-tiempo">Hace 2h</span>
-                </div>
-                <p class="anuncio-titulo">Examen parcial – cambio de fecha</p>
-                <p class="anuncio-desc">El examen del día 20 se traslada al 22 de mayo.</p>
-                <div class="anuncio-botones">
-                    <button class="btn-icono">
-                        <img src="assets/icons/edit.svg" alt="editar">
-                    </button>
-                    <button class="btn-icono btn-borrar">
-                        <img src="assets/icons/delete.svg" alt="borrar">
-                    </button>
-                </div>
-            </div>
+    <div id="sec-calificaciones" class="seccion-panel" style="display: none; flex: 1;">
+        <?php include '../components/dashboard-profesor/calificaciones.php'; ?>
+    </div>
 
-            <div class="anuncio-card">
-                <div class="anuncio-top">
-                    <span class="anuncio-asig">Bases de Datos</span>
-                    <span class="anuncio-tiempo">Ayer</span>
-                </div>
-                <p class="anuncio-titulo">Material adicional unidad 3</p>
-                <p class="anuncio-desc">He subido los apuntes de la sesión del martes.</p>
-                <div class="anuncio-botones">
-                    <button class="btn-icono">
-                        <img src="assets/icons/edit.svg" alt="editar">
-                    </button>
-                    <button class="btn-icono btn-borrar">
-                        <img src="assets/icons/delete.svg" alt="borrar">
-                    </button>
-                </div>
-            </div>
+    <div id="sec-tareas" class="seccion-panel" style="display: none; flex: 1;">
+        <?php include '../components/dashboard-profesor/tareas.php'; ?>
+    </div>
 
-            <div class="anuncio-card">
-                <div class="anuncio-top">
-                    <span class="anuncio-asig">HCI</span>
-                    <span class="anuncio-tiempo">Hace 3d</span>
-                </div>
-                <p class="anuncio-titulo">Recordatorio entrega prototipo</p>
-                <p class="anuncio-desc">Fecha límite el 20 de mayo a las 23:59.</p>
-                <div class="anuncio-botones">
-                    <button class="btn-icono">
-                        <img src="assets/icons/edit.svg" alt="editar">
-                    </button>
-                    <button class="btn-icono btn-borrar">
-                        <img src="assets/icons/delete.svg" alt="borrar">
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- vista general -->
-        <div class="bloque">
-            <div class="bloque-cabecera">
-                <h3>Vista General</h3>
-            </div>
-
-            <div class="stats-fila">
-                <div class="stat-card">
-                    <p class="stat-label">POR CORREGIR</p>
-                    <p class="stat-num rojo">13</p>
-                    <p class="stat-sub">entregas sin revisar</p>
-                </div>
-                <div class="stat-card">
-                    <p class="stat-label">TAREAS ACTIVAS</p>
-                    <p class="stat-num">5</p>
-                    <p class="stat-sub">en 3 asignaturas</p>
-                </div>
-                <div class="stat-card">
-                    <p class="stat-label">CLASES ESTA SEMANA</p>
-                    <p class="stat-num">6</p>
-                    <p class="stat-sub">próxima: hoy 10:00</p>
-                </div>
-            </div>
-
-            <div class="dos-col">
-                <div class="col-bloque">
-                    <p class="col-titulo">COLA DE CORRECCIÓN</p>
-
-                    <div class="correccion-fila">
-                        <div class="avatar">L</div>
-                        <div>
-                            <p class="nombre-alumno">Lief Simants</p>
-                            <p class="sub-alumno">Práctica 3 · Programación</p>
-                        </div>
-                        <div class="fila-derecha">
-                            <span class="tiempo-entrega">Hace 1h</span>
-                            <button class="btn-corregir">Corregir</button>
-                        </div>
-                    </div>
-
-                    <div class="correccion-fila">
-                        <div class="avatar">M</div>
-                        <div>
-                            <p class="nombre-alumno">Merline Kirdsch</p>
-                            <p class="sub-alumno">Tarea SQL · BD</p>
-                        </div>
-                        <div class="fila-derecha">
-                            <span class="tiempo-entrega">Hace 2h</span>
-                            <button class="btn-corregir">Corregir</button>
-                        </div>
-                    </div>
-
-                    <div class="correccion-fila">
-                        <div class="avatar">D</div>
-                        <div>
-                            <p class="nombre-alumno">Debora Rawstorne</p>
-                            <p class="sub-alumno">Entrega P2 · HCI</p>
-                        </div>
-                        <div class="fila-derecha">
-                            <span class="tiempo-entrega">Hace 4h</span>
-                            <button class="btn-corregir">Corregir</button>
-                        </div>
-                    </div>
-
-                    <div class="correccion-fila">
-                        <div class="avatar">K</div>
-                        <div>
-                            <p class="nombre-alumno">Kevan Pounds</p>
-                            <p class="sub-alumno">Práctica 3 · Programación</p>
-                        </div>
-                        <div class="fila-derecha">
-                            <span class="tiempo-entrega">Ayer</span>
-                            <button class="btn-corregir">Corregir</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-bloque">
-                    <p class="col-titulo">AGENDA DE HOY</p>
-
-                    <div class="agenda-fila">
-                        <div class="agenda-hora">
-                            <span class="hora">10:00</span>
-                            <span class="duracion">2h</span>
-                        </div>
-                        <div>
-                            <p class="nombre-alumno">Clase Programación</p>
-                            <p class="sub-alumno">A-204</p>
-                        </div>
-                    </div>
-
-                    <div class="agenda-fila">
-                        <div class="agenda-hora">
-                            <span class="hora">12:30</span>
-                            <span class="duracion">30m</span>
-                        </div>
-                        <div>
-                            <p class="nombre-alumno">Tutoría — Lief Simants</p>
-                            <p class="sub-alumno">B-101</p>
-                        </div>
-                    </div>
-
-                    <div class="agenda-fila">
-                        <div class="agenda-hora">
-                            <span class="hora">16:00</span>
-                            <span class="duracion">2h</span>
-                        </div>
-                        <div>
-                            <p class="nombre-alumno">Clase Bases de Datos</p>
-                            <p class="sub-alumno">A-110</p>
-                        </div>
-                    </div>
-
-                    <div class="agenda-fila">
-                        <div class="agenda-hora">
-                            <span class="hora">18:00</span>
-                            <span class="duracion">1h</span>
-                        </div>
-                        <div>
-                            <p class="nombre-alumno">Reunión departamento</p>
-                            <p class="sub-alumno">Sala 3</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    <div id="sec-anuncios" class="seccion-panel" style="display: none; flex: 1;">
+        <?php include '../components/dashboard-profesor/anuncios.php'; ?>
+    </div>
 
 </section>
 
+<script>
+    var anuncios = <?= json_encode($anuncios_js) ?>;
+    var calificaciones = <?= json_encode($calificaciones_js) ?>;
+    var tareas = <?= json_encode($tareas_js) ?>;
+</script>
+
 <script src="js/header-profesor.js"></script>
+<script src="js/anuncios-profesor.js"></script>
+<script src="js/tareas-profesor.js"></script>
+<script src="js/calificaciones-profesor.js"></script>
+<script src="js/router-profesor.js"></script>
+
 </body>
 </html>

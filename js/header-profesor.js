@@ -17,20 +17,27 @@ overlay.addEventListener('click', function() {
 // abrir y cerrar submenus de asignaturas
 var asigs = document.querySelectorAll('.nav-asig');
 
-asigs.forEach(function(item) {
-    item.addEventListener('click', function() {
+for (var i = 0; i < asigs.length; i++) {
+    asigs[i].addEventListener('click', function() {
+        var item = this;
         var id = item.getAttribute('data-id');
         var sub = document.getElementById('sub-' + id);
 
         // cierra los otros
-        document.querySelectorAll('.submenu').forEach(function(s) {
-            if (s !== sub) s.classList.remove('visible');
-        });
-        document.querySelectorAll('.nav-asig').forEach(function(n) {
-            if (n !== item) n.classList.remove('abierto');
-        });
+        var submenus = document.querySelectorAll('.submenu');
+        for (var j = 0; j < submenus.length; j++) {
+            if (submenus[j] !== sub) {
+                submenus[j].classList.remove('visible');
+            }
+        }
+        var navAsigs = document.querySelectorAll('.nav-asig');
+        for (var k = 0; k < navAsigs.length; k++) {
+            if (navAsigs[k] !== item) {
+                navAsigs[k].classList.remove('abierto');
+            }
+        }
 
         sub.classList.toggle('visible');
         item.classList.toggle('abierto');
     });
-});
+}
