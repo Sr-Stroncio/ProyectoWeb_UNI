@@ -1,5 +1,5 @@
 <?php
-$res = $conn->query("
+$res = $conexion->query("
     SELECT u.ID, u.Nombre, u.Apellido, u.Email, g.Nombre AS nombre_grado
     FROM Usuario u
     JOIN Alumno a ON a.ID_user = u.ID
@@ -79,7 +79,7 @@ $alumnos = $res->fetch_all(MYSQLI_ASSOC);
                 <select id="gradoAlumno" name="id_grado" class="campo-select">
                     <option value="">Sin grado</option>
                     <?php
-                    $grados = $conn->query("SELECT ID, Nombre FROM Grado ORDER BY Nombre ASC");
+                    $grados = $conexion->query("SELECT ID, Nombre FROM Grado ORDER BY Nombre ASC");
                     while ($g = $grados->fetch_assoc()):
                     ?>
                         <option value="<?= $g['ID'] ?>"><?= htmlspecialchars($g['Nombre']) ?></option>
