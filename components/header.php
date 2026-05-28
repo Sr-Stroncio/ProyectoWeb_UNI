@@ -1,3 +1,19 @@
+<?php
+// se determina el enlace del logo DOA según el rol del usuario conectado
+$enlace_doa = "/index.php";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['rol'])) {
+    if ($_SESSION['rol'] === 'admin') {
+        $enlace_doa = "/pages/dashboard-admin.php";
+    } else if ($_SESSION['rol'] === 'profesor') {
+        $enlace_doa = "/pages/dashboard-profesor.php";
+    } else if ($_SESSION['rol'] === 'alumno') {
+        $enlace_doa = "/pages/dashboard-alumno.php";
+    }
+}
+?>
 <header>
     <div class="div-logos">
         <a href="/">
