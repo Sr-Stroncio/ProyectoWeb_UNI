@@ -1,0 +1,12 @@
+.pagina-anuncios .anuncio-card {
+  min-height: auto;
+  max-height: none;
+}
+
+.pagina-anuncios .anuncio-contenido {
+  overflow: visible;
+}
+
+.pagina-anuncios .anuncio-desc {
+  overflow: visible;
+}
