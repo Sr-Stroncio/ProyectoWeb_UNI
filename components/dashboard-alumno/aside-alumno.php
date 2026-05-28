@@ -102,6 +102,6 @@
     </div>
 
     <div class="sidebar-img">
-        <img src="img/sidebar-img.png" alt="img-aside">
+        <img src="img/alumno.jpg" alt="img-aside">
     </div>
 </aside>

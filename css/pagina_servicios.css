@@ -1,18 +1,124 @@
 html {
   scroll-behavior: smooth;
 }
-
 body {
   margin: 0;
   padding: 0;
   font-family: "Open Sans", sans-serif;
 }
-
-.header {
+section {
+  scroll-margin-top: 90px;
+  padding-top: 80px;
+}
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  height: 60px;
+  padding: 5px 15px;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 90%;
+  height: 1px;
+  background-color: #ffce74;
+  transform: translateX(-50%);
+}
+.div-logos {
+  display: flex;
+  margin-left: 30px;
+}
+.GTI_logo {
+  height: 60px;
+  width: auto;
+}
+nav {
+  width: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav a {
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 30px;
+}
+nav a:hover {
+  background-color: #ffe2ab;
+  box-shadow: 0 0 18px 8px #ffe2ab;
+}
+nav a:focus {
+  background-color: #fdd994;
+  box-shadow: 0 0 18px 8px #fdd994;
+}
+.btn-empezar {
+  width: 120px;
+  height: 40px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  background-color: #ffce74;
+  color: #000000;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.btn-empezar:hover {
+  font-size: 17px;
+  box-shadow: 0 0 18px 8px #ffce74;
+}
+.header-empresa {
+  min-width: 90px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+.nombre-empresa {
+  margin: 0;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background-color: rgba(255, 206, 116, 0.35);
+  border: 1px solid rgba(255, 206, 116, 0.9);
+  color: #7a5200;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.btn-logout-empresa {
+  height: 38px;
+  padding: 0 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  border: 1px solid #d6d6d6;
+  background-color: #ffffff;
+  color: #111111;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-logout-empresa:hover {
+  background-color: #fdecea;
+  border-color: #f5c6c6;
+  color: #d32f2f;
+  transform: translateY(-2px);
 }
 .separador {
   border: none;
@@ -20,20 +126,23 @@ body {
   background-color: #000;
   margin: 20px 0;
 }
-.seleccionar_plan {
+.titulo_dos {
+  margin-top: 70px;
+  text-align: center;
+  color: #3a2c00;
+}
+.seleccionar_producto {
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  align-items: stretch;
+  align-items: center;
   padding: 10px 30px;
   gap: 20px;
 }
-
 .caja {
   display: flex;
-  white-space: pre-line;
   flex-direction: column;
   justify-content: flex-start;
   flex: 1 1 280px;
@@ -46,31 +155,122 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   transition: box-shadow 0.2s, transform 0.2s;
 }
-
 .caja:hover {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
 }
-
 .caja h3 {
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   font-size: 30px;
   color: #5a3e00;
 }
-
 .caja p {
   color: #4a3800;
   font-size: 17px;
   line-height: 1.6;
-  flex: 1;
-  margin-bottom: 20px;
+  flex: 0;
+  margin-bottom: 8px;
 }
-
+.caja .GTI_logo {
+  height: 64px;
+  width: auto;
+  display: block;
+  margin: 0 auto 20px;
+}
+.caja .btn-demo {
+  width: auto;
+  height: auto;
+  align-self: stretch;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-block;
+  padding: 9px 18px;
+  background-color: #ffcc74;
+  border: 1px solid #c8962a;
+  color: #3a2c00;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+.caja .btn-demo:hover {
+  background-color: #f0b840;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+.producto-etiqueta {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7a5c00;
+  margin: 0;
+}
+.producto-precio {
+  font-size: 32px;
+  font-weight: 600;
+  color: #5a3e00;
+  line-height: 1.2;
+  margin: 0;
+}
+.producto-nota {
+  font-size: 12px;
+  color: #7a5c00;
+  margin: 0 0 4px;
+}
+.producto-tagline {
+  font-size: 15px;
+  color: #4a3800;
+  flex: 0;
+  margin: 0 0 16px;
+}
+.producto-incluye-titulo {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #7a5c00;
+  margin: 0 0 10px;
+}
+.producto-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px;
+}
+.producto-lista li {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0 6px 20px;
+  border-bottom: 1px solid #e8c84a;
+  position: relative;
+}
+.producto-lista li:last-child {
+  border-bottom: none;
+}
+.producto-lista li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  color: #7a5c00;
+  font-size: 14px;
+}
+.producto-li-titulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a2c00;
+  margin: 0 0 2px;
+}
+.producto-li-sub {
+  font-size: 12px;
+  color: #7a5c00;
+  line-height: 1.5;
+  margin: 0;
+}
 .formulario_compra {
   padding-bottom: 60px;
 }
-
 .caja-compra {
   width: 100%;
   max-width: 440px;
@@ -85,7 +285,6 @@ body {
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 }
-
 .caja-compra input {
   width: 100%;
   box-sizing: border-box;
@@ -99,56 +298,13 @@ body {
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-
 .caja-compra input:focus {
   border-color: #b8860b;
   box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
 }
-
 .caja-compra input::placeholder {
   color: #b09050;
 }
-
-.btn-demo {
-  background-color: #ffcc74;
-  border: 1px solid #c8962a;
-  color: #3a2c00;
-  display: inline-block;
-  align-self: flex-start;
-  padding: 9px 18px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-.btn-demo:hover {
-  background-color: #f0b840;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-}
-
-.boton-seleccionar-plan {
-  background-color: #ffcc74;
-  border: 1px solid #c8962a;
-  color: #3a2c00;
-  display: inline-block;
-  align-self: flex-start;
-  padding: 9px 18px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-.boton-seleccionar-plan:hover {
-  background-color: #f0b840;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-}
-
 .boton-compra {
   background-color: #ffcc74;
   border: 1px solid #c8962a;
@@ -161,18 +317,11 @@ body {
   cursor: pointer;
   transition: background-color 0.2s, box-shadow 0.2s;
 }
-
 .boton-compra:hover {
   background-color: #f0b840;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
 }
-
-.titulo_dos {
-  margin-top: 70px;
-  text-align: center;
-  color: #3a2c00;
-}
-#plan-seleccionado {
+#producto-seleccionado {
   display: none;
   margin: 0 0 8px 0;
   font-weight: 600;
