@@ -1,5 +1,5 @@
 <?php
-$stmt = $conn->prepare("
+$stmt = $conexion->prepare("
     SELECT u.ID, u.Nombre, u.Apellido, u.Email, a.DNI, a.Fecha_nacimiento
     FROM Usuario u
     JOIN Alumno a ON a.ID_user = u.ID
@@ -15,7 +15,7 @@ if (!$alumno) {
     return;
 }
 
-$stmt = $conn->prepare("
+$stmt = $conexion->prepare("
     SELECT DISTINCT g.ID, g.Nombre
     FROM Grado g
     JOIN Curso c ON c.ID_grado = g.ID
@@ -28,7 +28,7 @@ $stmt->execute();
 $grados = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
-$stmt = $conn->prepare("
+$stmt = $conexion->prepare("
     SELECT asig.ID, asig.Nombre, c.Nombre AS nombre_curso
     FROM Asignatura asig
     JOIN Curso c ON c.ID = asig.ID_curso
@@ -41,8 +41,8 @@ $stmt->execute();
 $asignaturas = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
-$todosGrados = $conn->query("SELECT ID, Nombre FROM Grado ORDER BY Nombre ASC")->fetch_all(MYSQLI_ASSOC);
-$todasAsignaturas = $conn->query("
+$todosGrados = $conexion->query("SELECT ID, Nombre FROM Grado ORDER BY Nombre ASC")->fetch_all(MYSQLI_ASSOC);
+$todasAsignaturas = $conexion->query("
     SELECT asig.ID, asig.Nombre, c.Nombre AS nombre_curso, g.Nombre AS nombre_grado
     FROM Asignatura asig
     JOIN Curso c ON c.ID = asig.ID_curso

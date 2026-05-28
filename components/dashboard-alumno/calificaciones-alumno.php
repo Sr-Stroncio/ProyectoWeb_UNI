@@ -60,7 +60,6 @@ if (!$resultado_calificaciones) {
     <div class="cabecera-calificaciones">
         <div>
             <h1>Calificaciones</h1>
-            <p>Consulta tus notas de tareas y exámenes.</p>
         </div>
 
         <div class="filtros-calificaciones">
@@ -102,41 +101,43 @@ if (!$resultado_calificaciones) {
 
             <?php } ?>
 
-            <article class="tarjeta-calificacion">
+            <a href="">
+                <article class="tarjeta-calificacion">
 
-                <div class="info-calificacion">
-                    <span class="tipo-calificacion">
-                        <?php echo htmlspecialchars($calificacion['Tipo']); ?>
-                    </span>
+                    <div class="info-calificacion">
+                        <span class="tipo-calificacion">
+                            <?php echo htmlspecialchars($calificacion['Tipo']); ?>
+                        </span>
 
-                    <h3>
-                        <?php echo htmlspecialchars($calificacion['Titulo']); ?>
-                    </h3>
+                        <h3>
+                            <?php echo htmlspecialchars($calificacion['Titulo']); ?>
+                        </h3>
 
-                    <?php if ($filtro === 'recientes') { ?>
-                        <p class="materia-calificacion">
-                            <?php echo htmlspecialchars($calificacion['Asignatura']); ?>
+                        <?php if ($filtro === 'recientes') { ?>
+                            <p class="materia-calificacion">
+                                <?php echo htmlspecialchars($calificacion['Asignatura']); ?>
+                            </p>
+                        <?php } ?>
+
+                        <p class="fecha-calificacion">
+                            <?php echo date("d/m/Y", strtotime($calificacion['Fecha'])); ?>
                         </p>
-                    <?php } ?>
+                    </div>
 
-                    <p class="fecha-calificacion">
-                        <?php echo date("d/m/Y", strtotime($calificacion['Fecha'])); ?>
-                    </p>
+                    <div class="tarea-comentario">
+                        <?php if (!empty($calificacion['Comentario'])) { ?>
+                            <p class="comentario-profesor">
+                                <?php echo htmlspecialchars($calificacion['Comentario']); ?>
+                            </p>
+                        <?php } ?>
+                    </div>
 
-                    <?php if (!empty($calificacion['Comentario'])) { ?>
-                        <p class="comentario-profesor">
-                            <?php echo htmlspecialchars($calificacion['Comentario']); ?>
-                        </p>
-                    <?php } ?>
+                    <div class="nota-calificacion">
+                        <?php echo number_format($calificacion['Nota'], 2); ?>
+                    </div>
 
-                </div>
-
-                <div class="nota-calificacion">
-                    <?php echo number_format($calificacion['Nota'], 2); ?>
-                </div>
-
-            </article>
-
+                </article>
+            </a>
         <?php } ?>
 
     <?php } ?>

@@ -58,7 +58,7 @@ if (!$resultado_asignaturas) {
             } elseif ($seccion === 'calificaciones') {
                 include '../components/dashboard-alumno/calificaciones-alumno.php';
             } elseif ($seccion === 'anuncios') {
-                include '../components/dashboard-alumno/inicio-alumno.php';
+                include '../components/dashboard-alumno/anuncios-alumno.php';
             } elseif ($seccion === 'calendario') {
                 include '../components/dashboard-alumno/inicio-alumno.php';
             } elseif ($seccion === 'asignatura') {
