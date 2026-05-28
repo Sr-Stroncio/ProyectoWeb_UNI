@@ -1,191 +1,217 @@
-var calificaciones = {
-    prog: [
-        { id: 1, nombre: 'Lief Simants', p1: 7.5, p2: 8.2, final: 9.1 },
-        { id: 2, nombre: 'Merline Kirdsch', p1: 6.0, p2: 7.0, final: 8.0 },
-        { id: 3, nombre: 'Debora Rawstorne', p1: 9.0, p2: 8.8, final: 9.5 },
-        { id: 4, nombre: 'Kevan Pounds', p1: 5.5, p2: 6.5, final: 7.0 },
-        { id: 5, nombre: 'Luelle Pridmore', p1: 8.0, p2: 8.5, final: 9.0 },
-        { id: 6, nombre: 'Eolande Merriton', p1: 7.0, p2: 6.0, final: null }
-    ],
-    bd: [
-        { id: 7, nombre: 'Lief Simants', p1: 6.5, p2: 7.0, final: 8.5 },
-        { id: 8, nombre: 'Merline Kirdsch', p1: 8.0, p2: 7.5, final: 9.0 },
-        { id: 9, nombre: 'Debora Rawstorne', p1: 7.0, p2: 8.0, final: 7.5 }
-    ],
-    hci: [
-        { id: 10, nombre: 'Lief Simants', p1: 8.5, p2: 9.0, final: 8.0 },
-        { id: 11, nombre: 'Kevan Pounds', p1: 6.0, p2: null, final: 7.0 }
-    ]
-};
+// calificaciones
+// se cargan los datos de php
+if (typeof calificaciones === 'undefined') {
+    var calificaciones = {
+        prog: [
+            { id: 1, nombre: 'Lief Simants', email: 'l.simdre@epsg.upv.es', p1: 7.5, p2: 8.2, final: 9.1 },
+            { id: 2, nombre: 'Merline Kirdsch', email: 'm.kirkam@epsg.upv.es', p1: 6.0, p2: 7.0, final: 8.0 },
+            { id: 3, nombre: 'Debora Rawstorne', email: 'd.rawabc@epsg.upv.es', p1: 9.0, p2: 8.8, final: 9.5 }
+        ],
+        bd: [
+            { id: 1, nombre: 'Lief Simants', email: 'l.simdre@epsg.upv.es', p1: 6.5, p2: 7.0, final: 8.5 },
+            { id: 2, nombre: 'Merline Kirdsch', email: 'm.kirkam@epsg.upv.es', p1: 8.0, p2: 7.5, final: 9.0 }
+        ],
+        hci: [
+            { id: 1, nombre: 'Lief Simants', email: 'l.simdre@epsg.upv.es', p1: 8.5, p2: 9.0, final: 8.0 }
+        ]
+    };
+}
 
-var subtitulos = {
+var subtitulosCal = {
     prog: 'Programación · 28 alumnos',
     bd: 'Bases de Datos · 24 alumnos',
     hci: 'HCI · 25 alumnos'
 };
 
-var asigActiva = 'prog';
-var alumnoId = null;
-var nextId = 20;
-var ordenAscendente = true;
+var asigActivaCal = 'prog';
+var alumnoIdCal = null;
 
-var cuerpoTabla = document.getElementById('cuerpoTabla');
-var modalFondo = document.getElementById('modalFondo');
-var modalTitulo = document.getElementById('modalTitulo');
-var inputAlumno = document.getElementById('inputAlumno');
-var inputP1 = document.getElementById('inputP1');
-var inputP2 = document.getElementById('inputP2');
-var inputFinal = document.getElementById('inputFinal');
-var mediaPreview = document.getElementById('mediaPreview');
-var btnBorrar = document.getElementById('btnBorrarAlumno');
-
-
-function calcularMedia(p1, p2, final) {
-    var notas = [];
-    if (p1 !== null && p1 !== '') notas.push(parseFloat(p1));
-    if (p2 !== null && p2 !== '') notas.push(parseFloat(p2));
-    if (final !== null && final !== '') notas.push(parseFloat(final));
-    if (notas.length === 0) return null;
-
+// se calcula la media
+function calcularMediaCal(p1, p2, final) {
     var suma = 0;
-    for (var i = 0; i < notas.length; i++) {
-        suma = suma + notas[i];
+    var total = 0;
+    if (p1 !== null && p1 !== '' && !isNaN(p1)) {
+        suma = suma + parseFloat(p1);
+        total = total + 1;
     }
-    return Math.round((suma / notas.length) * 10) / 10;
+    if (p2 !== null && p2 !== '' && !isNaN(p2)) {
+        suma = suma + parseFloat(p2);
+        total = total + 1;
+    }
+    if (final !== null && final !== '' && !isNaN(final)) {
+        suma = suma + parseFloat(final);
+        total = total + 1;
+    }
+
+    if (total === 0) return '—';
+
+    var calculo = suma / total;
+    return Math.round(calculo * 10) / 10;
 }
 
-function mostrarNota(val) {
-    if (val === null || val === '') return '—';
+function mostrarNotaCal(val) {
+    if (val === null || val === '' || isNaN(val)) return '—';
     return val;
 }
 
-function renderTabla() {
-    cuerpoTabla.innerHTML = '';
-    var lista = calificaciones[asigActiva];
+// se pinta la lista de alumnos
+function renderTablaCal() {
+    var cuerpo = document.getElementById('cuerpoTablaAlumnos');
+    if (!cuerpo) return;
+    cuerpo.innerHTML = '';
+    
+    var lista = calificaciones[asigActivaCal];
+    if (!lista) return;
 
     lista.forEach(function(alumno) {
-        var media = calcularMedia(alumno.p1, alumno.p2, alumno.final);
-
         var fila = document.createElement('div');
         fila.className = 'tabla-fila';
-        fila.setAttribute('data-id', alumno.id);
+        fila.style.cursor = 'pointer';
+        
         fila.innerHTML =
             '<span class="col-alumno">' + alumno.nombre + '</span>' +
-            '<span class="col-nota">' + mostrarNota(alumno.p1) + '</span>' +
-            '<span class="col-nota">' + mostrarNota(alumno.p2) + '</span>' +
-            '<span class="col-nota">' + mostrarNota(alumno.final) + '</span>' +
-            '<span class="col-media">' + (media !== null ? media : '—') + '</span>' +
-            '<span class="col-accion"><button class="btn-editar">&#9998; Editar</button></span>';
+            '<span class="col-email" style="flex: 2;">' + alumno.email + '</span>' +
+            '<span class="col-accion"><button class="btn-editar" style="background: none; border: none; color: #ff9e00; cursor: pointer; font-weight: 600;">&#9998; Ver/Editar</button></span>';
 
-        fila.addEventListener('click', function(e) {
-            if (e.target.classList.contains('btn-editar')) return;
-            abrirEditar(alumno.id);
+        // se abre el detalle al hacer click
+        fila.addEventListener('click', function() {
+            mostrarDetalleCal(alumno.id);
         });
 
-        fila.querySelector('.btn-editar').addEventListener('click', function(e) {
-            e.stopPropagation();
-            abrirEditar(alumno.id);
-        });
-
-        cuerpoTabla.appendChild(fila);
+        cuerpo.appendChild(fila);
     });
 }
 
-function actualizarMedia() {
-    var media = calcularMedia(inputP1.value, inputP2.value, inputFinal.value);
-    mediaPreview.textContent = media !== null ? media : '—';
-}
+// se selecciona la asignatura desde el hash
+window.seleccionarAsignaturaHash = function(asig) {
+    asigActivaCal = asig;
+    
+    var pestanas = document.querySelectorAll('.pill');
+    pestanas.forEach(function(p) {
+        if (p.getAttribute('data-asig') === asig) {
+            p.classList.add('activo');
+        } else {
+            p.classList.remove('activo');
+        }
+    });
 
-function abrirNuevo() {
-    alumnoId = null;
-    modalTitulo.textContent = 'Nueva calificación';
-    inputAlumno.value = '';
-    inputP1.value = '';
-    inputP2.value = '';
-    inputFinal.value = '';
-    mediaPreview.textContent = '—';
-    btnBorrar.classList.add('oculto');
-    modalFondo.classList.add('visible');
-}
+    if (document.getElementById('subtitulo')) {
+        document.getElementById('subtitulo').textContent = subtitulosCal[asig];
+    }
+    
+    // se vuelve al listado
+    if (document.getElementById('vista-detalle-alumno')) {
+        document.getElementById('vista-detalle-alumno').style.display = 'none';
+    }
+    if (document.getElementById('vista-lista-alumnos')) {
+        document.getElementById('vista-lista-alumnos').style.display = 'block';
+    }
+    
+    renderTablaCal();
+};
 
-function abrirEditar(id) {
-    var lista = calificaciones[asigActiva];
+// se muestran los detalles del alumno
+function mostrarDetalleCal(id) {
+    var lista = calificaciones[asigActivaCal];
     var alumno = lista.find(function(a) { return a.id === id; });
     if (!alumno) return;
 
-    alumnoId = id;
-    modalTitulo.textContent = 'Editar calificación — ' + alumno.nombre;
-    inputAlumno.value = alumno.nombre;
-    inputP1.value = alumno.p1 !== null ? alumno.p1 : '';
-    inputP2.value = alumno.p2 !== null ? alumno.p2 : '';
-    inputFinal.value = alumno.final !== null ? alumno.final : '';
-    actualizarMedia();
-    btnBorrar.classList.remove('oculto');
-    modalFondo.classList.add('visible');
+    alumnoIdCal = id;
+
+    document.getElementById('detalleNombreAlumno').textContent = alumno.nombre;
+    document.getElementById('detalleEmailAlumno').textContent = alumno.email;
+
+    document.getElementById('detalleNotaP1').textContent = mostrarNotaCal(alumno.p1);
+    document.getElementById('detalleNotaP2').textContent = mostrarNotaCal(alumno.p2);
+    document.getElementById('detalleNotaFinal').textContent = mostrarNotaCal(alumno.final);
+
+    var media = calcularMediaCal(alumno.p1, alumno.p2, alumno.final);
+    document.getElementById('detalleNotaMedia').textContent = media;
+
+    // se oculta el listado
+    document.getElementById('vista-lista-alumnos').style.display = 'none';
+    document.getElementById('vista-detalle-alumno').style.display = 'block';
 }
 
-function cerrarModal() {
-    modalFondo.classList.remove('visible');
-    alumnoId = null;
+function actualizarMediaCal() {
+    var p1 = document.getElementById('inputP1').value;
+    var p2 = document.getElementById('inputP2').value;
+    var finalVal = document.getElementById('inputFinal').value;
+    
+    var media = calcularMediaCal(p1, p2, finalVal);
+    document.getElementById('mediaPreview').textContent = media;
 }
 
-function guardar() {
-    var nombre = inputAlumno.value.trim();
-    if (!nombre) {
-        alert('El nombre del alumno no puede estar vacío.');
-        return;
+function abrirEditarCal() {
+    if (alumnoIdCal === null) return;
+    
+    var lista = calificaciones[asigActivaCal];
+    var alumno = lista.find(function(a) { return a.id === alumnoIdCal; });
+    if (!alumno) return;
+
+    document.getElementById('modalNombreAlumno').textContent = alumno.nombre;
+    document.getElementById('inputP1').value = alumno.p1 !== null ? alumno.p1 : '';
+    document.getElementById('inputP2').value = alumno.p2 !== null ? alumno.p2 : '';
+    document.getElementById('inputFinal').value = alumno.final !== null ? alumno.final : '';
+
+    actualizarMediaCal();
+    document.getElementById('modalFondo').classList.add('visible');
+}
+
+function cerrarModalCal() {
+    document.getElementById('modalFondo').classList.remove('visible');
+}
+
+function guardarCal() {
+    if (alumnoIdCal === null) return;
+
+    var p1Val = document.getElementById('inputP1').value;
+    var p2Val = document.getElementById('inputP2').value;
+    var finVal = document.getElementById('inputFinal').value;
+
+    var p1 = p1Val !== '' ? parseFloat(p1Val) : null;
+    var p2 = p2Val !== '' ? parseFloat(p2Val) : null;
+    var fin = finVal !== '' ? parseFloat(finVal) : null;
+
+    var lista = calificaciones[asigActivaCal];
+    var alumno = lista.find(function(a) { return a.id === alumnoIdCal; });
+    if (alumno) {
+        alumno.p1 = p1;
+        alumno.p2 = p2;
+        alumno.final = fin;
     }
 
-    var p1 = inputP1.value !== '' ? parseFloat(inputP1.value) : null;
-    var p2 = inputP2.value !== '' ? parseFloat(inputP2.value) : null;
-    var fin = inputFinal.value !== '' ? parseFloat(inputFinal.value) : null;
+    // se envían los datos por POST
+    var params = 'alumno_id=' + alumnoIdCal +
+                 '&asignatura=' + asigActivaCal +
+                 '&p1=' + (p1 !== null ? p1 : '') +
+                 '&p2=' + (p2 !== null ? p2 : '') +
+                 '&final=' + (fin !== null ? fin : '');
 
-    if (alumnoId === null) {
-        calificaciones[asigActiva].push({
-            id: nextId++,
-            nombre: nombre,
-            p1: p1,
-            p2: p2,
-            final: fin
-        });
-    } else {
-        var lista = calificaciones[asigActiva];
-        var alumno = lista.find(function(a) { return a.id === alumnoId; });
-        if (alumno) {
-            alumno.nombre = nombre;
-            alumno.p1 = p1;
-            alumno.p2 = p2;
-            alumno.final = fin;
-        }
-    }
-
-    cerrarModal();
-    renderTabla();
-}
-
-function borrarAlumno() {
-    if (alumnoId === null) return;
-    if (!confirm('¿Seguro que quieres eliminar este alumno?')) return;
-
-    calificaciones[asigActiva] = calificaciones[asigActiva].filter(function(a) {
-        return a.id !== alumnoId;
+    fetch('utils/guardar-notas-profesor.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params
     });
 
-    cerrarModal();
-    renderTabla();
+    cerrarModalCal();
+    mostrarDetalleCal(alumnoIdCal);
 }
 
-function exportarCSV() {
-    var lista = calificaciones[asigActiva];
-    var filas = ['Alumno,Parcial 1,Parcial 2,Final,Media'];
+function exportarCSVCal() {
+    var lista = calificaciones[asigActivaCal];
+    var filas = ['Alumno,Correo,Parcial 1,Parcial 2,Final,Media'];
 
     lista.forEach(function(alumno) {
-        var media = calcularMedia(alumno.p1, alumno.p2, alumno.final);
+        var media = calcularMediaCal(alumno.p1, alumno.p2, alumno.final);
         var linea = alumno.nombre + ',' +
-                    mostrarNota(alumno.p1) + ',' +
-                    mostrarNota(alumno.p2) + ',' +
-                    mostrarNota(alumno.final) + ',' +
-                    (media !== null ? media : '—');
+                    alumno.email + ',' +
+                    mostrarNotaCal(alumno.p1) + ',' +
+                    mostrarNotaCal(alumno.p2) + ',' +
+                    mostrarNotaCal(alumno.final) + ',' +
+                    media;
         filas.push(linea);
     });
 
@@ -194,47 +220,50 @@ function exportarCSV() {
     var url = URL.createObjectURL(blob);
     var enlace = document.createElement('a');
     enlace.href = url;
-    enlace.download = 'calificaciones-' + asigActiva + '.csv';
+    enlace.download = 'calificaciones-' + asigActivaCal + '.csv';
     enlace.click();
-    URL.revokeObjectURL(url);
 }
 
-function ordenarPorMedia() {
-    calificaciones[asigActiva].sort(function(a, b) {
-        var ma = calcularMedia(a.p1, a.p2, a.final) || 0;
-        var mb = calcularMedia(b.p1, b.p2, b.final) || 0;
-        return ordenAscendente ? ma - mb : mb - ma;
-    });
-    ordenAscendente = !ordenAscendente;
-    renderTabla();
-}
-
-document.getElementById('btnNuevaCalif').addEventListener('click', abrirNuevo);
-document.getElementById('modalCerrar').addEventListener('click', cerrarModal);
-document.getElementById('btnCancelar').addEventListener('click', cerrarModal);
-document.getElementById('btnGuardar').addEventListener('click', guardar);
-document.getElementById('btnBorrarAlumno').addEventListener('click', borrarAlumno);
-document.getElementById('btnExportarCSV').addEventListener('click', exportarCSV);
-document.getElementById('btnOrdenar').addEventListener('click', ordenarPorMedia);
-
-inputP1.addEventListener('input', actualizarMedia);
-inputP2.addEventListener('input', actualizarMedia);
-inputFinal.addEventListener('input', actualizarMedia);
-
-modalFondo.addEventListener('click', function(e) {
-    if (e.target === modalFondo) cerrarModal();
+// se configuran los escuchadores de eventos
+document.getElementById('btnVolverLista').addEventListener('click', function() {
+    document.getElementById('vista-detalle-alumno').style.display = 'none';
+    document.getElementById('vista-lista-alumnos').style.display = 'block';
+    renderTablaCal();
 });
 
-document.querySelectorAll('.pill').forEach(function(pill) {
+document.getElementById('btnEditarNotasAlumno').addEventListener('click', abrirEditarCal);
+document.getElementById('modalCerrar').addEventListener('click', cerrarModalCal);
+document.getElementById('btnCancelar').addEventListener('click', cerrarModalCal);
+document.getElementById('btnGuardar').addEventListener('click', guardarCal);
+
+document.getElementById('inputP1').addEventListener('input', actualizarMediaCal);
+document.getElementById('inputP2').addEventListener('input', actualizarMediaCal);
+document.getElementById('inputFinal').addEventListener('input', actualizarMediaCal);
+
+var modalFondoCal = document.getElementById('modalFondo');
+modalFondoCal.addEventListener('click', function(e) {
+    if (e.target === modalFondoCal) cerrarModalCal();
+});
+
+document.getElementById('btnExportarCSV').addEventListener('click', exportarCSVCal);
+
+var pestanasCal = document.querySelectorAll('.pill');
+pestanasCal.forEach(function(pill) {
     pill.addEventListener('click', function() {
-        document.querySelectorAll('.pill').forEach(function(p) {
+        pestanasCal.forEach(function(p) {
             p.classList.remove('activo');
         });
         pill.classList.add('activo');
-        asigActiva = pill.getAttribute('data-asig');
-        document.getElementById('subtitulo').textContent = subtitulos[asigActiva];
-        renderTabla();
+        asigActivaCal = pill.getAttribute('data-asig');
+        document.getElementById('subtitulo').textContent = subtitulosCal[asigActivaCal];
+        
+        // se vuelve a la lista
+        document.getElementById('vista-detalle-alumno').style.display = 'none';
+        document.getElementById('vista-lista-alumnos').style.display = 'block';
+        
+        renderTablaCal();
     });
 });
 
-renderTabla();
+// se realiza el renderizado inicial
+renderTablaCal();
