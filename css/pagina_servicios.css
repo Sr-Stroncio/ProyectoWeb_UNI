@@ -327,3 +327,12 @@ nav a:focus {
   font-weight: 600;
   color: #5a3e00;
 }
+.caja .btn-demo-secundario {
+  background-color: #ffffff;
+  border: 1px solid #c8962a;
+  color: #5a3e00;
+}
+.caja .btn-demo-secundario:hover {
+  background-color: #fff8e6;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.10);
+}
