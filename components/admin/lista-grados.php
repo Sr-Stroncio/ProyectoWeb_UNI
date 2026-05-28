@@ -1,5 +1,5 @@
 <?php
-$res = $conn->query("SELECT ID, Nombre FROM Grado ORDER BY Nombre ASC");
+$res = $conexion->query("SELECT ID, Nombre FROM Grado ORDER BY Nombre ASC");
 $grados = $res->fetch_all(MYSQLI_ASSOC);
 ?>
 
