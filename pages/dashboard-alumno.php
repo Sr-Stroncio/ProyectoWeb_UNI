@@ -38,6 +38,7 @@ if (!$resultado_asignaturas) {
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/dashboard-alumno.css">
     <link rel="stylesheet" href="css/inicio-alumno.css">
+    <link rel="stylesheet" href="css/calendario.css">
     <link rel="stylesheet" href="css/calificaciones-alumno.css">
     <link rel="stylesheet" href="css/alumno-anuncios.css">
     <link rel="stylesheet" href="css/alumno-tareas.css">
