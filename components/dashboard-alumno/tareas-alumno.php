@@ -76,70 +76,71 @@ if (!$resultado_tareas) {
 
                 <?php while ($tarea = mysqli_fetch_assoc($resultado_tareas)): ?>
 
-                    <article class="anuncio-card tarea-card">
+                    <a href="/pages/dashboard-alumno.php?seccion=beta">
+                        <article class="anuncio-card tarea-card">
 
-                        <div class="anuncio-info">
+                            <div class="anuncio-info">
 
-                            <div class="anuncio-top">
+                                <div class="anuncio-top">
 
-                                <span class="anuncio-asig">
-                                    <?= htmlspecialchars($nombre_asignatura) ?>
-                                </span>
-
-                                <span class="anuncio-tiempo">
-                                    Publicada:
-                                    <?= date("d/m/Y H:i", strtotime($tarea['Fecha_creacion'])) ?>
-                                </span>
-
-                                <?php if (!empty($tarea['Fecha_limite'])): ?>
-                                    <span class="anuncio-tiempo">
-                                        Límite:
-                                        <?= date("d/m/Y H:i", strtotime($tarea['Fecha_limite'])) ?>
+                                    <span class="anuncio-asig">
+                                        <?= htmlspecialchars($nombre_asignatura) ?>
                                     </span>
-                                <?php endif; ?>
 
-                            </div>
+                                    <span class="anuncio-tiempo">
+                                        Publicada:
+                                        <?= date("d/m/Y H:i", strtotime($tarea['Fecha_creacion'])) ?>
+                                    </span>
 
-                            <h4 class="anuncio-titulo">
-                                <?= htmlspecialchars($tarea['Titulo']) ?>
-                            </h4>
-
-                        </div>
-                        
-                        <div class="anuncio-contenido tarea-contenido">
-
-                            <p class="anuncio-desc tarea-desc">
-                                <?= nl2br(htmlspecialchars($tarea['Descripcion'])) ?>
-                            </p>
-
-                            <div class="tarea-estado">
-
-                                <?php if ($tarea['Fecha_entrega'] !== null): ?>
-
-                                    <?php if ($tarea['Nota'] !== null): ?>
-                                        <span class="estado-entregada">
-                                            Nota: <?= number_format($tarea['Nota'], 2) ?>
-                                        </span>
-                                    <?php else: ?>
-                                        <span class="estado-entregada">
-                                            Entregada - Sin nota
+                                    <?php if (!empty($tarea['Fecha_limite'])): ?>
+                                        <span class="anuncio-tiempo">
+                                            Límite:
+                                            <?= date("d/m/Y H:i", strtotime($tarea['Fecha_limite'])) ?>
                                         </span>
                                     <?php endif; ?>
 
-                                <?php else: ?>
+                                </div>
 
-                                    <span class="estado-pendiente">
-                                        Pendiente
-                                    </span>
-
-                                <?php endif; ?>
+                                <h4 class="anuncio-titulo">
+                                    <?= htmlspecialchars($tarea['Titulo']) ?>
+                                </h4>
 
                             </div>
 
-                        </div>
+                            <div class="anuncio-contenido tarea-contenido">
 
-                    </article>
+                                <p class="anuncio-desc tarea-desc">
+                                    <?= nl2br(htmlspecialchars($tarea['Descripcion'])) ?>
+                                </p>
 
+                                <div class="tarea-estado">
+
+                                    <?php if ($tarea['Fecha_entrega'] !== null): ?>
+
+                                        <?php if ($tarea['Nota'] !== null): ?>
+                                            <span class="estado-entregada">
+                                                Nota: <?= number_format($tarea['Nota'], 2) ?>
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="estado-entregada">
+                                                Entregada - Sin nota
+                                            </span>
+                                        <?php endif; ?>
+
+                                    <?php else: ?>
+
+                                        <span class="estado-pendiente">
+                                            Pendiente
+                                        </span>
+
+                                    <?php endif; ?>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+                    </a>
                 <?php endwhile; ?>
 
             <?php else: ?>
