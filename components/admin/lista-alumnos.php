@@ -75,6 +75,10 @@ $alumnos = $res->fetch_all(MYSQLI_ASSOC);
                 <input type="email" id="emailAlumno" name="email" placeholder="correo@ejemplo.com">
             </div>
             <div class="campo">
+                <label for="dniAlumno">DNI</label>
+                <input type="text" id="dniAlumno" name="dni" placeholder="DNI del alumno">
+            </div>
+            <div class="campo">
                 <label for="gradoAlumno">Grado</label>
                 <select id="gradoAlumno" name="id_grado" class="campo-select">
                     <option value="">Sin grado</option>
