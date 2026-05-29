@@ -43,7 +43,4 @@
         </ul>
     </div>
 
-    <div class="sidebar-img">
-        <img src="img/sidebar-img.png" alt="imagen">
-    </div>
 </aside>
