@@ -1,6 +1,6 @@
 <?php
 
-include '../utils/logout-empresa.php';
+include '../utils/logout-producto.php';
 
 require_once __DIR__ . "/../database/conexion.php";
 
