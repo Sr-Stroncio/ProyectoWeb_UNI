@@ -55,6 +55,12 @@ header::after {
   margin-left: 30px;
 }
 
+.div-logos a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 .GTI_logo {
   height: 60px;
   width: auto;
