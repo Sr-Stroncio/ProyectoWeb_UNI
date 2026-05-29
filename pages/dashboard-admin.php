@@ -1,27 +1,10 @@
 <?php
 session_start();
 
-require_once '../utils/db.php';
+require_once '../database/conexion.php';
 
-if (!isset($_SESSION['usuario'])) {
-    header('Location: /pages/log-in-producto.php');
-    exit;
-}
-
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
-    if ($_SESSION['rol'] == 'profesor') {
-        header('Location: /pages/dashboard-profesor.php');
-        exit;
-    }
-    if ($_SESSION['rol'] == 'alumno') {
-        header('Location: /pages/dashboard-alumno.php');
-        exit;
-    }
-    header('Location: /pages/log-in-producto.php');
-    exit;
-}
-
-
+include '../utils/check-usuario.php';
+comprobarUsuario('admin');
 
 $seccion = isset($_GET['seccion']) ? $_GET['seccion'] : null;
 $id_grado = isset($_GET['id']) ? intval($_GET['id']) : null;
@@ -43,6 +26,7 @@ if ($seccion == 'grados') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
+    <link rel="stylesheet" href="css/profesor-header.css">
     <link rel="stylesheet" href="css/dashboard-admin.css">
     <title>Dashboard administrador</title>
 </head>
