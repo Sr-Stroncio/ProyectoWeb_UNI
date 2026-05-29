@@ -2,7 +2,7 @@
     <div class="sidebar-grupo">
         <p class="sidebar-label">PRINCIPAL</p>
         <ul class="sidebar-nav">
-            <li class="nav-item <?= $seccion === 'inicio' ? 'activo' : '' ?>">
+            <li class="nav-item nav-item-link-wrap <?= $seccion === 'inicio' ? 'activo' : '' ?>">
                 <a class="nav-item-link" href="/pages/dashboard-profesor.php">
                     <img src="assets/iconos/home.svg" alt="" class="nav-icon">
                     Inicio

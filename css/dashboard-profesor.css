@@ -260,9 +260,13 @@ aside {
 }
 
 .nav-sub {
-  padding-left: 44px;
+  padding: 0;
   font-size: 13px;
   color: #666666;
+}
+
+.nav-sub .nav-item-link {
+  padding: 8px 16px 8px 32px;
 }
 
 .separador {
