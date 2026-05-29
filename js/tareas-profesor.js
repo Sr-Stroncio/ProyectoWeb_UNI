@@ -45,6 +45,7 @@ if (typeof tareas === 'undefined') {
 
 var nextIdTar = 5;
 var filtroActivoTar = 'todas';
+var filtroAsigTar = 'todas';
 var tareaIdTar = null;
 
 var cuerpoTablaTar = document.getElementById('cuerpoTabla');
@@ -53,21 +54,55 @@ var modalTituloTar = document.getElementById('modalTituloTar');
 var inputNombreTar = document.getElementById('inputNombreTar');
 var inputAsigTar = document.getElementById('inputAsigTar');
 var inputCierreTar = document.getElementById('inputCierreTar');
-var inputTotalTar = document.getElementById('inputTotalTar');
 var inputDescTar = document.getElementById('inputDescTar');
-var inputEstadoTar = document.getElementById('inputEstadoTar');
 var btnBorrarTar = document.getElementById('btnBorrarTareaTar');
+var extenderBloqueTar = document.getElementById('extenderBloqueTar');
+var inputExtenderTar = document.getElementById('inputExtenderTar');
+var inputExtenderUnidadTar = document.getElementById('inputExtenderUnidadTar');
+var btnExtenderTar = document.getElementById('btnExtenderTar');
 
 function formatearFechaTar(fechaStr) {
     var meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
     var partes = fechaStr.split('-');
-    
+
     if (partes.length < 3) return fechaStr;
-    
+
     var dia = parseInt(partes[2]);
     var mesNum = parseInt(partes[1]);
     var mes = meses[mesNum - 1];
     return dia + ' ' + mes;
+}
+
+// se calcula el estado a partir de la fecha de cierre
+function calcularEstadoTar(cierre) {
+    if (!cierre) return 'abierta';
+    var hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    var fechaCierre = new Date(cierre);
+    if (fechaCierre < hoy) return 'cerrada';
+    return 'abierta';
+}
+
+// se traduce el codigo de asignatura (prog/bd/hci) al nombre que esta en la tarea
+function nombreAsigTar(codigo) {
+    if (codigo === 'prog') return 'Programación';
+    if (codigo === 'bd') return 'BD';
+    if (codigo === 'hci') return 'HCI';
+    return '';
+}
+
+// se cambia el filtro de asignatura desde fuera (lo llama el router)
+function filtrarTareasPorAsignatura(codigo) {
+    filtroAsigTar = codigo;
+    var sub = document.getElementById('subtituloTar');
+    if (sub) {
+        if (codigo === 'todas') {
+            sub.textContent = 'Todas las asignaturas';
+        } else {
+            sub.textContent = nombreAsigTar(codigo);
+        }
+    }
+    renderTablaTar();
 }
 
 // se pinta la tabla usando forEach
@@ -76,6 +111,7 @@ function renderTablaTar() {
 
     tareas.forEach(function(tarea) {
         if (filtroActivoTar !== 'todas' && tarea.estado !== filtroActivoTar) return;
+        if (filtroAsigTar !== 'todas' && tarea.asig !== nombreAsigTar(filtroAsigTar)) return;
 
         var porcentaje = 0;
         if (tarea.total > 0) {
@@ -117,10 +153,9 @@ function abrirNuevaTar() {
     inputNombreTar.value = '';
     inputAsigTar.value = 'Programación';
     inputCierreTar.value = '';
-    inputTotalTar.value = '';
     inputDescTar.value = '';
-    inputEstadoTar.value = 'futura';
     btnBorrarTar.classList.add('oculto');
+    extenderBloqueTar.classList.add('oculto');
     modalFondoTar.classList.add('visible');
 }
 
@@ -134,11 +169,44 @@ function abrirEditarTar(id) {
     inputNombreTar.value = tarea.nombre;
     inputAsigTar.value = tarea.asig;
     inputCierreTar.value = tarea.cierre;
-    inputTotalTar.value = tarea.total;
     inputDescTar.value = tarea.desc;
-    inputEstadoTar.value = tarea.estado;
+    inputExtenderTar.value = '';
     btnBorrarTar.classList.remove('oculto');
+    extenderBloqueTar.classList.remove('oculto');
     modalFondoTar.classList.add('visible');
+}
+
+function extenderTar() {
+    if (tareaIdTar === null) return;
+    var cantidad = parseInt(inputExtenderTar.value) || 0;
+    if (cantidad <= 0) {
+        alert('Introduce una cantidad valida para extender el plazo.');
+        return;
+    }
+    var unidad = inputExtenderUnidadTar.value;
+    var idEnviar = tareaIdTar;
+
+    var params = 'id=' + idEnviar + '&cantidad=' + cantidad + '&unidad=' + unidad;
+
+    fetch('utils/extender-tarea.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params
+    })
+    .then(function(r) { return r.text(); })
+    .then(function(nuevaFechaFull) {
+        // la respuesta viene como "YYYY-MM-DD HH:MM:SS", nos quedamos con la fecha
+        var nuevaFecha = nuevaFechaFull.split(' ')[0];
+        var tarea = tareas.find(function(t) { return t.id === idEnviar; });
+        if (tarea && nuevaFecha) {
+            tarea.cierre = nuevaFecha;
+            tarea.estado = calcularEstadoTar(nuevaFecha);
+            inputCierreTar.value = nuevaFecha;
+        }
+        inputExtenderTar.value = '';
+        renderTablaTar();
+        alert('Plazo extendido. Nueva fecha: ' + nuevaFecha);
+    });
 }
 
 function cerrarModalTar() {
@@ -156,8 +224,7 @@ function guardarTar() {
     var asig = inputAsigTar.value;
     var cierre = inputCierreTar.value;
     var desc = inputDescTar.value.trim();
-    var total = parseInt(inputTotalTar.value) || 0;
-    var estado = inputEstadoTar.value;
+    var estado = calcularEstadoTar(cierre);
     var idEnviar = tareaIdTar !== null ? tareaIdTar : '';
 
     var params = 'id=' + idEnviar +
@@ -179,7 +246,7 @@ function guardarTar() {
                 nombre: nombre,
                 asig: asig,
                 cierre: cierre,
-                total: total,
+                total: 0,
                 entregas: 0,
                 estado: estado,
                 desc: desc
@@ -190,7 +257,6 @@ function guardarTar() {
                 tarea.nombre = nombre;
                 tarea.asig = asig;
                 tarea.cierre = cierre;
-                tarea.total = total || tarea.total;
                 tarea.estado = estado;
                 tarea.desc = desc;
             }
@@ -223,6 +289,7 @@ document.getElementById('modalCerrarTar').addEventListener('click', cerrarModalT
 document.getElementById('btnCancelarTar').addEventListener('click', cerrarModalTar);
 document.getElementById('btnGuardarTar').addEventListener('click', guardarTar);
 document.getElementById('btnBorrarTareaTar').addEventListener('click', borrarTareaTar);
+btnExtenderTar.addEventListener('click', extenderTar);
 
 modalFondoTar.addEventListener('click', function(e) {
     if (e.target === modalFondoTar) cerrarModalTar();
@@ -240,6 +307,9 @@ botonesFiltroTar.forEach(function(btn) {
         renderTablaTar();
     });
 });
+
+// se expone la funcion para que el router pueda llamarla
+window.filtrarTareasPorAsignatura = filtrarTareasPorAsignatura;
 
 // se realiza el arranque inicial
 renderTablaTar();
