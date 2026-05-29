@@ -55,13 +55,13 @@ if (!$resultado_asignaturas) {
             <?php
 
             if ($seccion === 'inicio') {
-                include '../components/dashboard-alumno/inicio-alumno.php';
+                include '../components/dashboard-alumno/Inicio-alumno.php';
             } elseif ($seccion === 'calificaciones') {
                 include '../components/dashboard-alumno/calificaciones-alumno.php';
             } elseif ($seccion === 'anuncios') {
                 include '../components/dashboard-alumno/anuncios-alumno.php';
             } elseif ($seccion === 'calendario') {
-                include '../components/dashboard-alumno/inicio-alumno.php';
+                include '../components/dashboard-profesor/calendario.php';
             } elseif ($seccion === 'recursos') {
                 include '../components/dashboard-alumno/tareas-alumno.php';
             } elseif ($seccion === 'examenes') {
@@ -69,7 +69,7 @@ if (!$resultado_asignaturas) {
             } elseif ($seccion === 'tareas') {
                 include '../components/dashboard-alumno/tareas-alumno.php';
             } else {
-                include '../components/dashboard-alumno/inicio-alumno.php';
+                include '../components/dashboard-alumno/Inicio-alumno.php';
             }
 
             ?>
