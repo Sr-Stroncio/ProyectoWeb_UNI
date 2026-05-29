@@ -16,7 +16,12 @@ var modales = {
     'btnNuevoGrado':        'modalNuevoGrado',
     'btnNuevoAlumno':       'modalNuevoAlumno',
     'btnEditarAlumno':      'modalEditarAlumno',
-    'btnEditarAsignaturas': 'modalEditarAsignaturas'
+    'btnEditarAsignaturas': 'modalEditarAsignaturas',
+    'btnNuevoProfesor':     'modalNuevoProfesor',
+    'btnEditarProfesor':    'modalEditarProfesor',
+    'btnEditarMaterias':    'modalEditarMaterias',
+    'btnAddAlumno':         'modalAddAlumno',
+    'btnAddProfesor':       'modalAddProfesor'
 };
 
 Object.keys(modales).forEach(function(btnId) {
@@ -33,7 +38,12 @@ var cierres = [
     'btnCerrarModal', 'btnCancelarModal',
     'btnCerrarModalAlumno', 'btnCancelarModalAlumno',
     'btnCerrarModalEditar', 'btnCancelarModalEditar',
-    'btnCerrarModalAsig', 'btnCancelarModalAsig'
+    'btnCerrarModalAsig', 'btnCancelarModalAsig',
+    'btnCerrarModalProfesor', 'btnCancelarModalProfesor',
+    'btnCerrarModalEditarProfesor', 'btnCancelarModalEditarProfesor',
+    'btnCerrarModalMaterias', 'btnCancelarModalMaterias',
+    'btnCerrarAddAlumno', 'btnCancelarAddAlumno',
+    'btnCerrarAddProfesor', 'btnCancelarAddProfesor'
 ];
 
 cierres.forEach(function(id) {
@@ -53,6 +63,17 @@ if (buscador) {
     buscador.addEventListener('input', function() {
         var texto = buscador.value.toLowerCase();
         document.querySelectorAll('#tablaAlumnos tbody tr').forEach(function(fila) {
+            fila.style.display = fila.textContent.toLowerCase().includes(texto) ? '' : 'none';
+        });
+    });
+}
+
+var buscadorProf = document.getElementById('buscadorProfesores');
+
+if (buscadorProf) {
+    buscadorProf.addEventListener('input', function() {
+        var texto = buscadorProf.value.toLowerCase();
+        document.querySelectorAll('#tablaProfesores tbody tr').forEach(function(fila) {
             fila.style.display = fila.textContent.toLowerCase().includes(texto) ? '' : 'none';
         });
     });
@@ -108,6 +129,18 @@ function eliminarMateria(idMateria, idGrado) {
     var i2 = document.createElement('input');
     i2.type = 'hidden'; i2.name = 'id_grado'; i2.value = idGrado;
     form.appendChild(i1); form.appendChild(i2);
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function eliminarProfesorAdmin(idProfesor) {
+    if (!confirm('¿Seguro que quieres eliminar este profesor?')) return;
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/utils/eliminar-profesor.php';
+    var i1 = document.createElement('input');
+    i1.type = 'hidden'; i1.name = 'id_profesor'; i1.value = idProfesor;
+    form.appendChild(i1);
     document.body.appendChild(form);
     form.submit();
 }

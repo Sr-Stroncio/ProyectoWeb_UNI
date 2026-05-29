@@ -26,8 +26,8 @@ if (isset($_SESSION['usuario_rol'])) {
     <div class="div-nav">
         <div class="perfil">
             <div class="perfil-info">
-                <p class="perfil-saludo">Bienvenido/a, <?= $_SESSION['nombre'] ?></p>
-                <span class="perfil-rol"><?= $_SESSION['rol'] ?></span>
+                <p class="perfil-saludo">Bienvenido/a, <?= $_SESSION['usuario_nombre'] ?></p>
+                <span class="perfil-rol"><?= $_SESSION['usuario_rol'] ?></span>
             </div>
             <a class="btn-logout" href="/utils/logout-producto.php">Cerrar sesión</a>
         </div>

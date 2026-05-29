@@ -9,11 +9,14 @@ comprobarUsuario('admin');
 $seccion = isset($_GET['seccion']) ? $_GET['seccion'] : null;
 $id_grado = isset($_GET['id']) ? intval($_GET['id']) : null;
 $id_alumno = isset($_GET['id']) ? intval($_GET['id']) : null;
+$id_profesor = isset($_GET['id']) ? intval($_GET['id']) : null;
 
 if ($seccion == 'grados') {
     $tituloPagina = 'Grados';
 } elseif ($seccion == 'alumnos') {
     $tituloPagina = 'Alumnos';
+} elseif ($seccion == 'profesores') {
+    $tituloPagina = 'Profesores';
 } else {
     $tituloPagina = 'Dashboard';
 }
@@ -23,7 +26,7 @@ if ($seccion == 'grados') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, ini  tial-scale=1.0">
     <base href="/">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/profesor-header.css">
@@ -55,6 +58,15 @@ if ($seccion == 'grados') {
 
         <?php elseif ($seccion == 'alumnos' && $id_alumno !== null): ?>
             <?php include '../components/admin/detalle-alumno.php'; ?>
+
+        <?php elseif ($seccion == 'profesores' && $id_profesor === null): ?>
+            <?php include '../components/admin/lista-profesores.php'; ?>
+
+        <?php elseif ($seccion == 'profesores' && $id_profesor !== null): ?>
+            <?php include '../components/admin/detalle-profesor.php'; ?>
+
+        <?php elseif ($seccion == 'anuncios'): ?>
+            <?php include '../components/beta.php'; ?>
 
         <?php endif; ?>
 
