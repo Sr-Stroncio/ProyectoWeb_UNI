@@ -20,9 +20,30 @@ function routerHash() {
         }
     } else if (hash === '#tareas') {
         document.getElementById('sec-tareas').style.display = 'flex';
+        if (window.filtrarTareasPorAsignatura) {
+            window.filtrarTareasPorAsignatura('todas');
+        }
         var linkT = document.querySelector('a[href="/pages/dashboard-profesor.php#tareas"]');
         if (linkT) {
             linkT.parentNode.classList.add('activo');
+        }
+    } else if (hash.indexOf('#tareas-') === 0) {
+        document.getElementById('sec-tareas').style.display = 'flex';
+        var asigTareas = hash.replace('#tareas-', '');
+        if (window.filtrarTareasPorAsignatura) {
+            window.filtrarTareasPorAsignatura(asigTareas);
+        }
+    } else if (hash.indexOf('#recursos-') === 0) {
+        document.getElementById('sec-recursos').style.display = 'flex';
+        var asigRecursos = hash.replace('#recursos-', '');
+        if (window.filtrarRecursosPorAsignatura) {
+            window.filtrarRecursosPorAsignatura(asigRecursos);
+        }
+    } else if (hash === '#calendario') {
+        document.getElementById('sec-calendario').style.display = 'flex';
+        var linkC = document.querySelector('a[href="/pages/dashboard-profesor.php#calendario"]');
+        if (linkC) {
+            linkC.parentNode.classList.add('activo');
         }
     } else if (hash === '#anuncios' || hash === '#anuncios-nuevo') {
         document.getElementById('sec-anuncios').style.display = 'flex';
