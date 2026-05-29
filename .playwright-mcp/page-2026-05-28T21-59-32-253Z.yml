@@ -1,0 +1,60 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "GTI Logo" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "GTI Logo" [ref=e5]
+    - navigation [ref=e6]:
+      - link "Productos" [ref=e7] [cursor=pointer]:
+        - /url: /pages/pagina_servicios.php
+    - link "Inicia sesión" [ref=e9] [cursor=pointer]:
+      - /url: /pages/log-in-app.php
+  - generic [ref=e10]:
+    - heading "Seleccionar producto" [level=2] [ref=e11]
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - heading "Página de prueba (DOA)" [level=3] [ref=e14]
+        - paragraph [ref=e15]: Prueba DOA sin compromiso y comprueba todo lo que puede hacer por tu institución.
+        - paragraph [ref=e16]: Incluye
+        - list [ref=e17]:
+          - listitem [ref=e18]:
+            - text: ✓
+            - paragraph [ref=e19]: Acceso completo a la plataforma
+            - paragraph [ref=e20]: Explora todas las funcionalidades antes de elegir un producto.
+          - listitem [ref=e21]:
+            - text: ✓
+            - paragraph [ref=e22]: Todos los roles disponibles
+            - paragraph [ref=e23]: Prueba la experiencia de Alumno, Profesor y Administrador.
+          - listitem [ref=e24]:
+            - text: ✓
+            - paragraph [ref=e25]: Sin tarjeta ni contrato
+            - paragraph [ref=e26]: Completamente gratis, empieza en segundos.
+        - separator [ref=e27]
+        - link "Ir a la prueba" [ref=e28] [cursor=pointer]:
+          - /url: /pages/log-in-producto.php
+      - generic [ref=e29]:
+        - img "DOA" [ref=e30]
+        - paragraph [ref=e31]: DOA
+        - paragraph [ref=e32]: 5.000 €
+        - paragraph [ref=e33]: Pago único · Licencia institucional
+        - separator [ref=e34]
+        - paragraph [ref=e35]: Todo lo que necesitas para el día a día educativo, en un solo lugar.
+        - paragraph [ref=e36]: Incluye
+        - list [ref=e37]:
+          - listitem [ref=e38]:
+            - text: ✓
+            - paragraph [ref=e39]: Tres roles diferenciados
+            - paragraph [ref=e40]: Alumno, Profesor y Administrador, cada uno con sus propias acciones y vistas.
+          - listitem [ref=e41]:
+            - text: ✓
+            - paragraph [ref=e42]: Módulos completos por rol
+            - paragraph [ref=e43]: Anuncios, calendario y asignaturas con calificaciones, tareas, recursos y exámenes.
+          - listitem [ref=e44]:
+            - text: ✓
+            - paragraph [ref=e45]: Ecosistema 100 % online
+            - paragraph [ref=e46]: Alumnos y docentes siempre actualizados, sin necesidad de presencia física.
+          - listitem [ref=e47]:
+            - text: ✓
+            - paragraph [ref=e48]: Ideal para instituciones educativas
+            - paragraph [ref=e49]: Diseñado para centros que quieren mantener a sus alumnos al día.
+        - separator [ref=e50]
+        - generic [ref=e51] [cursor=pointer]: Seleccionar producto
