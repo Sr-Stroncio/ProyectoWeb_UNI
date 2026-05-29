@@ -20,18 +20,22 @@
             <label class="campo-label">Fecha de cierre</label>
             <input class="campo-input" type="date" id="inputCierreTar">
 
-            <label class="campo-label">Total de alumnos</label>
-            <input class="campo-input" type="number" id="inputTotalTar" placeholder="Ej: 28" min="1">
-
             <label class="campo-label">Descripción</label>
             <textarea class="campo-input campo-textarea" id="inputDescTar" placeholder="Instrucciones de la tarea..."></textarea>
 
-            <label class="campo-label">Estado</label>
-            <select class="campo-input" id="inputEstadoTar">
-                <option value="futura">Futura</option>
-                <option value="abierta">Abierta</option>
-                <option value="cerrada">Cerrada</option>
-            </select>
+            <!-- extender plazo (solo visible al editar) -->
+            <div class="extender-bloque" id="extenderBloqueTar">
+                <label class="campo-label">Extender plazo</label>
+                <div class="extender-controles">
+                    <input class="campo-input extender-input" type="number" id="inputExtenderTar" placeholder="5" min="1">
+                    <select class="campo-input extender-unidad" id="inputExtenderUnidadTar">
+                        <option value="MINUTE">minutos</option>
+                        <option value="HOUR">horas</option>
+                        <option value="DAY">días</option>
+                    </select>
+                    <button class="btn-extender" id="btnExtenderTar" type="button">Extender</button>
+                </div>
+            </div>
         </div>
 
         <div class="modal-pie">
@@ -48,7 +52,7 @@
     <div class="main-cabecera">
         <div>
             <h2>Tareas</h2>
-            <p class="main-sub">Todas las asignaturas</p>
+            <p class="main-sub" id="subtituloTar">Todas las asignaturas</p>
         </div>
         <button class="btn-nuevo" id="btnNuevaTarea">+ Nueva tarea</button>
     </div>

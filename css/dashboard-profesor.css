@@ -118,7 +118,7 @@ header {
 .perfil-rol {
   padding: 4px 12px;
   border-radius: 50px;
-  background-color: #ff9e00;
+  background-color: #ffce74;
   color: #222222;
   font-size: 12px;
   font-weight: 700;
@@ -311,7 +311,7 @@ main {
 
 /* botones */
 .btn-nuevo {
-  background-color: #ff9e00;
+  background-color: #ffce74;
   color: #222222;
   border: none;
   padding: 9px 18px;
@@ -322,7 +322,7 @@ main {
 }
 
 .btn-nuevo:hover {
-  background-color: #e08b00;
+  background-color: #ffc04d;
 }
 
 /* modales */
@@ -412,7 +412,7 @@ main {
 
 .campo-input:focus {
   outline: none;
-  border-color: #ff9e00;
+  border-color: #ffce74;
 }
 
 .campo-textarea {
@@ -451,6 +451,47 @@ main {
   display: none;
 }
 
+.extender-bloque {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed #d6d6d6;
+}
+
+.extender-bloque.oculto {
+  display: none;
+}
+
+.extender-controles {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.extender-input {
+  width: 80px;
+  margin-right: 8px;
+}
+
+.extender-unidad {
+  width: 120px;
+  margin-right: 8px;
+}
+
+.btn-extender {
+  background-color: #ffce74;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a2c00;
+  cursor: pointer;
+}
+
+.btn-extender:hover {
+  background-color: #ffc04d;
+}
+
 .btn-modal-cancelar {
   background-color: #ffffff;
   border: 1px solid #d6d6d6;
@@ -467,7 +508,7 @@ main {
 }
 
 .btn-modal-guardar {
-  background-color: #ff9e00;
+  background-color: #ffce74;
   border: none;
   border-radius: 8px;
   padding: 9px 18px;
@@ -477,7 +518,7 @@ main {
 }
 
 .btn-modal-guardar:hover {
-  background-color: #e08b00;
+  background-color: #ffc04d;
 }
 
 /* inicio */
@@ -633,7 +674,7 @@ main {
 
 .btn-corregir:hover {
   background-color: #fff5e0;
-  border-color: #ff9e00;
+  border-color: #ffce74;
 }
 
 .agenda-fila {
@@ -689,8 +730,8 @@ main {
 }
 
 .filtro.activo {
-  background-color: #ff9e00;
-  border-color: #ff9e00;
+  background-color: #ffce74;
+  border-color: #ffce74;
   color: #222222;
   font-weight: 600;
 }
@@ -862,8 +903,8 @@ main {
 }
 
 .pill.activo {
-  background-color: #ff9e00;
-  border-color: #ff9e00;
+  background-color: #ffce74;
+  border-color: #ffce74;
   color: #222222;
   font-weight: 600;
 }
@@ -980,7 +1021,7 @@ main {
 
 .btn-editar:hover {
   background-color: #fff5e0;
-  border-color: #ff9e00;
+  border-color: #ffce74;
 }
 
 .notas-fila {
@@ -1075,7 +1116,7 @@ main {
 
 .barra-relleno {
   height: 100%;
-  background-color: #ff9e00;
+  background-color: #ffce74;
   border-radius: 50px;
 }
 
@@ -1114,7 +1155,7 @@ main {
 
 .btn-ver:hover {
   background-color: #fff5e0;
-  border-color: #ff9e00;
+  border-color: #ffce74;
 }
 
 /* diseño adaptable */
@@ -1277,4 +1318,378 @@ main {
 
 .nav-item-link:visited {
   color: inherit;
+}
+/* calendario */
+.cal-main {
+  padding: 20px 30px 40px 30px;
+  flex: 1;
+}
+
+.cal-layout {
+  display: flex;
+  gap: 20px;
+  margin-top: 16px;
+  align-items: stretch;
+}
+
+.cal-bloque-grande {
+  flex: 1 1 auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.cal-panel-eventos {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cal-bloque-chico {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.cal-bloque-titulo {
+  margin: 0 0 12px 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 0.5px;
+}
+
+.cal-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.cal-nav h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #222;
+}
+
+.cal-btn-flecha {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #555;
+  padding: 0 10px;
+}
+
+.cal-btn-flecha:hover {
+  color: #ffce74;
+}
+
+.cal-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.cal-tabla th {
+  text-align: center;
+  font-size: 12px;
+  color: #888;
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.cal-dia {
+  position: relative;
+  text-align: center;
+  height: 60px;
+  font-size: 14px;
+  color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.cal-dia:hover {
+  background-color: #fff7e3;
+}
+
+.cal-dia-otro {
+  color: #d8d8d8;
+  opacity: 0.7;
+}
+
+.cal-dia-hoy {
+  background-color: #ffce74;
+  color: #3a2c00;
+  font-weight: 700;
+}
+
+.cal-dia-punto {
+  position: absolute;
+  left: calc(50% - 2px);
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #ffce74;
+}
+
+.cal-evento-card {
+  display: flex;
+  align-items: center;
+  padding: 12px 8px;
+  margin: 0 -8px;
+  border-radius: 8px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.cal-evento-card:hover {
+  background-color: #faf6ec;
+}
+
+.cal-evento-card:last-child {
+  border-bottom: none;
+}
+
+.cal-evento-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cal-evento-titulo {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+}
+
+.cal-evento-hora,
+.cal-evento-asig {
+  margin: 3px 0 0 0;
+  font-size: 12px;
+  color: #888;
+}
+
+.cal-fecha-circulo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-right: 14px;
+  background-color: #fff7e3;
+  border-radius: 8px;
+}
+
+.cal-fecha-dia {
+  font-size: 17px;
+  font-weight: 700;
+  color: #3a2c00;
+  line-height: 1;
+}
+
+.cal-fecha-mes {
+  font-size: 9px;
+  color: #8a6d3b;
+  margin-top: 2px;
+  font-weight: 700;
+}
+
+.cal-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 20px;
+  margin-left: 10px;
+  white-space: nowrap;
+}
+
+.cal-tag-tutoria {
+  background-color: #fdecea;
+  color: #c0392b;
+}
+
+.cal-tag-clase {
+  background-color: #e8f0fe;
+  color: #1a73e8;
+}
+
+.cal-tag-examen {
+  background-color: #fff3cd;
+  color: #8a6d3b;
+}
+
+.cal-tag-tarea {
+  background-color: #e7f5e9;
+  color: #2e7d32;
+}
+
+.cal-tag-general {
+  background-color: #f0f0f0;
+  color: #555;
+}
+
+.cal-tag-asignatura {
+  background-color: #ede7f6;
+  color: #5e35b1;
+}
+
+.cal-vacio {
+  margin: 0;
+  font-size: 13px;
+  color: #999;
+  text-align: center;
+  padding: 14px 0;
+}
+
+@media (max-width: 1100px) {
+  .cal-layout {
+    flex-direction: column;
+  }
+
+  .cal-panel-eventos {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .cal-main {
+    padding: 12px 14px;
+  }
+
+  .cal-bloque-grande,
+  .cal-bloque-chico {
+    padding: 14px;
+  }
+
+  .cal-dia {
+    height: 44px;
+    font-size: 13px;
+    border-radius: 6px;
+  }
+
+  .cal-tabla th {
+    font-size: 11px;
+  }
+
+  .cal-evento-card {
+    flex-wrap: wrap;
+  }
+
+  .cal-tag {
+    margin-left: 0;
+    margin-top: 6px;
+  }
+}
+
+/* recursos */
+.lista-recursos {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.recurso-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  cursor: pointer;
+}
+
+.recurso-card:hover {
+  background-color: #faf6ec;
+}
+
+.recurso-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.recurso-asig {
+  font-size: 12px;
+  color: #8a6d3b;
+  font-weight: 700;
+  background-color: #fff7e3;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.recurso-estado {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  text-transform: capitalize;
+}
+
+.recurso-estado.activo {
+  background-color: #e7f5e9;
+  color: #2e7d32;
+}
+
+.recurso-estado.inactivo {
+  background-color: #f0f0f0;
+  color: #888;
+}
+
+.recurso-titulo {
+  margin: 4px 0 6px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+}
+
+.recurso-desc {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.recurso-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.recurso-link:hover {
+  text-decoration: underline;
+}
+
+.lista-vacia {
+  margin: 18px 0;
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* gestion de examenes */
+.examen-fila {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.examen-titulo-input {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.examen-guardar {
+  margin-right: 6px;
 }

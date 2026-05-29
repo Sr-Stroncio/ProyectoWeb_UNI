@@ -12,6 +12,8 @@ $seccion = 'inicio';
 $anuncios_js = [];
 $tareas_js = [];
 $calificaciones_js = [];
+$examenes_js = [];
+$recursos_js = [];
 
 include '../components/dashboard-profesor/datos.php';
 ?>
@@ -50,18 +52,29 @@ include '../components/dashboard-profesor/datos.php';
         <?php include '../components/dashboard-profesor/anuncios.php'; ?>
     </div>
 
+    <div id="sec-calendario" class="seccion-panel" style="display: none; flex: 1;">
+        <?php include '../components/dashboard-profesor/calendario.php'; ?>
+    </div>
+
+    <div id="sec-recursos" class="seccion-panel" style="display: none; flex: 1;">
+        <?php include '../components/dashboard-profesor/recursos.php'; ?>
+    </div>
+
 </section>
 
 <script>
     var anuncios = <?= json_encode($anuncios_js) ?>;
     var calificaciones = <?= json_encode($calificaciones_js) ?>;
+    var examenes = <?= json_encode($examenes_js) ?>;
     var tareas = <?= json_encode($tareas_js) ?>;
+    var recursos = <?= json_encode($recursos_js) ?>;
 </script>
 
 <script src="js/header-profesor.js"></script>
 <script src="js/anuncios-profesor.js"></script>
 <script src="js/tareas-profesor.js"></script>
 <script src="js/calificaciones-profesor.js"></script>
+<script src="js/recursos-profesor.js"></script>
 <script src="js/router-profesor.js"></script>
 
 </body>
