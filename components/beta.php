@@ -2,10 +2,6 @@
 
     <div class="beta-card">
 
-        <div class="beta-icono">
-            🚧
-        </div>
-
         <h2>Estamos trabajando en esta página</h2>
 
         <p>
