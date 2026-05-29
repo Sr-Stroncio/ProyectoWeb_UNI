@@ -1,7 +1,5 @@
 <?php
 
-include '../utils/logout-empresa.php';
-
 require_once __DIR__ . "/../database/conexion.php";
 
 $error = $_SESSION['error_login'] ?? '';
