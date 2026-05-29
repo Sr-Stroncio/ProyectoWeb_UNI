@@ -57,8 +57,12 @@
             <?php while ($asignatura = mysqli_fetch_assoc($resultado_asignaturas)): ?>
 
                 <?php
-                    $id_actual = $asignatura['ID'];
-                    $asignatura_activa = ($seccion === 'asignatura' && $id_asignatura == $id_actual);
+                $id_actual = $asignatura['ID'];
+
+                $asignatura_activa = (
+                    ($seccion === 'recursos' || $seccion === 'examenes' || $seccion === 'tareas')
+                    && $id_asignatura == $id_actual
+                );
                 ?>
 
                 <li class="nav-item nav-asig <?= $asignatura_activa ? 'activo' : '' ?>" data-id="<?= $id_actual ?>">
@@ -69,24 +73,24 @@
 
                 <ul class="submenu <?= $asignatura_activa ? 'abierto' : '' ?>" id="sub-<?= $id_actual ?>">
 
-                    <a class="nav-item-link" href="pages/dashboard-alumno.php?seccion=asignatura&id=<?= $id_actual ?>&vista=recursos">
-                        <li class="nav-item nav-sub <?= ($asignatura_activa && $vista === 'recursos') ? 'activo' : '' ?>">
+                    <a class="nav-item-link" href="pages/dashboard-alumno.php?seccion=recursos&id=<?= $id_actual ?>">
+                        <li class="nav-item nav-sub <?= ($seccion === 'recursos' && $id_asignatura == $id_actual) ? 'activo' : '' ?>">
 
                             Recursos
 
                         </li>
                     </a>
 
-                    <a class="nav-item-link" href="pages/dashboard-alumno.php?seccion=asignatura&id=<?= $id_actual ?>&vista=examenes">
-                        <li class="nav-item nav-sub <?= ($asignatura_activa && $vista === 'examenes') ? 'activo' : '' ?>">
+                    <a class="nav-item-link" href="pages/dashboard-alumno.php?seccion=examenes&id=<?= $id_actual ?>">
+                        <li class="nav-item nav-sub <?= ($seccion === 'examenes' && $id_asignatura == $id_actual) ? 'activo' : '' ?>">
 
                             Exámenes
 
                         </li>
                     </a>
 
-                    <a class="nav-item-link" href="pages/dashboard-alumno.php?seccion=asignatura&id=<?= $id_actual ?>&vista=tareas">
-                        <li class="nav-item nav-sub <?= ($asignatura_activa && $vista === 'tareas') ? 'activo' : '' ?>">
+                    <a class="nav-item-link" href="pages/dashboard-alumno.php?seccion=tareas&id=<?= $id_actual ?>">
+                        <li class="nav-item nav-sub <?= ($seccion === 'tareas' && $id_asignatura == $id_actual) ? 'activo' : '' ?>">
 
                             Tareas
 

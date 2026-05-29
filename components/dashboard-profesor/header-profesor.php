@@ -1,11 +1,27 @@
+<?php
+// se determina el enlace del logo DOA según el rol del usuario conectado
+$enlace_doa = "/index.php";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['usuario_rol'])) {
+    if ($_SESSION['usuario_rol'] === 'admin') {
+        $enlace_doa = "/pages/dashboard-admin.php";
+    } else if ($_SESSION['usuario_rol'] === 'profesor') {
+        $enlace_doa = "/pages/dashboard-profesor.php";
+    } else if ($_SESSION['usuario_rol'] === 'alumno') {
+        $enlace_doa = "/pages/dashboard-alumno.php";
+    }
+}
+?>
 <header>
     <div class="div-izquierdo">
         <button class="btn-menu" id="btnMenu">
             <img src="assets/iconos/menu-2.svg" alt="menu">
         </button>
         <div class="div-logos">
-            <img class="DOA_logo" src="assets/DoA color.svg" alt="DOA Logo">
-            <img class="GTI_logo" src="assets/logoGTI.svg" alt="GTI Logo">
+            <a href="<?= $enlace_doa ?>"><img class="DOA_logo" src="assets/DoA color.svg" alt="DOA Logo"></a>
+            <a href="/index.php"><img class="GTI_logo" src="assets/logoGTI.svg" alt="GTI Logo"></a>
         </div>
         <h2><?= $tituloPagina ?? 'Dashboard' ?></h2>
     </div>
@@ -13,8 +29,8 @@
     <div class="div-nav">
         <div class="perfil">
             <div class="perfil-info">
-                <p class="perfil-saludo">Bienvenido/a, <?= $_SESSION['nombre'] ?></p>
-                <span class="perfil-rol"><?= $_SESSION['rol'] ?></span>
+                <p class="perfil-saludo">Bienvenido/a, <?= $_SESSION['usuario_nombre'] ?></p>
+                <span class="perfil-rol"><?= $_SESSION['usuario_rol'] ?></span>
             </div>
             <a class="btn-logout" href="/utils/logout-producto.php">Cerrar sesión</a>
         </div>

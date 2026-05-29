@@ -2,13 +2,17 @@
     <div class="sidebar-grupo">
         <p class="sidebar-label">PRINCIPAL</p>
         <ul class="sidebar-nav">
-            <li class="nav-item activo">
-                <img src="assets/iconos/home.svg" alt="" class="nav-icon">
-                Inicio
+            <li class="nav-item <?= $seccion === 'inicio' ? 'activo' : '' ?>">
+                <a class="nav-item-link" href="/pages/dashboard-profesor.php">
+                    <img src="assets/iconos/home.svg" alt="" class="nav-icon">
+                    Inicio
+                </a>
             </li>
             <li class="nav-item">
-                <img src="assets/iconos/calendar.svg" alt="" class="nav-icon">
-                Calendario
+                <a class="nav-item-link" href="/pages/dashboard-profesor.php#">
+                    <img src="assets/iconos/calendar.svg" alt="" class="nav-icon">
+                    Calendario
+                </a>
             </li>
         </ul>
     </div>
@@ -19,26 +23,16 @@
         <p class="sidebar-label">UTILIDADES</p>
         <ul class="sidebar-nav">
             <li class="nav-item nav-item-link-wrap">
-                <a class="nav-item-link" href="/pages/calificaciones-profesor.php">
-                    <img src="assets/iconos/school.svg" alt="" class="nav-icon">
-                    Calificaciones
-                </a>
-            </li>
-            <li class="nav-item nav-item-link-wrap">
-                <a class="nav-item-link" href="/pages/tareas-profesor.php">
+                <a class="nav-item-link" href="/pages/dashboard-profesor.php#tareas">
                     <img src="assets/iconos/checklist.svg" alt="" class="nav-icon">
                     Tareas
                 </a>
             </li>
             <li class="nav-item nav-item-link-wrap">
-                <a class="nav-item-link" href="/pages/anuncios-profesor.php">
+                <a class="nav-item-link" href="/pages/dashboard-profesor.php#anuncios">
                     <img src="assets/iconos/speakerphone.svg" alt="" class="nav-icon">
                     Anuncios
                 </a>
-            </li>
-            <li class="nav-item">
-                <img src="assets/iconos/message.svg" alt="" class="nav-icon">
-                Chats
             </li>
         </ul>
     </div>
@@ -55,8 +49,10 @@
             </li>
             <ul class="submenu" id="sub-prog">
                 <li class="nav-item nav-sub">Recursos</li>
-                <li class="nav-item nav-sub">Exámenes</li>
                 <li class="nav-item nav-sub">Tareas</li>
+                <li class="nav-item nav-sub">
+                    <a class="nav-item-link" href="/pages/dashboard-profesor.php#calificaciones-prog">Calificaciones</a>
+                </li>
             </ul>
 
             <li class="nav-item nav-asig" data-id="bd">
@@ -66,8 +62,10 @@
             </li>
             <ul class="submenu" id="sub-bd">
                 <li class="nav-item nav-sub">Recursos</li>
-                <li class="nav-item nav-sub">Exámenes</li>
                 <li class="nav-item nav-sub">Tareas</li>
+                <li class="nav-item nav-sub">
+                    <a class="nav-item-link" href="/pages/dashboard-profesor.php#calificaciones-bd">Calificaciones</a>
+                </li>
             </ul>
 
             <li class="nav-item nav-asig" data-id="hci">
@@ -77,13 +75,11 @@
             </li>
             <ul class="submenu" id="sub-hci">
                 <li class="nav-item nav-sub">Recursos</li>
-                <li class="nav-item nav-sub">Exámenes</li>
                 <li class="nav-item nav-sub">Tareas</li>
+                <li class="nav-item nav-sub">
+                    <a class="nav-item-link" href="/pages/dashboard-profesor.php#calificaciones-hci">Calificaciones</a>
+                </li>
             </ul>
         </ul>
-    </div>
-
-    <div class="sidebar-img">
-        <img src="img/sidebar-img.png" alt="imagen">
     </div>
 </aside>

@@ -1,88 +1,91 @@
-var anuncios = [
-    {
-        id: 1,
-        propio: true,
-        autor: 'Tú · Programación',
-        asig: 'Programación',
-        tiempo: 'Hace 2h',
-        titulo: 'Examen parcial – cambio de fecha',
-        desc: 'El examen del día 20 se traslada al 22. Misma aula.',
-        tipo: 'mios'
-    },
-    {
-        id: 2,
-        propio: false,
-        autor: 'Secretaría',
-        asig: '',
-        tiempo: 'Ayer',
-        titulo: 'Período de matrícula abierto',
-        desc: 'Del 15 al 30 de mayo podéis formalizar la matrícula.',
-        tipo: 'general'
-    },
-    {
-        id: 3,
-        propio: true,
-        autor: 'Tú · BD',
-        asig: 'BD',
-        tiempo: 'Hace 2d',
-        titulo: 'Material adicional unidad 3',
-        desc: 'He subido los apuntes de la sesión del martes.',
-        tipo: 'mios'
-    },
-    {
-        id: 4,
-        propio: true,
-        autor: 'Tú · HCI',
-        asig: 'HCI',
-        tiempo: 'Hace 3d',
-        titulo: 'Recordatorio entrega prototipo',
-        desc: 'La fecha límite es el 20 de mayo a las 23:59.',
-        tipo: 'mios'
-    },
-    {
-        id: 5,
-        propio: false,
-        autor: 'Dirección',
-        asig: '',
-        tiempo: 'Hace 5d',
-        titulo: 'Semana cultural — participación voluntaria',
-        desc: 'Del 27 al 31 de mayo se celebra la semana cultural del centro.',
-        tipo: 'general'
-    }
-];
+if (typeof anuncios === 'undefined') {
+    var anuncios = [
+        {
+            id: 1,
+            propio: true,
+            autor: 'Tú · Programación',
+            asig: 'Programación',
+            tiempo: 'Hace 2h',
+            titulo: 'Examen parcial – cambio de fecha',
+            desc: 'El examen del día 20 se traslada al 22. Misma aula.',
+            tipo: 'mios'
+        },
+        {
+            id: 2,
+            propio: false,
+            autor: 'Secretaría',
+            asig: '',
+            tiempo: 'Ayer',
+            titulo: 'Período de matrícula abierto',
+            desc: 'Del 15 al 30 de mayo podéis formalizar la matrícula.',
+            tipo: 'general'
+        },
+        {
+            id: 3,
+            propio: true,
+            autor: 'Tú · BD',
+            asig: 'BD',
+            tiempo: 'Hace 2d',
+            titulo: 'Material adicional unidad 3',
+            desc: 'He subido los apuntes de la sesión del martes.',
+            tipo: 'mios'
+        },
+        {
+            id: 4,
+            propio: true,
+            autor: 'Tú · HCI',
+            asig: 'HCI',
+            tiempo: 'Hace 3d',
+            titulo: 'Recordatorio entrega prototipo',
+            desc: 'La fecha límite es el 20 de mayo a las 23:59.',
+            tipo: 'mios'
+        },
+        {
+            id: 5,
+            propio: false,
+            autor: 'Dirección',
+            asig: '',
+            tiempo: 'Hace 5d',
+            titulo: 'Semana cultural — participación voluntaria',
+            desc: 'Del 27 al 31 de mayo se celebra la semana cultural del centro.',
+            tipo: 'general'
+        }
+    ];
+}
 
-var nextId = 6;
-var filtroActivo = 'todos';
-var anuncioId = null;
+var nextIdAnu = 6;
+var filtroActivoAnu = 'todos';
+var anuncioIdAnu = null;
 
-var listaAnuncios = document.getElementById('listaAnuncios');
-var modalFondo = document.getElementById('modalFondo');
-var modalTitulo = document.getElementById('modalTitulo');
-var inputTitulo = document.getElementById('inputTitulo');
-var inputDesc = document.getElementById('inputDesc');
-var inputAsig = document.getElementById('inputAsig');
-var inputTipo = document.getElementById('inputTipo');
-var btnBorrar = document.getElementById('btnBorrarAnuncio');
-var btnGuardar = document.getElementById('btnGuardar');
+var listaAnunciosAnu = document.getElementById('listaAnuncios');
+var modalFondoAnu = document.getElementById('modalFondoAnu');
+var modalTituloAnu = document.getElementById('modalTituloAnu');
+var inputTituloAnu = document.getElementById('inputTituloAnu');
+var inputDescAnu = document.getElementById('inputDescAnu');
+var inputAsigAnu = document.getElementById('inputAsigAnu');
+var inputTipoAnu = document.getElementById('inputTipoAnu');
+var btnBorrarAnu = document.getElementById('btnBorrarAnuncioAnu');
+var btnGuardarAnu = document.getElementById('btnGuardarAnu');
 
-
-function renderLista() {
-    listaAnuncios.innerHTML = '';
+// se renderiza la lista de anuncios usando forEach
+function renderListaAnu() {
+    listaAnunciosAnu.innerHTML = '';
 
     anuncios.forEach(function(anuncio) {
-        if (filtroActivo !== 'todos' && anuncio.tipo !== filtroActivo) return;
+        if (filtroActivoAnu !== 'todos' && anuncio.tipo !== filtroActivoAnu) return;
 
         var tagClase = anuncio.tipo === 'mios' ? 'tag-asignatura' : 'tag-general';
         var tagTexto = anuncio.tipo === 'mios' ? 'Asignatura' : 'General';
 
         var btnEditar = '';
         if (anuncio.propio) {
-            btnEditar = '<button class="btn-editar-anuncio"><img src="assets/icons/edit.svg" alt="editar"></button>';
+            btnEditar = '<button class="btn-editar-anuncio"><img src="assets/iconos/pencil.svg" alt="editar"></button>';
         }
 
         var card = document.createElement('div');
         card.className = 'anuncio-card' + (anuncio.propio ? ' propio' : '');
         card.setAttribute('data-id', anuncio.id);
+        
         card.innerHTML =
             '<div class="anuncio-top">' +
                 '<span class="anuncio-autor">' + anuncio.autor + '</span>' +
@@ -98,117 +101,146 @@ function renderLista() {
         if (anuncio.propio) {
             card.addEventListener('click', function(e) {
                 if (e.target.classList.contains('btn-editar-anuncio') || e.target.tagName === 'IMG') return;
-                abrirEditar(anuncio.id);
+                abrirEditarAnu(anuncio.id);
             });
 
             card.querySelector('.btn-editar-anuncio').addEventListener('click', function(e) {
                 e.stopPropagation();
-                abrirEditar(anuncio.id);
+                abrirEditarAnu(anuncio.id);
             });
         }
 
-        listaAnuncios.appendChild(card);
+        listaAnunciosAnu.appendChild(card);
     });
 }
 
-function abrirNuevo() {
-    anuncioId = null;
-    modalTitulo.textContent = 'Nuevo anuncio';
-    inputTitulo.value = '';
-    inputDesc.value = '';
-    inputAsig.value = 'Programación';
-    inputTipo.value = 'mios';
-    btnBorrar.classList.add('oculto');
-    btnGuardar.textContent = 'Publicar';
-    modalFondo.classList.add('visible');
+function abrirNuevoAnu() {
+    anuncioIdAnu = null;
+    modalTituloAnu.textContent = 'Nuevo anuncio';
+    inputTituloAnu.value = '';
+    inputDescAnu.value = '';
+    inputAsigAnu.value = 'Programación';
+    inputTipoAnu.value = 'mios';
+    btnBorrarAnu.classList.add('oculto');
+    btnGuardarAnu.textContent = 'Publicar';
+    modalFondoAnu.classList.add('visible');
 }
 
-function abrirEditar(id) {
+function abrirEditarAnu(id) {
+    // se busca el anuncio usando find
     var anuncio = anuncios.find(function(a) { return a.id === id; });
     if (!anuncio) return;
 
-    anuncioId = id;
-    modalTitulo.textContent = 'Editar anuncio';
-    inputTitulo.value = anuncio.titulo;
-    inputDesc.value = anuncio.desc;
-    inputAsig.value = anuncio.asig || 'Programación';
-    inputTipo.value = anuncio.tipo;
-    btnBorrar.classList.remove('oculto');
-    btnGuardar.textContent = 'Guardar';
-    modalFondo.classList.add('visible');
+    anuncioIdAnu = id;
+    modalTituloAnu.textContent = 'Editar anuncio';
+    inputTituloAnu.value = anuncio.titulo;
+    inputDescAnu.value = anuncio.desc;
+    inputAsigAnu.value = anuncio.asig || 'Programación';
+    inputTipoAnu.value = anuncio.tipo;
+    btnBorrarAnu.classList.remove('oculto');
+    btnGuardarAnu.textContent = 'Guardar';
+    modalFondoAnu.classList.add('visible');
 }
 
-function cerrarModal() {
-    modalFondo.classList.remove('visible');
-    anuncioId = null;
+function cerrarModalAnu() {
+    modalFondoAnu.classList.remove('visible');
+    anuncioIdAnu = null;
 }
 
-function guardar() {
-    var titulo = inputTitulo.value.trim();
+function guardarAnu() {
+    var titulo = inputTituloAnu.value.trim();
     if (!titulo) {
         alert('El título no puede estar vacío.');
         return;
     }
 
-    var asig = inputAsig.value;
-    var tipo = inputTipo.value;
+    var asig = inputAsigAnu.value;
+    var tipo = inputTipoAnu.value;
+    var desc = inputDescAnu.value.trim();
     var autorTexto = tipo === 'mios' ? 'Tú · ' + asig : 'Tú';
+    var idEnviar = anuncioIdAnu !== null ? anuncioIdAnu : '';
 
-    if (anuncioId === null) {
-        anuncios.unshift({
-            id: nextId++,
-            propio: true,
-            autor: autorTexto,
-            asig: asig,
-            tiempo: 'Ahora',
-            titulo: titulo,
-            desc: inputDesc.value.trim(),
-            tipo: tipo
-        });
-    } else {
-        var anuncio = anuncios.find(function(a) { return a.id === anuncioId; });
-        if (anuncio) {
-            anuncio.titulo = titulo;
-            anuncio.desc = inputDesc.value.trim();
-            anuncio.asig = asig;
-            anuncio.tipo = tipo;
-            anuncio.autor = autorTexto;
+    var params = 'id=' + idEnviar +
+                 '&titulo=' + encodeURIComponent(titulo) +
+                 '&desc=' + encodeURIComponent(desc) +
+                 '&asig=' + encodeURIComponent(asig) +
+                 '&tipo=' + tipo;
+
+    fetch('utils/guardar-anuncio.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params
+    })
+    .then(function(r) { return r.text(); })
+    .then(function(respuesta) {
+        if (anuncioIdAnu === null) {
+            anuncios.unshift({
+                id: parseInt(respuesta),
+                propio: true,
+                autor: autorTexto,
+                asig: asig,
+                tiempo: 'Ahora',
+                titulo: titulo,
+                desc: desc,
+                tipo: tipo
+            });
+        } else {
+            var anuncio = anuncios.find(function(a) { return a.id === anuncioIdAnu; });
+            if (anuncio) {
+                anuncio.titulo = titulo;
+                anuncio.desc = desc;
+                anuncio.asig = asig;
+                anuncio.tipo = tipo;
+                anuncio.autor = autorTexto;
+            }
         }
-    }
-
-    cerrarModal();
-    renderLista();
+        cerrarModalAnu();
+        renderListaAnu();
+    });
 }
 
-function borrarAnuncio() {
-    if (anuncioId === null) return;
+function borrarAnuncioAnu() {
+    if (anuncioIdAnu === null) return;
     if (!confirm('¿Seguro que quieres eliminar este anuncio?')) return;
 
-    anuncios = anuncios.filter(function(a) { return a.id !== anuncioId; });
-    cerrarModal();
-    renderLista();
+    var idBorrar = anuncioIdAnu;
+
+    fetch('utils/borrar-anuncio.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'id=' + idBorrar
+    })
+    .then(function() {
+        anuncios = anuncios.filter(function(a) { return a.id !== idBorrar; });
+        cerrarModalAnu();
+        renderListaAnu();
+    });
 }
 
-document.getElementById('btnNuevoAnuncio').addEventListener('click', abrirNuevo);
-document.getElementById('modalCerrar').addEventListener('click', cerrarModal);
-document.getElementById('btnCancelar').addEventListener('click', cerrarModal);
-btnGuardar.addEventListener('click', guardar);
-btnBorrar.addEventListener('click', borrarAnuncio);
+document.getElementById('btnNuevoAnuncio').addEventListener('click', abrirNuevoAnu);
+document.getElementById('modalCerrarAnu').addEventListener('click', cerrarModalAnu);
+document.getElementById('btnCancelarAnu').addEventListener('click', cerrarModalAnu);
+btnGuardarAnu.addEventListener('click', guardarAnu);
+btnBorrarAnu.addEventListener('click', borrarAnuncioAnu);
 
-modalFondo.addEventListener('click', function(e) {
-    if (e.target === modalFondo) cerrarModal();
+modalFondoAnu.addEventListener('click', function(e) {
+    if (e.target === modalFondoAnu) cerrarModalAnu();
 });
 
-// botones de filtro
-document.querySelectorAll('.filtro').forEach(function(btn) {
+// se configuran los botones de filtro
+var botonesFiltroAnu = document.querySelectorAll('.filtro');
+botonesFiltroAnu.forEach(function(btn) {
     btn.addEventListener('click', function() {
-        document.querySelectorAll('.filtro').forEach(function(b) {
+        botonesFiltroAnu.forEach(function(b) {
             b.classList.remove('activo');
         });
         btn.classList.add('activo');
-        filtroActivo = btn.getAttribute('data-filtro');
-        renderLista();
+        filtroActivoAnu = btn.getAttribute('data-filtro');
+        renderListaAnu();
     });
 });
 
-renderLista();
+// se realiza el arranque inicial
+renderListaAnu();
+
+window.abrirNuevoAnuncioModal = abrirNuevoAnu;
