@@ -2,14 +2,14 @@
     <div class="sidebar-grupo">
         <p class="sidebar-label">PRINCIPAL</p>
         <ul class="sidebar-nav">
-            <li class="nav-item <?= $seccion === 'inicio' ? 'activo' : '' ?>">
+            <li class="nav-item nav-item-link-wrap <?= $seccion === 'inicio' ? 'activo' : '' ?>">
                 <a class="nav-item-link" href="/pages/dashboard-profesor.php">
                     <img src="assets/iconos/home.svg" alt="" class="nav-icon">
                     Inicio
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item-link" href="/pages/dashboard-profesor.php#">
+            <li class="nav-item nav-item-link-wrap">
+                <a class="nav-item-link" href="/pages/dashboard-profesor.php#calendario">
                     <img src="assets/iconos/calendar.svg" alt="" class="nav-icon">
                     Calendario
                 </a>
@@ -48,8 +48,12 @@
                 <span class="chevron">&#8250;</span>
             </li>
             <ul class="submenu" id="sub-prog">
-                <li class="nav-item nav-sub">Recursos</li>
-                <li class="nav-item nav-sub">Tareas</li>
+                <li class="nav-item nav-sub">
+                    <a class="nav-item-link" href="/pages/dashboard-profesor.php#recursos-prog">Recursos</a>
+                </li>
+                <li class="nav-item nav-sub">
+                    <a class="nav-item-link" href="/pages/dashboard-profesor.php#tareas-prog">Tareas</a>
+                </li>
                 <li class="nav-item nav-sub">
                     <a class="nav-item-link" href="/pages/dashboard-profesor.php#calificaciones-prog">Calificaciones</a>
                 </li>
@@ -61,8 +65,12 @@
                 <span class="chevron">&#8250;</span>
             </li>
             <ul class="submenu" id="sub-bd">
-                <li class="nav-item nav-sub">Recursos</li>
-                <li class="nav-item nav-sub">Tareas</li>
+                <li class="nav-item nav-sub">
+                    <a class="nav-item-link" href="/pages/dashboard-profesor.php#recursos-bd">Recursos</a>
+                </li>
+                <li class="nav-item nav-sub">
+                    <a class="nav-item-link" href="/pages/dashboard-profesor.php#tareas-bd">Tareas</a>
+                </li>
                 <li class="nav-item nav-sub">
                     <a class="nav-item-link" href="/pages/dashboard-profesor.php#calificaciones-bd">Calificaciones</a>
                 </li>
@@ -74,8 +82,12 @@
                 <span class="chevron">&#8250;</span>
             </li>
             <ul class="submenu" id="sub-hci">
-                <li class="nav-item nav-sub">Recursos</li>
-                <li class="nav-item nav-sub">Tareas</li>
+                <li class="nav-item nav-sub">
+                    <a class="nav-item-link" href="/pages/dashboard-profesor.php#recursos-hci">Recursos</a>
+                </li>
+                <li class="nav-item nav-sub">
+                    <a class="nav-item-link" href="/pages/dashboard-profesor.php#tareas-hci">Tareas</a>
+                </li>
                 <li class="nav-item nav-sub">
                     <a class="nav-item-link" href="/pages/dashboard-profesor.php#calificaciones-hci">Calificaciones</a>
                 </li>

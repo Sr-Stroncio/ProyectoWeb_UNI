@@ -1,0 +1,30 @@
+.pagina-beta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.beta-card {
+  width: 100%;
+  max-width: 520px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 18px;
+  padding: 45px 35px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.beta-card h2 {
+  margin: 0 0 14px 0;
+  font-size: 24px;
+  color: #222222;
+}
+
+.beta-card p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #555555;
+}

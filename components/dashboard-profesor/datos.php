@@ -97,8 +97,40 @@ foreach ($asignaturas_ids as $asig_id) {
     }
 }
 
-// se obtienen los alumnos y sus calificaciones
+// se obtienen los recursos del profesor
+$recursos_js = [];
+foreach ($asignaturas_ids as $asig_id) {
+    $stmt_as = mysqli_prepare($conexion, "SELECT Nombre FROM Asignatura WHERE ID = ?");
+    mysqli_stmt_bind_param($stmt_as, "i", $asig_id);
+    mysqli_stmt_execute($stmt_as);
+    $row_as = mysqli_fetch_row(mysqli_stmt_get_result($stmt_as));
+    $nombre_asig = $row_as[0];
+
+    $stmt_r = mysqli_prepare($conexion, "SELECT * FROM Recurso WHERE ID_asignatura = ?");
+    mysqli_stmt_bind_param($stmt_r, "i", $asig_id);
+    mysqli_stmt_execute($stmt_r);
+    $recursos_raw = mysqli_fetch_all(mysqli_stmt_get_result($stmt_r), MYSQLI_ASSOC);
+
+    foreach ($recursos_raw as $r) {
+        $recursos_js[] = [
+            'id' => (int)$r['ID'],
+            'titulo' => $r['Titulo'],
+            'desc' => $r['Descripcion'],
+            'asig' => $nombre_asig === 'Programación' ? 'Programación' : ($nombre_asig === 'Bases de Datos' ? 'BD' : 'HCI'),
+            'estado' => $r['Estado'],
+            'url' => $r['Archivo_URL']
+        ];
+    }
+}
+
+// se obtienen los alumnos, los examenes y las calificaciones (dinamico)
 $calificaciones_js = [
+    'prog' => [],
+    'bd' => [],
+    'hci' => []
+];
+
+$examenes_js = [
     'prog' => [],
     'bd' => [],
     'hci' => []
@@ -119,23 +151,18 @@ foreach ($asignaturas_ids as $asig_id) {
         $key = 'hci';
     }
 
-    // se obtienen los examenes
-    $stmt_ex = mysqli_prepare($conexion, "SELECT ID, Titulo FROM Examen WHERE ID_asignatura = ?");
+    // se obtienen los examenes de la asignatura (sin auto-crear nada)
+    $stmt_ex = mysqli_prepare($conexion, "SELECT ID, Titulo, Fecha_examen FROM Examen WHERE ID_asignatura = ? ORDER BY Fecha_examen");
     mysqli_stmt_bind_param($stmt_ex, "i", $asig_id);
     mysqli_stmt_execute($stmt_ex);
     $examenes = mysqli_fetch_all(mysqli_stmt_get_result($stmt_ex), MYSQLI_ASSOC);
 
-    // si no hay examenes se crean
-    if (empty($examenes)) {
-        $titulos = ['Examen Parcial 1', 'Examen Parcial 2', 'Examen Final Ordinario'];
-        foreach ($titulos as $titulo) {
-            $stmt_ins = mysqli_prepare($conexion, "INSERT INTO Examen (ID_asignatura, ID_profesor, Titulo, Fecha_examen) VALUES (?, ?, ?, NOW())");
-            mysqli_stmt_bind_param($stmt_ins, "iis", $asig_id, $id_profesor, $titulo);
-            mysqli_stmt_execute($stmt_ins);
-        }
-
-        mysqli_stmt_execute($stmt_ex);
-        $examenes = mysqli_fetch_all(mysqli_stmt_get_result($stmt_ex), MYSQLI_ASSOC);
+    foreach ($examenes as $ex) {
+        $examenes_js[$key][] = [
+            'id' => (int)$ex['ID'],
+            'titulo' => $ex['Titulo'],
+            'fecha' => $ex['Fecha_examen']
+        ];
     }
 
     // se obtienen los alumnos
@@ -156,33 +183,22 @@ foreach ($asignaturas_ids as $asig_id) {
 
         if (!$u) continue;
 
-        $p1 = null;
-        $p2 = null;
-        $final = null;
-
+        // se montan las notas como un diccionario id_examen => nota
+        $notas = [];
         foreach ($examenes as $ex) {
             $stmt_n = mysqli_prepare($conexion, "SELECT Nota FROM Nota_Examen WHERE ID_examen = ? AND ID_alumno = ?");
             mysqli_stmt_bind_param($stmt_n, "ii", $ex['ID'], $al_id);
             mysqli_stmt_execute($stmt_n);
             $row_n = mysqli_fetch_row(mysqli_stmt_get_result($stmt_n));
-            $nota = $row_n ? $row_n[0] : null;
-
-            if (strpos(strtolower($ex['Titulo']), 'parcial 1') !== false) {
-                $p1 = $nota;
-            } elseif (strpos(strtolower($ex['Titulo']), 'parcial 2') !== false) {
-                $p2 = $nota;
-            } elseif (strpos(strtolower($ex['Titulo']), 'final') !== false) {
-                $final = $nota;
-            }
+            $id_ex_str = (string)$ex['ID'];
+            $notas[$id_ex_str] = $row_n && $row_n[0] !== null ? (float)$row_n[0] : null;
         }
 
         $calificaciones_js[$key][] = [
             'id' => (int)$u['ID'],
             'nombre' => $u['Nombre'] . ' ' . $u['Apellido'],
             'email' => $u['Email'],
-            'p1' => $p1 !== null ? (float)$p1 : null,
-            'p2' => $p2 !== null ? (float)$p2 : null,
-            'final' => $final !== null ? (float)$final : null
+            'notas' => $notas
         ];
     }
 }
