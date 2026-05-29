@@ -9,7 +9,7 @@ $id_alumno = $_SESSION['usuario_id'];
 
 $seccion = $_GET['seccion'] ?? 'inicio';
 $id_asignatura = $_GET['id'] ?? null;
-$vista = $_GET['vista'] ?? null; 
+$vista = $_GET['vista'] ?? null;
 
 $sql_asignaturas = "SELECT 
                         Asignatura.ID,
@@ -39,6 +39,7 @@ if (!$resultado_asignaturas) {
     <link rel="stylesheet" href="css/dashboard-alumno.css">
     <link rel="stylesheet" href="css/inicio-alumno.css">
     <link rel="stylesheet" href="css/calificaciones-alumno.css">
+    <link rel="stylesheet" href="css/alumno-anuncios.css">
     <title>Dashboard alumno</title>
 </head>
 
@@ -61,8 +62,12 @@ if (!$resultado_asignaturas) {
                 include '../components/dashboard-alumno/anuncios-alumno.php';
             } elseif ($seccion === 'calendario') {
                 include '../components/dashboard-alumno/inicio-alumno.php';
-            } elseif ($seccion === 'asignatura') {
-                include '../components/dashboard-alumno/inicio-alumno.php';
+            } elseif ($seccion === 'recursos') {
+                include '../components/dashboard-alumno/tareas-alumno.php';
+            } elseif ($seccion === 'examenes') {
+                include '../components/dashboard-alumno/tareas-alumno.php';
+            } elseif ($seccion === 'tareas') {
+                include '../components/dashboard-alumno/tareas-alumno.php';
             } else {
                 include '../components/dashboard-alumno/inicio-alumno.php';
             }
