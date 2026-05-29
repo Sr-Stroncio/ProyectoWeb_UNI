@@ -1,8 +1,8 @@
 <?php
 
 $servidor = "localhost";
-$usuario = "root";
-$password = "";
+$usuario = "doa_user";
+$password = "Doa_2026.Mysql";
 $base_datos = "doa_db";
 $puerto = 3306;
 
