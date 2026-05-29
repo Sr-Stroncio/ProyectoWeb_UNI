@@ -26,6 +26,7 @@ if ($seccion == 'grados') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
+    <link rel="stylesheet" href="css/profesor-header.css">
     <link rel="stylesheet" href="css/dashboard-admin.css">
     <title>Dashboard administrador</title>
 </head>
