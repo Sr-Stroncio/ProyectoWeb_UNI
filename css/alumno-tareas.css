@@ -1,0 +1,59 @@
+.pagina-tareas .anuncio-card {
+  min-height: auto;
+  max-height: none;
+}
+
+.pagina-tareas .anuncio-contenido {
+  overflow: visible;
+}
+
+.pagina-tareas .anuncio-desc {
+  overflow: visible;
+  margin-bottom: 16px;
+}
+
+.tarea-estado {
+  margin-top: 14px;
+}
+
+.estado-pendiente,
+.estado-entregada {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 999px;
+}
+
+.estado-pendiente {
+  color: #9a6500;
+  background-color: #fff3d6;
+}
+
+.estado-entregada {
+  color: #284b7a;
+  background-color: #e8f1ff;
+}
+
+.tarea-contenido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.tarea-desc {
+  flex: 1;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .tarea-contenido {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tarea-estado {
+    text-align: left;
+  }
+}
