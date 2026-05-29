@@ -98,7 +98,7 @@ Comienzo del HTML del inicio del dashboard
             <?php if (mysqli_num_rows($resultado_anuncios) > 0): ?>
 
                 <?php while ($anuncio = mysqli_fetch_assoc($resultado_anuncios)): ?>
-                    <a href="">
+                    <a href="/pages/dashboard-alumno.php?seccion=beta">
                         <article class="anuncio-card">
 
                             <div class="anuncio-info">
