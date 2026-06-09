@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 require_once __DIR__ . "/../database/conexion.php";
@@ -78,6 +79,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
+// cuentas para el desplegable de demo (no se consulta la password real)
+$demo_password = '123456';
+$cuentas_demo = [];
+$sql_demo = "SELECT Nombre, Apellido, Email, Rol
+             FROM Usuario
+             WHERE Rol IN ('alumno', 'profesor', 'admin')
+             ORDER BY Rol, Nombre";
+$res_demo = mysqli_query($conexion, $sql_demo);
+if ($res_demo) {
+    while ($fila = mysqli_fetch_assoc($res_demo)) {
+        $cuentas_demo[] = $fila;
+    }
+}
+
 ?>
 
 <!-- comienzo del html -->
@@ -135,14 +150,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="texto-error"><?= $error ?></p>
             <?php endif; ?>
 
+            <?php if (!empty($cuentas_demo)): ?>
+                <div class="demo-cuentas" id="demoCuentas" data-password="<?= $demo_password ?>">
+                    <button type="button" class="demo-toggle" id="demoToggle">
+                        <span>Cuentas de demostración</span>
+                        <span class="demo-flecha">&#9662;</span>
+                    </button>
+                    <ul class="demo-lista">
+                        <?php foreach ($cuentas_demo as $cuenta): ?>
+                            <li class="demo-item"
+                                data-email="<?= htmlspecialchars($cuenta['Email']) ?>">
+                                <span class="demo-nombre"><?= htmlspecialchars(trim($cuenta['Nombre'] . ' ' . $cuenta['Apellido'])) ?></span>
+                                <span class="demo-rol"><?= ucfirst($cuenta['Rol']) ?></span>
+                                <span class="demo-email"><?= htmlspecialchars($cuenta['Email']) ?></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
             <form method="POST" action="">
                 <p class="texto-campo">Correo institucional</p>
-                <input class="caja-input" type="email" name="correo"
+                <input class="caja-input" type="email" name="correo" id="campoCorreo"
                     placeholder="correo@institución.es"
                     value="<?= htmlspecialchars($correo_guardado) ?>">
 
                 <p class="texto-campo">Contraseña</p>
-                <input class="caja-input" type="password" name="password"
+                <input class="caja-input" type="password" name="password" id="campoPassword"
                     placeholder="••••••••">
 
                 <p class="olvide">
@@ -165,6 +199,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setTimeout(() => {
                 mensajeError.style.display = "none";
             }, 2000);
+        }
+
+        // se rellena el formulario al elegir una cuenta del desplegable
+        var demoCuentas = document.getElementById('demoCuentas');
+
+        if (demoCuentas) {
+            var demoToggle = document.getElementById('demoToggle');
+            var campoCorreo = document.getElementById('campoCorreo');
+            var campoPassword = document.getElementById('campoPassword');
+            var demoPassword = demoCuentas.getAttribute('data-password');
+            var demoItems = demoCuentas.querySelectorAll('.demo-item');
+
+            demoToggle.addEventListener('click', function() {
+                demoCuentas.classList.toggle('abierto');
+            });
+
+            demoItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    campoCorreo.value = item.getAttribute('data-email');
+                    campoPassword.value = demoPassword;
+                    demoCuentas.classList.remove('abierto');
+                });
+            });
+
+            document.addEventListener('click', function(evento) {
+                if (!demoCuentas.contains(evento.target)) {
+                    demoCuentas.classList.remove('abierto');
+                }
+            });
         }
     </script>
 </body>
