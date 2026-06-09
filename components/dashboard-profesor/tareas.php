@@ -23,6 +23,10 @@
             <label class="campo-label">Descripción</label>
             <textarea class="campo-input campo-textarea" id="inputDescTar" placeholder="Instrucciones de la tarea..."></textarea>
 
+            <label class="campo-label">Archivo PDF (opcional)</label>
+            <input class="campo-input" type="file" id="inputArchivoTar" accept="application/pdf">
+            <p class="archivo-actual oculto" id="archivoActualTar"></p>
+
             <!-- extender plazo (solo visible al editar) -->
             <div class="extender-bloque" id="extenderBloqueTar">
                 <label class="campo-label">Extender plazo</label>

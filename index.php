@@ -11,7 +11,7 @@ session_start();
     <link rel="stylesheet" href="css/lading_page.css">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <title>Landing page</title>
-    <base href="/">
+    <base href=".">
 </head>
 
 <body>
