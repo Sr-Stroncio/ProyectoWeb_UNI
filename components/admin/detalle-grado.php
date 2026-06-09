@@ -2,8 +2,7 @@
 $stmt = $conexion->prepare("SELECT ID, Nombre FROM Grado WHERE ID = ?");
 $stmt->bind_param("i", $id_grado);
 $stmt->execute();
-$res = $stmt->get_result();
-$grado = $res->fetch_assoc();
+$grado = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$grado) {
@@ -57,6 +56,10 @@ if (count($ids_cursos) > 0) {
     ");
     $asignaturas = $res->fetch_all(MYSQLI_ASSOC);
 }
+
+// para los selects de los modales de grado
+$res = $conexion->query("SELECT ID, Nombre FROM Grado ORDER BY Nombre ASC");
+$todosGrados = $res->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <div class="bloque">
@@ -169,7 +172,6 @@ if (count($ids_cursos) > 0) {
 <div class="bloque">
     <div class="bloque-cabecera">
         <h3>Materias</h3>
-        <button class="btn-nuevo" id="btnAddMateria">+ Añadir materia</button>
     </div>
 
     <?php if (count($asignaturas) == 0): ?>
@@ -200,4 +202,70 @@ if (count($ids_cursos) > 0) {
             </table>
         </div>
     <?php endif; ?>
+</div>
+
+<!-- modal añadir alumno — mismo util que la sección de alumnos, con id_grado relleno -->
+<div class="modal-fondo" id="modalAddAlumno">
+    <div class="modal">
+        <div class="modal-cabecera">
+            <h4>Nuevo alumno</h4>
+            <button class="btn-cerrar-modal" id="btnCerrarAddAlumno">✕</button>
+        </div>
+        <form method="POST" action="/utils/crear-alumno.php">
+            <input type="hidden" name="id_grado" value="<?= $id_grado ?>">
+            <div class="campo">
+                <label for="addNombreAlumno">Nombre</label>
+                <input type="text" id="addNombreAlumno" name="nombre" placeholder="Nombre del alumno">
+            </div>
+            <div class="campo">
+                <label for="addApellidoAlumno">Apellido</label>
+                <input type="text" id="addApellidoAlumno" name="apellido" placeholder="Apellido del alumno">
+            </div>
+            <div class="campo">
+                <label for="addEmailAlumno">Correo</label>
+                <input type="email" id="addEmailAlumno" name="email" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="campo">
+                <label for="addDniAlumno">DNI</label>
+                <input type="text" id="addDniAlumno" name="dni" placeholder="DNI del alumno">
+            </div>
+            <div class="modal-botones">
+                <button type="button" class="btn-cancelar" id="btnCancelarAddAlumno">Cancelar</button>
+                <button type="submit" class="btn-guardar">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- modal añadir profesor — mismo util que la sección de profesores -->
+<div class="modal-fondo" id="modalAddProfesor">
+    <div class="modal">
+        <div class="modal-cabecera">
+            <h4>Nuevo profesor</h4>
+            <button class="btn-cerrar-modal" id="btnCerrarAddProfesor">✕</button>
+        </div>
+        <form method="POST" action="/utils/crear-profesor.php">
+            <input type="hidden" name="id_grado" value="<?= $id_grado ?>">
+            <div class="campo">
+                <label for="addNombreProfesor">Nombre</label>
+                <input type="text" id="addNombreProfesor" name="nombre" placeholder="Nombre del profesor">
+            </div>
+            <div class="campo">
+                <label for="addApellidoProfesor">Apellido</label>
+                <input type="text" id="addApellidoProfesor" name="apellido" placeholder="Apellido del profesor">
+            </div>
+            <div class="campo">
+                <label for="addEmailProfesor">Correo</label>
+                <input type="email" id="addEmailProfesor" name="email" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="campo">
+                <label for="addDniProfesor">DNI</label>
+                <input type="text" id="addDniProfesor" name="dni" placeholder="DNI del profesor">
+            </div>
+            <div class="modal-botones">
+                <button type="button" class="btn-cancelar" id="btnCancelarAddProfesor">Cancelar</button>
+                <button type="submit" class="btn-guardar">Guardar</button>
+            </div>
+        </form>
+    </div>
 </div>

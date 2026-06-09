@@ -1,27 +1,27 @@
+// grados-admin.js
+
 var sidebar = document.getElementById('sidebar');
 var btnMenu = document.getElementById('btnMenu');
 var overlay = document.getElementById('overlay');
 
-btnMenu.addEventListener('click', function() {
-    sidebar.classList.toggle('abierto');
-    overlay.classList.toggle('activo');
-});
+if (btnMenu) {
+    btnMenu.addEventListener('click', function() {
+        sidebar.classList.toggle('abierto');
+        overlay.classList.toggle('activo');
+    });
+}
 
-overlay.addEventListener('click', function() {
-    sidebar.classList.remove('abierto');
-    overlay.classList.remove('activo');
-});
+if (overlay) {
+    overlay.addEventListener('click', function() {
+        sidebar.classList.remove('abierto');
+        overlay.classList.remove('activo');
+    });
+}
 
 var modales = {
-    'btnNuevoGrado':        'modalNuevoGrado',
-    'btnNuevoAlumno':       'modalNuevoAlumno',
-    'btnEditarAlumno':      'modalEditarAlumno',
-    'btnEditarAsignaturas': 'modalEditarAsignaturas',
-    'btnNuevoProfesor':     'modalNuevoProfesor',
-    'btnEditarProfesor':    'modalEditarProfesor',
-    'btnEditarMaterias':    'modalEditarMaterias',
-    'btnAddAlumno':         'modalAddAlumno',
-    'btnAddProfesor':       'modalAddProfesor'
+    'btnNuevoGrado':    'modalNuevoGrado',
+    'btnAddAlumno':     'modalAddAlumno',
+    'btnAddProfesor':   'modalAddProfesor'
 };
 
 Object.keys(modales).forEach(function(btnId) {
@@ -36,12 +36,6 @@ Object.keys(modales).forEach(function(btnId) {
 
 var cierres = [
     'btnCerrarModal', 'btnCancelarModal',
-    'btnCerrarModalAlumno', 'btnCancelarModalAlumno',
-    'btnCerrarModalEditar', 'btnCancelarModalEditar',
-    'btnCerrarModalAsig', 'btnCancelarModalAsig',
-    'btnCerrarModalProfesor', 'btnCancelarModalProfesor',
-    'btnCerrarModalEditarProfesor', 'btnCancelarModalEditarProfesor',
-    'btnCerrarModalMaterias', 'btnCancelarModalMaterias',
     'btnCerrarAddAlumno', 'btnCancelarAddAlumno',
     'btnCerrarAddProfesor', 'btnCancelarAddProfesor'
 ];
@@ -58,7 +52,6 @@ cierres.forEach(function(id) {
 });
 
 var buscador = document.getElementById('buscadorAlumnos');
-
 if (buscador) {
     buscador.addEventListener('input', function() {
         var texto = buscador.value.toLowerCase();
@@ -68,30 +61,7 @@ if (buscador) {
     });
 }
 
-var buscadorProf = document.getElementById('buscadorProfesores');
-
-if (buscadorProf) {
-    buscadorProf.addEventListener('input', function() {
-        var texto = buscadorProf.value.toLowerCase();
-        document.querySelectorAll('#tablaProfesores tbody tr').forEach(function(fila) {
-            fila.style.display = fila.textContent.toLowerCase().includes(texto) ? '' : 'none';
-        });
-    });
-}
-
-function eliminarAlumno(idAlumno) {
-    if (!confirm('¿Seguro que quieres eliminar este alumno?')) return;
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = '/utils/eliminar-alumno.php';
-    var i1 = document.createElement('input');
-    i1.type = 'hidden'; i1.name = 'id_alumno'; i1.value = idAlumno;
-    form.appendChild(i1);
-    document.body.appendChild(form);
-    form.submit();
-}
-
-function eliminarAlumnoGrado(idAlumno, idGrado) {
+function eliminarAlumno(idAlumno, idGrado) {
     if (!confirm('¿Seguro que quieres eliminar este alumno del grado?')) return;
     var form = document.createElement('form');
     form.method = 'POST';
@@ -129,18 +99,6 @@ function eliminarMateria(idMateria, idGrado) {
     var i2 = document.createElement('input');
     i2.type = 'hidden'; i2.name = 'id_grado'; i2.value = idGrado;
     form.appendChild(i1); form.appendChild(i2);
-    document.body.appendChild(form);
-    form.submit();
-}
-
-function eliminarProfesorAdmin(idProfesor) {
-    if (!confirm('¿Seguro que quieres eliminar este profesor?')) return;
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = '/utils/eliminar-profesor.php';
-    var i1 = document.createElement('input');
-    i1.type = 'hidden'; i1.name = 'id_profesor'; i1.value = idProfesor;
-    form.appendChild(i1);
     document.body.appendChild(form);
     form.submit();
 }
