@@ -14,6 +14,7 @@ $tareas_js = [];
 $calificaciones_js = [];
 $examenes_js = [];
 $recursos_js = [];
+$eventos_js = [];
 
 include '../components/dashboard-profesor/datos.php';
 ?>
@@ -68,6 +69,7 @@ include '../components/dashboard-profesor/datos.php';
     var examenes = <?= json_encode($examenes_js) ?>;
     var tareas = <?= json_encode($tareas_js) ?>;
     var recursos = <?= json_encode($recursos_js) ?>;
+    var eventos = <?= json_encode($eventos_js) ?>;
 </script>
 
 <script src="js/header-profesor.js"></script>
@@ -75,6 +77,7 @@ include '../components/dashboard-profesor/datos.php';
 <script src="js/tareas-profesor.js"></script>
 <script src="js/calificaciones-profesor.js"></script>
 <script src="js/recursos-profesor.js"></script>
+<script src="js/calendario-profesor.js"></script>
 <script src="js/router-profesor.js"></script>
 
 </body>

@@ -1,19 +1,17 @@
-if (typeof recursos === 'undefined') {
-    var recursos = [];
-}
+// los recursos llegan inyectados desde dashboard-profesor.php
 
-var filtroAsigRec = 'todas';
-var recursoIdRec = null;
+let filtroAsigRec = 'todas';
+let recursoIdRec = null;
 
-var listaRecursosRec = document.getElementById('listaRecursos');
-var modalFondoRec = document.getElementById('modalFondoRec');
-var modalTituloRec = document.getElementById('modalTituloRec');
-var inputTituloRec = document.getElementById('inputTituloRec');
-var inputDescRec = document.getElementById('inputDescRec');
-var inputAsigRec = document.getElementById('inputAsigRec');
-var inputUrlRec = document.getElementById('inputUrlRec');
-var inputEstadoRec = document.getElementById('inputEstadoRec');
-var btnBorrarRec = document.getElementById('btnBorrarRecursoRec');
+const listaRecursosRec = document.getElementById('listaRecursos');
+const modalFondoRec = document.getElementById('modalFondoRec');
+const modalTituloRec = document.getElementById('modalTituloRec');
+const inputTituloRec = document.getElementById('inputTituloRec');
+const inputDescRec = document.getElementById('inputDescRec');
+const inputAsigRec = document.getElementById('inputAsigRec');
+const inputUrlRec = document.getElementById('inputUrlRec');
+const inputEstadoRec = document.getElementById('inputEstadoRec');
+const btnBorrarRec = document.getElementById('btnBorrarRecursoRec');
 
 function nombreAsigRec(codigo) {
     if (codigo === 'prog') return 'Programación';
@@ -24,13 +22,11 @@ function nombreAsigRec(codigo) {
 
 function filtrarRecursosPorAsignatura(codigo) {
     filtroAsigRec = codigo;
-    var sub = document.getElementById('subtituloRec');
-    if (sub) {
-        if (codigo === 'todas') {
-            sub.textContent = 'Todas las asignaturas';
-        } else {
-            sub.textContent = nombreAsigRec(codigo);
-        }
+    const sub = document.getElementById('subtituloRec');
+    if (codigo === 'todas') {
+        sub.textContent = 'Todas las asignaturas';
+    } else {
+        sub.textContent = nombreAsigRec(codigo);
     }
     renderRecursosRec();
 }
@@ -38,17 +34,17 @@ function filtrarRecursosPorAsignatura(codigo) {
 function renderRecursosRec() {
     listaRecursosRec.innerHTML = '';
 
-    var hayAlguno = false;
-    for (var i = 0; i < recursos.length; i++) {
-        var r = recursos[i];
+    let hayAlguno = false;
+    for (let i = 0; i < recursos.length; i++) {
+        let r = recursos[i];
         if (filtroAsigRec !== 'todas' && r.asig !== nombreAsigRec(filtroAsigRec)) continue;
         hayAlguno = true;
 
-        var card = document.createElement('div');
+        const card = document.createElement('div');
         card.className = 'recurso-card';
         card.setAttribute('data-id', r.id);
 
-        var enlace = '';
+        let enlace = '';
         if (r.url) {
             enlace = '<a class="recurso-link" href="' + r.url + '" target="_blank">Abrir enlace</a>';
         }
@@ -64,7 +60,7 @@ function renderRecursosRec() {
 
         card.addEventListener('click', function(e) {
             if (e.target.classList.contains('recurso-link')) return;
-            var id = parseInt(this.getAttribute('data-id'));
+            let id = parseInt(this.getAttribute('data-id'));
             abrirEditarRec(id);
         });
 
@@ -89,8 +85,8 @@ function abrirNuevoRec() {
 }
 
 function abrirEditarRec(id) {
-    var r = null;
-    for (var i = 0; i < recursos.length; i++) {
+    let r = null;
+    for (let i = 0; i < recursos.length; i++) {
         if (recursos[i].id === id) {
             r = recursos[i];
             break;
@@ -115,19 +111,19 @@ function cerrarModalRec() {
 }
 
 function guardarRec() {
-    var titulo = inputTituloRec.value.trim();
+    let titulo = inputTituloRec.value.trim();
     if (!titulo) {
         alert('El titulo no puede estar vacio.');
         return;
     }
 
-    var desc = inputDescRec.value.trim();
-    var asig = inputAsigRec.value;
-    var url = inputUrlRec.value.trim();
-    var estado = inputEstadoRec.value;
-    var idEnviar = recursoIdRec !== null ? recursoIdRec : '';
+    let desc = inputDescRec.value.trim();
+    let asig = inputAsigRec.value;
+    let url = inputUrlRec.value.trim();
+    let estado = inputEstadoRec.value;
+    const idEnviar = recursoIdRec !== null ? recursoIdRec : '';
 
-    var params = 'id=' + idEnviar +
+    const params = 'id=' + idEnviar +
                  '&titulo=' + encodeURIComponent(titulo) +
                  '&desc=' + encodeURIComponent(desc) +
                  '&asig=' + encodeURIComponent(asig) +
@@ -151,7 +147,7 @@ function guardarRec() {
                 estado: estado
             });
         } else {
-            for (var i = 0; i < recursos.length; i++) {
+            for (let i = 0; i < recursos.length; i++) {
                 if (recursos[i].id === recursoIdRec) {
                     recursos[i].titulo = titulo;
                     recursos[i].desc = desc;
@@ -171,7 +167,7 @@ function borrarRecursoRec() {
     if (recursoIdRec === null) return;
     if (!confirm('Seguro que quieres eliminar este recurso?')) return;
 
-    var idBorrar = recursoIdRec;
+    const idBorrar = recursoIdRec;
 
     fetch('utils/borrar-recurso.php', {
         method: 'POST',
@@ -179,8 +175,8 @@ function borrarRecursoRec() {
         body: 'id=' + idBorrar
     })
     .then(function() {
-        var nuevos = [];
-        for (var i = 0; i < recursos.length; i++) {
+        const nuevos = [];
+        for (let i = 0; i < recursos.length; i++) {
             if (recursos[i].id !== idBorrar) {
                 nuevos.push(recursos[i]);
             }

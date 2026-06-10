@@ -30,15 +30,35 @@ $id_asignatura = $row ? (int)$row[0] : null;
 // la fecha viene como YYYY-MM-DD, se le pone hora 23:59:59
 $fecha_limite = $cierre . ' 23:59:59';
 
+// se gestiona el archivo PDF que sube el profesor (es opcional)
+$archivo_guardado = '';
+if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] === UPLOAD_ERR_OK) {
+    // el tamaño ya se controla en el formulario, aqui solo se mira que sea pdf
+    if ($_FILES['archivo']['type'] === 'application/pdf') {
+        $carpeta = __DIR__ . '/../uploads/';
+        $nombre_archivo = 'tarea_' . time() . '_' . rand(1000, 9999) . '.pdf';
+        if (move_uploaded_file($_FILES['archivo']['tmp_name'], $carpeta . $nombre_archivo)) {
+            $archivo_guardado = 'uploads/' . $nombre_archivo;
+        }
+    }
+}
+
 if ($id > 0) {
-    // se actualiza la tarea existente
-    $stmt = mysqli_prepare($conexion, "UPDATE Tarea SET Titulo = ?, Descripcion = ?, ID_asignatura = ?, Fecha_limite = ? WHERE ID = ?");
-    mysqli_stmt_bind_param($stmt, "ssisi", $nombre, $desc, $id_asignatura, $fecha_limite, $id);
+    if ($archivo_guardado !== '') {
+        // se actualiza la tarea cambiando tambien el archivo
+        $stmt = mysqli_prepare($conexion, "UPDATE Tarea SET Titulo = ?, Descripcion = ?, ID_asignatura = ?, Fecha_limite = ?, Archivo_URL = ? WHERE ID = ?");
+        mysqli_stmt_bind_param($stmt, "ssissi", $nombre, $desc, $id_asignatura, $fecha_limite, $archivo_guardado, $id);
+    } else {
+        // se actualiza la tarea sin tocar el archivo que ya tuviera
+        $stmt = mysqli_prepare($conexion, "UPDATE Tarea SET Titulo = ?, Descripcion = ?, ID_asignatura = ?, Fecha_limite = ? WHERE ID = ?");
+        mysqli_stmt_bind_param($stmt, "ssisi", $nombre, $desc, $id_asignatura, $fecha_limite, $id);
+    }
     mysqli_stmt_execute($stmt);
+    echo '|' . $archivo_guardado;
 } else {
     // se crea una nueva tarea
-    $stmt = mysqli_prepare($conexion, "INSERT INTO Tarea (ID_asignatura, ID_profesor, Titulo, Descripcion, Fecha_limite) VALUES (?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, "iisss", $id_asignatura, $id_profesor, $nombre, $desc, $fecha_limite);
+    $stmt = mysqli_prepare($conexion, "INSERT INTO Tarea (ID_asignatura, ID_profesor, Titulo, Descripcion, Fecha_limite, Archivo_URL) VALUES (?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "iissss", $id_asignatura, $id_profesor, $nombre, $desc, $fecha_limite, $archivo_guardado);
     mysqli_stmt_execute($stmt);
-    echo mysqli_insert_id($conexion);
+    echo mysqli_insert_id($conexion) . '|' . $archivo_guardado;
 }

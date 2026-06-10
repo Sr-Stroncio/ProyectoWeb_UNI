@@ -6,6 +6,7 @@
             <a class="btn-nuevo" href="/pages/dashboard-profesor.php#anuncios-nuevo">+ Nuevo anuncio</a>
         </div>
 
+        <div class="lista-anuncios">
         <?php
         $count = 0;
         if (!empty($anuncios_js)) {
@@ -34,6 +35,7 @@
             echo '<p style="padding: 20px; color: #888;">No hay anuncios disponibles.</p>';
         }
         ?>
+        </div>
     </div>
 
     <!-- vista general -->

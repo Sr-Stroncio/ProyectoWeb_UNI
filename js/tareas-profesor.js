@@ -1,84 +1,42 @@
-if (typeof tareas === 'undefined') {
-    var tareas = [
-        {
-            id: 1,
-            nombre: 'Práctica 3 — Algoritmos',
-            asig: 'Programación',
-            cierre: '2025-05-15',
-            total: 28,
-            entregas: 22,
-            estado: 'abierta',
-            desc: 'Implementar los algoritmos de ordenación vistos en clase.'
-        },
-        {
-            id: 2,
-            nombre: 'Tarea SQL básico',
-            asig: 'BD',
-            cierre: '2025-05-12',
-            total: 31,
-            entregas: 31,
-            estado: 'cerrada',
-            desc: 'Consultas básicas sobre la base de datos de ejemplo.'
-        },
-        {
-            id: 3,
-            nombre: 'Entrega Prototipo P2',
-            asig: 'HCI',
-            cierre: '2025-05-20',
-            total: 25,
-            entregas: 8,
-            estado: 'abierta',
-            desc: 'Segunda entrega del prototipo de alta fidelidad.'
-        },
-        {
-            id: 4,
-            nombre: 'Examen Parcial 2',
-            asig: 'Programación',
-            cierre: '2025-05-22',
-            total: 28,
-            entregas: 0,
-            estado: 'futura',
-            desc: 'Examen de los temas 4, 5 y 6.'
-        }
-    ];
-}
+// las tareas llegan inyectadas desde dashboard-profesor.php
 
-var nextIdTar = 5;
-var filtroActivoTar = 'todas';
-var filtroAsigTar = 'todas';
-var tareaIdTar = null;
+let filtroActivoTar = 'todas';
+let filtroAsigTar = 'todas';
+let tareaIdTar = null;
 
-var cuerpoTablaTar = document.getElementById('cuerpoTabla');
-var modalFondoTar = document.getElementById('modalFondoTar');
-var modalTituloTar = document.getElementById('modalTituloTar');
-var inputNombreTar = document.getElementById('inputNombreTar');
-var inputAsigTar = document.getElementById('inputAsigTar');
-var inputCierreTar = document.getElementById('inputCierreTar');
-var inputDescTar = document.getElementById('inputDescTar');
-var btnBorrarTar = document.getElementById('btnBorrarTareaTar');
-var extenderBloqueTar = document.getElementById('extenderBloqueTar');
-var inputExtenderTar = document.getElementById('inputExtenderTar');
-var inputExtenderUnidadTar = document.getElementById('inputExtenderUnidadTar');
-var btnExtenderTar = document.getElementById('btnExtenderTar');
+const cuerpoTablaTar = document.getElementById('cuerpoTabla');
+const modalFondoTar = document.getElementById('modalFondoTar');
+const modalTituloTar = document.getElementById('modalTituloTar');
+const inputNombreTar = document.getElementById('inputNombreTar');
+const inputAsigTar = document.getElementById('inputAsigTar');
+const inputCierreTar = document.getElementById('inputCierreTar');
+const inputDescTar = document.getElementById('inputDescTar');
+const inputArchivoTar = document.getElementById('inputArchivoTar');
+const archivoActualTar = document.getElementById('archivoActualTar');
+const btnBorrarTar = document.getElementById('btnBorrarTareaTar');
+const extenderBloqueTar = document.getElementById('extenderBloqueTar');
+const inputExtenderTar = document.getElementById('inputExtenderTar');
+const inputExtenderUnidadTar = document.getElementById('inputExtenderUnidadTar');
+const btnExtenderTar = document.getElementById('btnExtenderTar');
 
 function formatearFechaTar(fechaStr) {
-    var meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
-    var partes = fechaStr.split('-');
+    // las tareas sin fecha limite llegan con la fecha vacia
+    if (!fechaStr) return '';
 
-    if (partes.length < 3) return fechaStr;
-
-    var dia = parseInt(partes[2]);
-    var mesNum = parseInt(partes[1]);
-    var mes = meses[mesNum - 1];
+    const meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    const partes = fechaStr.split('-');
+    const dia = parseInt(partes[2]);
+    const mesNum = parseInt(partes[1]);
+    const mes = meses[mesNum - 1];
     return dia + ' ' + mes;
 }
 
 // se calcula el estado a partir de la fecha de cierre
 function calcularEstadoTar(cierre) {
     if (!cierre) return 'abierta';
-    var hoy = new Date();
+    const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
-    var fechaCierre = new Date(cierre);
+    const fechaCierre = new Date(cierre);
     if (fechaCierre < hoy) return 'cerrada';
     return 'abierta';
 }
@@ -94,36 +52,40 @@ function nombreAsigTar(codigo) {
 // se cambia el filtro de asignatura desde fuera (lo llama el router)
 function filtrarTareasPorAsignatura(codigo) {
     filtroAsigTar = codigo;
-    var sub = document.getElementById('subtituloTar');
-    if (sub) {
-        if (codigo === 'todas') {
-            sub.textContent = 'Todas las asignaturas';
-        } else {
-            sub.textContent = nombreAsigTar(codigo);
-        }
+    const sub = document.getElementById('subtituloTar');
+    if (codigo === 'todas') {
+        sub.textContent = 'Todas las asignaturas';
+    } else {
+        sub.textContent = nombreAsigTar(codigo);
     }
     renderTablaTar();
 }
 
-// se pinta la tabla usando forEach
+// se pinta la tabla de tareas
 function renderTablaTar() {
     cuerpoTablaTar.innerHTML = '';
 
-    tareas.forEach(function(tarea) {
-        if (filtroActivoTar !== 'todas' && tarea.estado !== filtroActivoTar) return;
-        if (filtroAsigTar !== 'todas' && tarea.asig !== nombreAsigTar(filtroAsigTar)) return;
+    for (let i = 0; i < tareas.length; i++) {
+        let tarea = tareas[i];
+        if (filtroActivoTar !== 'todas' && tarea.estado !== filtroActivoTar) continue;
+        if (filtroAsigTar !== 'todas' && tarea.asig !== nombreAsigTar(filtroAsigTar)) continue;
 
-        var porcentaje = 0;
+        let porcentaje = 0;
         if (tarea.total > 0) {
             porcentaje = Math.round((tarea.entregas / tarea.total) * 100);
         }
 
-        var fila = document.createElement('div');
+        let enlacePdf = '';
+        if (tarea.archivo) {
+            enlacePdf = ' <a class="tarea-pdf" href="' + tarea.archivo + '" target="_blank">PDF</a>';
+        }
+
+        const fila = document.createElement('div');
         fila.className = 'tabla-fila';
         fila.setAttribute('data-id', tarea.id);
-        
+
         fila.innerHTML =
-            '<span class="col-tarea nombre-tarea">' + tarea.nombre + '</span>' +
+            '<span class="col-tarea nombre-tarea">' + tarea.nombre + enlacePdf + '</span>' +
             '<span class="col-asig">' + tarea.asig + '</span>' +
             '<span class="col-cierre">' + formatearFechaTar(tarea.cierre) + '</span>' +
             '<span class="col-entregas">' +
@@ -135,6 +97,7 @@ function renderTablaTar() {
 
         fila.addEventListener('click', function(e) {
             if (e.target.classList.contains('btn-ver')) return;
+            if (e.target.classList.contains('tarea-pdf')) return;
             abrirEditarTar(tarea.id);
         });
 
@@ -144,7 +107,7 @@ function renderTablaTar() {
         });
 
         cuerpoTablaTar.appendChild(fila);
-    });
+    }
 }
 
 function abrirNuevaTar() {
@@ -154,14 +117,22 @@ function abrirNuevaTar() {
     inputAsigTar.value = 'Programación';
     inputCierreTar.value = '';
     inputDescTar.value = '';
+    inputArchivoTar.value = '';
+    archivoActualTar.classList.add('oculto');
     btnBorrarTar.classList.add('oculto');
     extenderBloqueTar.classList.add('oculto');
     modalFondoTar.classList.add('visible');
 }
 
 function abrirEditarTar(id) {
-    // se busca la tarea usando find
-    var tarea = tareas.find(function(t) { return t.id === id; });
+    // se busca la tarea
+    let tarea = null;
+    for (let i = 0; i < tareas.length; i++) {
+        if (tareas[i].id === id) {
+            tarea = tareas[i];
+            break;
+        }
+    }
     if (!tarea) return;
 
     tareaIdTar = id;
@@ -170,7 +141,17 @@ function abrirEditarTar(id) {
     inputAsigTar.value = tarea.asig;
     inputCierreTar.value = tarea.cierre;
     inputDescTar.value = tarea.desc;
+    inputArchivoTar.value = '';
     inputExtenderTar.value = '';
+
+    // si la tarea ya tiene un PDF se muestra un enlace para verlo
+    if (tarea.archivo) {
+        archivoActualTar.innerHTML = 'Archivo actual: <a href="' + tarea.archivo + '" target="_blank">ver PDF</a>';
+        archivoActualTar.classList.remove('oculto');
+    } else {
+        archivoActualTar.classList.add('oculto');
+    }
+
     btnBorrarTar.classList.remove('oculto');
     extenderBloqueTar.classList.remove('oculto');
     modalFondoTar.classList.add('visible');
@@ -178,15 +159,15 @@ function abrirEditarTar(id) {
 
 function extenderTar() {
     if (tareaIdTar === null) return;
-    var cantidad = parseInt(inputExtenderTar.value) || 0;
+    let cantidad = parseInt(inputExtenderTar.value) || 0;
     if (cantidad <= 0) {
         alert('Introduce una cantidad valida para extender el plazo.');
         return;
     }
-    var unidad = inputExtenderUnidadTar.value;
-    var idEnviar = tareaIdTar;
+    let unidad = inputExtenderUnidadTar.value;
+    const idEnviar = tareaIdTar;
 
-    var params = 'id=' + idEnviar + '&cantidad=' + cantidad + '&unidad=' + unidad;
+    const params = 'id=' + idEnviar + '&cantidad=' + cantidad + '&unidad=' + unidad;
 
     fetch('utils/extender-tarea.php', {
         method: 'POST',
@@ -195,16 +176,30 @@ function extenderTar() {
     })
     .then(function(r) { return r.text(); })
     .then(function(nuevaFechaFull) {
-        // la respuesta viene como "YYYY-MM-DD HH:MM:SS", nos quedamos con la fecha
-        var nuevaFecha = nuevaFechaFull.split(' ')[0];
-        var tarea = tareas.find(function(t) { return t.id === idEnviar; });
+        // la respuesta viene como "YYYY-MM-DD HH:MM:SS", se coge solo la fecha
+        const nuevaFecha = nuevaFechaFull.split(' ')[0];
+        let tarea = null;
+        for (let i = 0; i < tareas.length; i++) {
+            if (tareas[i].id === idEnviar) {
+                tarea = tareas[i];
+                break;
+            }
+        }
         if (tarea && nuevaFecha) {
             tarea.cierre = nuevaFecha;
             tarea.estado = calcularEstadoTar(nuevaFecha);
             inputCierreTar.value = nuevaFecha;
+            // se mueve tambien el evento del calendario a la nueva fecha
+            for (let j = 0; j < eventos.length; j++) {
+                if (eventos[j].tipo === 'tarea' && eventos[j].id === idEnviar) {
+                    eventos[j].fecha = nuevaFecha;
+                    break;
+                }
+            }
         }
         inputExtenderTar.value = '';
         renderTablaTar();
+        refrescarCalendario();
         alert('Plazo extendido. Nueva fecha: ' + nuevaFecha);
     });
 }
@@ -215,54 +210,108 @@ function cerrarModalTar() {
 }
 
 function guardarTar() {
-    var nombre = inputNombreTar.value.trim();
+    let nombre = inputNombreTar.value.trim();
     if (!nombre) {
         alert('El nombre de la tarea no puede estar vacío.');
         return;
     }
 
-    var asig = inputAsigTar.value;
-    var cierre = inputCierreTar.value;
-    var desc = inputDescTar.value.trim();
-    var estado = calcularEstadoTar(cierre);
-    var idEnviar = tareaIdTar !== null ? tareaIdTar : '';
+    let asig = inputAsigTar.value;
+    let cierre = inputCierreTar.value;
+    let desc = inputDescTar.value.trim();
+    const estado = calcularEstadoTar(cierre);
+    const idEnviar = tareaIdTar !== null ? tareaIdTar : '';
 
-    var params = 'id=' + idEnviar +
-                 '&nombre=' + encodeURIComponent(nombre) +
-                 '&desc=' + encodeURIComponent(desc) +
-                 '&asig=' + encodeURIComponent(asig) +
-                 '&cierre=' + cierre;
+    // se valida que el archivo, si lo hay, sea un PDF de como mucho 10 MB
+    if (inputArchivoTar.files.length > 0) {
+        const archivo = inputArchivoTar.files[0];
+        if (archivo.type !== 'application/pdf') {
+            alert('El archivo tiene que ser un PDF.');
+            return;
+        }
+        if (archivo.size > 10 * 1024 * 1024) {
+            alert('El archivo no puede pesar más de 10 MB.');
+            return;
+        }
+    }
+
+    // se usa FormData para poder enviar el PDF junto con los demas campos
+    const datos = new FormData();
+    datos.append('id', idEnviar);
+    datos.append('nombre', nombre);
+    datos.append('desc', desc);
+    datos.append('asig', asig);
+    datos.append('cierre', cierre);
+    if (inputArchivoTar.files.length > 0) {
+        datos.append('archivo', inputArchivoTar.files[0]);
+    }
 
     fetch('utils/guardar-tarea.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params
+        body: datos
     })
     .then(function(r) { return r.text(); })
     .then(function(respuesta) {
+        // la respuesta viene como "id|ruta_archivo" (cualquiera de los dos puede ir vacio)
+        const partes = respuesta.split('|');
+        const idNuevo = partes[0];
+        const archivoNuevo = partes[1] || '';
+
         if (tareaIdTar === null) {
             tareas.push({
-                id: parseInt(respuesta),
+                id: parseInt(idNuevo),
                 nombre: nombre,
                 asig: asig,
                 cierre: cierre,
                 total: 0,
                 entregas: 0,
                 estado: estado,
-                desc: desc
+                desc: desc,
+                archivo: archivoNuevo
             });
+            // la tarea nueva tambien es un evento del calendario
+            if (cierre) {
+                eventos.push({
+                    id: parseInt(idNuevo),
+                    titulo: nombre,
+                    asig: asig,
+                    fecha: cierre,
+                    hora: '',
+                    tipo: 'tarea'
+                });
+            }
         } else {
-            var tarea = tareas.find(function(t) { return t.id === tareaIdTar; });
+            let tarea = null;
+            for (let i = 0; i < tareas.length; i++) {
+                if (tareas[i].id === tareaIdTar) {
+                    tarea = tareas[i];
+                    break;
+                }
+            }
             if (tarea) {
                 tarea.nombre = nombre;
                 tarea.asig = asig;
                 tarea.cierre = cierre;
                 tarea.estado = estado;
                 tarea.desc = desc;
+                // solo se cambia el archivo si se ha subido uno nuevo
+                if (archivoNuevo !== '') {
+                    tarea.archivo = archivoNuevo;
+                }
+            }
+            // se actualiza tambien el evento del calendario
+            for (let i = 0; i < eventos.length; i++) {
+                if (eventos[i].tipo === 'tarea' && eventos[i].id === tareaIdTar) {
+                    eventos[i].titulo = nombre;
+                    eventos[i].asig = asig;
+                    eventos[i].fecha = cierre;
+                    break;
+                }
             }
         }
         cerrarModalTar();
         renderTablaTar();
+        refrescarCalendario();
     });
 }
 
@@ -270,7 +319,7 @@ function borrarTareaTar() {
     if (tareaIdTar === null) return;
     if (!confirm('¿Seguro que quieres eliminar esta tarea?')) return;
 
-    var idBorrar = tareaIdTar;
+    const idBorrar = tareaIdTar;
 
     fetch('utils/borrar-tarea.php', {
         method: 'POST',
@@ -278,9 +327,25 @@ function borrarTareaTar() {
         body: 'id=' + idBorrar
     })
     .then(function() {
-        tareas = tareas.filter(function(t) { return t.id !== idBorrar; });
+        let nuevas = [];
+        for (let i = 0; i < tareas.length; i++) {
+            if (tareas[i].id !== idBorrar) {
+                nuevas.push(tareas[i]);
+            }
+        }
+        tareas = nuevas;
+        // se quita tambien el evento del calendario
+        let eventosNuevos = [];
+        for (let i = 0; i < eventos.length; i++) {
+            if (eventos[i].tipo === 'tarea' && eventos[i].id === idBorrar) {
+                continue;
+            }
+            eventosNuevos.push(eventos[i]);
+        }
+        eventos = eventosNuevos;
         cerrarModalTar();
         renderTablaTar();
+        refrescarCalendario();
     });
 }
 
@@ -296,17 +361,17 @@ modalFondoTar.addEventListener('click', function(e) {
 });
 
 // se configuran los botones de filtro
-var botonesFiltroTar = document.querySelectorAll('.filtro');
-botonesFiltroTar.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        botonesFiltroTar.forEach(function(b) {
-            b.classList.remove('activo');
-        });
-        btn.classList.add('activo');
-        filtroActivoTar = btn.getAttribute('data-filtro');
+const botonesFiltroTar = document.querySelectorAll('.filtro');
+for (let i = 0; i < botonesFiltroTar.length; i++) {
+    botonesFiltroTar[i].addEventListener('click', function() {
+        for (let j = 0; j < botonesFiltroTar.length; j++) {
+            botonesFiltroTar[j].classList.remove('activo');
+        }
+        this.classList.add('activo');
+        filtroActivoTar = this.getAttribute('data-filtro');
         renderTablaTar();
     });
-});
+}
 
 // se expone la funcion para que el router pueda llamarla
 window.filtrarTareasPorAsignatura = filtrarTareasPorAsignatura;

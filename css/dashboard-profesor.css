@@ -13,6 +13,10 @@ body {
   min-height: calc(100vh - 65px);
 }
 
+.seccion-panel {
+  background-color: #dddcd2;
+}
+
 /* header */
 header {
   display: flex;
@@ -74,16 +78,25 @@ header {
 
 .btn-menu {
   display: none;
-  background: none;
-  border: none;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f2f2;
+  border: 1px solid #d6d6d6;
+  border-radius: 12px;
   cursor: pointer;
-  margin-right: 10px;
-  padding: 4px;
+  margin-right: 12px;
+  padding: 11px;
+}
+
+.btn-menu:hover {
+  background-color: #ffce74;
+  border-color: #ffce74;
 }
 
 .btn-menu img {
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
+  display: block;
 }
 
 .div-nav {
@@ -291,6 +304,8 @@ main {
   background-color: #dddcd2;
   padding: 32px 28px;
   box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .main-cabecera {
@@ -556,15 +571,13 @@ main {
   flex: 1;
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
-  padding: 20px 24px;
-}
-
-.stat-card:first-child {
-  border-radius: 12px 0 0 12px;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-right: 16px;
 }
 
 .stat-card:last-child {
-  border-radius: 0 12px 12px 0;
+  margin-right: 0;
 }
 
 .stat-label {
@@ -742,7 +755,7 @@ main {
 
 .lista-anuncios {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .anuncio-card {
@@ -751,6 +764,9 @@ main {
   border-radius: 12px;
   padding: 20px 24px;
   margin-bottom: 14px;
+  margin-right: 2%;
+  width: 31%;
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -1103,6 +1119,31 @@ main {
   color: #222222;
 }
 
+.tarea-pdf {
+  font-size: 12px;
+  font-weight: 600;
+  color: #c0392b;
+  text-decoration: none;
+  margin-left: 8px;
+  padding: 2px 7px;
+  border: 1px solid #f0c9c2;
+  border-radius: 6px;
+}
+
+.tarea-pdf:hover {
+  background-color: #fdecea;
+}
+
+.archivo-actual {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #555555;
+}
+
+.archivo-actual.oculto {
+  display: none;
+}
+
 .entregas-texto {
   font-size: 13px;
   color: #555555;
@@ -1182,20 +1223,16 @@ main {
     left: 0;
   }
 
+  .btn-menu {
+    display: flex;
+  }
+
   main {
     padding: 20px 16px;
   }
 
   .stats-fila {
     flex-direction: column;
-  }
-
-  .stat-card:first-child {
-    border-radius: 12px 12px 0 0;
-  }
-
-  .stat-card:last-child {
-    border-radius: 0 0 12px 12px;
   }
 
   .dos-col {
@@ -1243,10 +1280,6 @@ main {
 }
 
 @media (max-width: 900px) {
-  .btn-menu {
-    display: flex;
-  }
-
   .div-izquierdo h2 {
     display: none;
   }
@@ -1599,7 +1632,7 @@ main {
 .lista-recursos {
   margin-top: 16px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .recurso-card {
@@ -1607,6 +1640,9 @@ main {
   border-radius: 10px;
   padding: 18px 20px;
   margin-bottom: 14px;
+  margin-right: 2%;
+  width: 31%;
+  box-sizing: border-box;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   cursor: pointer;
 }
