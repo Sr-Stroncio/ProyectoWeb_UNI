@@ -3,6 +3,7 @@
 session_start();
 
 require_once __DIR__ . "/../database/conexion.php";
+require_once __DIR__ . "/../utils/rutas.php";
 
 $error = $_SESSION['error_registro'] ?? '';
 
@@ -13,12 +14,10 @@ $nif_guardado = $_SESSION['registro_nif'] ?? '';
 // Borramos todas las sesion que habian antes luego de guardarlas para mostrarlas en los input
 // y asi que el usuario no tenga que escribir todo de nuevo cuando cometa un error en el registro
 
-
 unset($_SESSION['error_registro']);
 unset($_SESSION['registro_nombre']);
 unset($_SESSION['registro_correo']);
 unset($_SESSION['registro_nif']);
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -54,35 +53,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password_confirmar === ''
     ) {
         $_SESSION['error_registro'] = 'Todos los campos son obligatorios.';
-        header('Location: /pages/registro.php');
+        header('Location: ' . $base_url . 'pages/registro.php');
         exit;
     }
 
     // 2. Validar correo
     if (!filter_var($correo_institucion, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['error_registro'] = 'El correo no tiene un formato válido.';
-        header('Location: /pages/registro.php');
+        header('Location: ' . $base_url . 'pages/registro.php');
         exit;
     }
 
     // 3. Validar contraseñas iguales
     if ($password !== $password_confirmar) {
         $_SESSION['error_registro'] = 'Las contraseñas no coinciden.';
-        header('Location: /pages/registro.php');
+        header('Location: ' . $base_url . 'pages/registro.php');
         exit;
     }
 
     // 4. Validar longitud mínima de contraseña
     if (strlen($password) < 6) {
         $_SESSION['error_registro'] = 'La contraseña debe tener al menos 6 caracteres.';
-        header('Location: /pages/registro.php');
+        header('Location: ' . $base_url . 'pages/registro.php');
         exit;
     }
 
     // 5. Validar NIF: una letra y 8 números
     if (!preg_match('/^[A-Z][0-9]{8}$/', $nif)) {
         $_SESSION['error_registro'] = 'El NIF tiene que ser una letra y 8 números.';
-        header('Location: /pages/registro.php');
+        header('Location: ' . $base_url . 'pages/registro.php');
         exit;
     }
 
@@ -100,7 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     WHERE Email = '$correo_institucion'
                     LIMIT 1";
 
-
     // aqui hago la llamda a la consulta que guarte arriba en sql_email
 
     $resultado_email = mysqli_query($conexion, $sql_email);
@@ -111,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mysqli_num_rows($resultado_email) > 0) {
         $_SESSION['error_registro'] = 'Ya existe una cuenta con ese correo.';
-        header('Location: /pages/registro.php');
+        header('Location: ' . $base_url . 'pages/registro.php');
         exit;
     }
 
@@ -129,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mysqli_num_rows($resultado_nif) > 0) {
         $_SESSION['error_registro'] = 'Ya existe una cuenta con ese NIF.';
-        header('Location: /pages/registro.php');
+        header('Location: ' . $base_url . 'pages/registro.php');
         exit;
     }
 
@@ -143,14 +141,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$resultado_usuario) {
         $_SESSION['error_registro'] = 'No se pudo crear el usuario.';
-        header('Location: /pages/registro.php');
+        header('Location: ' . $base_url . 'pages/registro.php');
         exit;
     }
 
     // 9. Obtener el ID del usuario creado
     $id_usuario_nuevo = mysqli_insert_id($conexion);
 
-    
     // 10. Insertar en Cliente
     $sql_cliente = "INSERT INTO Cliente (ID_user, NIF)
                     VALUES ($id_usuario_nuevo, '$nif')";
@@ -159,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$resultado_cliente) {
         $_SESSION['error_registro'] = 'No se pudo crear el cliente.';
-        header('Location: /pages/registro.php');
+        header('Location: ' . $base_url . 'pages/registro.php');
         exit;
     }
 
@@ -173,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     unset($_SESSION['registro_correo']);
     unset($_SESSION['registro_nif']);
 
-    header('Location: /index.php');
+    header('Location: ' . $base_url . 'index.php');
     exit;
 }
 
@@ -188,22 +185,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOA — Crear cuenta</title>
+
+    <base href="<?= $base_url ?>">
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/lading_page.css">
-    <link rel="stylesheet" href="../css/estilos-login-app.css">
-    <link rel="stylesheet" href="../css/estilos-registro.css">
+    <link rel="stylesheet" href="css/lading_page.css">
+    <link rel="stylesheet" href="css/estilos-login-app.css">
+    <link rel="stylesheet" href="css/estilos-registro.css">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
-    <base href="/">
 </head>
 
 <body>
-    <?php include '../components/header.php'; ?>
+    <?php include __DIR__ . '/../components/header.php'; ?>
 
     <div class="contenedor-tarjeta">
         <div class="tarjeta">
 
             <div class="panel-institucion">
-                <img src="../assets/logoGTI.svg" alt="GTI" class="logo-gti-grande">
+                <img src="assets/logoGTI.svg" alt="GTI" class="logo-gti-grande">
                 <p class="nombre-grado">Grado en Tecnologías Interactivas</p>
                 <p class="campus">Campus de Gandia — Universitat Politècnica de València</p>
 

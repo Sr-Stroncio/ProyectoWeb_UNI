@@ -3,6 +3,8 @@
 session_start();
 
 require_once __DIR__ . "/../database/conexion.php";
+require_once __DIR__ . "/../utils/rutas.php";
+require_once __DIR__ . "/../utils/check-empresa.php";
 
 $error = $_SESSION['error_login'] ?? '';
 $correo_guardado = $_SESSION['correo_login'] ?? '';
@@ -19,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error_login'] = 'Debes introducir correo y contraseña.';
         $_SESSION['correo_login'] = $correo;
 
-        header('Location: /pages/log-in-producto.php');
+        header('Location: ' . $base_url . 'pages/log-in-producto.php');
         exit;
     }
 
@@ -56,17 +58,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             if ($usuario['Rol'] === 'admin') {
-                header('Location: /pages/dashboard-admin.php');
+                header('Location: ' . $base_url . 'pages/dashboard-admin.php');
                 exit;
             }
 
             if ($usuario['Rol'] === 'profesor') {
-                header('Location: /pages/dashboard-profesor.php');
+                header('Location: ' . $base_url . 'pages/dashboard-profesor.php');
                 exit;
             }
 
             if ($usuario['Rol'] === 'alumno') {
-                header('Location: /pages/dashboard-alumno.php');
+                header('Location: ' . $base_url . 'pages/dashboard-alumno.php');
                 exit;
             }
         }
@@ -75,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['error_login'] = 'Correo o contraseña incorrectos.';
     $_SESSION['correo_login'] = $correo;
 
-    header('Location: /pages/log-in-producto.php');
+    header('Location: ' . $base_url . 'pages/log-in-producto.php');
     exit;
 }
 
@@ -83,9 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $demo_password = '123456';
 $cuentas_demo = [];
 $sql_demo = "SELECT Nombre, Apellido, Email, Rol
-             FROM Usuario
-             WHERE Rol IN ('alumno', 'profesor', 'admin')
-             ORDER BY Rol, Nombre";
+                FROM Usuario
+                WHERE Rol IN ('alumno', 'profesor', 'admin')
+                ORDER BY Rol, Nombre";
 $res_demo = mysqli_query($conexion, $sql_demo);
 if ($res_demo) {
     while ($fila = mysqli_fetch_assoc($res_demo)) {
@@ -104,21 +106,23 @@ if ($res_demo) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOA — Accede a tu cuenta</title>
+
+    <base href="<?= $base_url ?>">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/lading_page.css">
-    <link rel="stylesheet" href="../css/estilos-login.css">
+    <link rel="stylesheet" href="css/lading_page.css">
+    <link rel="stylesheet" href="css/estilos-login.css">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
-    <base href="/">
+
 </head>
 
 <body>
     <!-- include del header general (se usa en las paginas de producto) -->
-    <?php include '../components/header.php'; ?>
+    <?php include __DIR__ . '/../components/header.php'; ?>
 
     <div class="cuerpo">
 
         <div class="panel-oscuro">
-            <img src="../assets/DoA color.svg" alt="DOA" class="logo-panel">
+            <img src="assets/DoA color.svg" alt="DOA" class="logo-panel">
             <h1 class="titulo-panel">La plataforma académica de GTI</h1>
             <p class="descripcion-panel">
                 Gestión de calificaciones, comunicación y
