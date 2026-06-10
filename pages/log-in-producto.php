@@ -81,10 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// cuentas para el desplegable de demo (no se consulta la password real)
-$demo_password = '123456';
+// cuentas para el desplegable de demo, se saca tambien la password
+// para rellenarla al elegir la cuenta (cada usuario tiene la suya)
 $cuentas_demo = [];
-$sql_demo = "SELECT Nombre, Apellido, Email, Rol
+$sql_demo = "SELECT Nombre, Apellido, Email, Rol, Password
                 FROM Usuario
                 WHERE Rol IN ('alumno', 'profesor', 'admin')
                 ORDER BY Rol, Nombre";
@@ -155,7 +155,7 @@ if ($res_demo) {
             <?php endif; ?>
 
             <?php if (!empty($cuentas_demo)): ?>
-                <div class="demo-cuentas" id="demoCuentas" data-password="<?= $demo_password ?>">
+                <div class="demo-cuentas" id="demoCuentas">
                     <button type="button" class="demo-toggle" id="demoToggle">
                         <span>Cuentas de demostración</span>
                         <span class="demo-flecha">&#9662;</span>
@@ -163,7 +163,8 @@ if ($res_demo) {
                     <ul class="demo-lista">
                         <?php foreach ($cuentas_demo as $cuenta): ?>
                             <li class="demo-item"
-                                data-email="<?= htmlspecialchars($cuenta['Email']) ?>">
+                                data-email="<?= htmlspecialchars($cuenta['Email']) ?>"
+                                data-password="<?= htmlspecialchars($cuenta['Password']) ?>">
                                 <span class="demo-nombre"><?= htmlspecialchars(trim($cuenta['Nombre'] . ' ' . $cuenta['Apellido'])) ?></span>
                                 <span class="demo-rol"><?= ucfirst($cuenta['Rol']) ?></span>
                                 <span class="demo-email"><?= htmlspecialchars($cuenta['Email']) ?></span>
@@ -212,20 +213,20 @@ if ($res_demo) {
             var demoToggle = document.getElementById('demoToggle');
             var campoCorreo = document.getElementById('campoCorreo');
             var campoPassword = document.getElementById('campoPassword');
-            var demoPassword = demoCuentas.getAttribute('data-password');
             var demoItems = demoCuentas.querySelectorAll('.demo-item');
 
             demoToggle.addEventListener('click', function() {
                 demoCuentas.classList.toggle('abierto');
             });
 
-            demoItems.forEach(function(item) {
-                item.addEventListener('click', function() {
-                    campoCorreo.value = item.getAttribute('data-email');
-                    campoPassword.value = demoPassword;
+            for (var i = 0; i < demoItems.length; i++) {
+                demoItems[i].addEventListener('click', function() {
+                    // cada cuenta lleva su correo y su clave en los data
+                    campoCorreo.value = this.getAttribute('data-email');
+                    campoPassword.value = this.getAttribute('data-password');
                     demoCuentas.classList.remove('abierto');
                 });
-            });
+            }
 
             document.addEventListener('click', function(evento) {
                 if (!demoCuentas.contains(evento.target)) {

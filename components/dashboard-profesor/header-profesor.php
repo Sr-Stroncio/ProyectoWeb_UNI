@@ -21,7 +21,7 @@ if (isset($_SESSION['usuario_rol'])) {
         </button>
         <div class="div-logos">
             <a href="<?= $enlace_doa ?>"><img class="DOA_logo" src="assets/DoA color.svg" alt="DOA Logo"></a>
-            <a href="/index.php"><img class="GTI_logo" src="assets/logoGTI.svg" alt="GTI Logo"></a>
+            <a href="index.php"><img class="GTI_logo" src="assets/logoGTI.svg" alt="GTI Logo"></a>
         </div>
         <h2><?= $tituloPagina ?? 'Dashboard' ?></h2>
     </div>
@@ -32,7 +32,7 @@ if (isset($_SESSION['usuario_rol'])) {
                 <p class="perfil-saludo">Bienvenido/a, <?= $_SESSION['usuario_nombre'] ?></p>
                 <span class="perfil-rol"><?= $_SESSION['usuario_rol'] ?></span>
             </div>
-            <a class="btn-logout" href="/utils/logout-producto.php">Cerrar sesión</a>
+            <a class="btn-logout" href="utils/logout-producto.php">Cerrar sesión</a>
         </div>
     </div>
 </header>

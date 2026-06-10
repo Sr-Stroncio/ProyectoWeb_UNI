@@ -1,50 +1,71 @@
 <?php
-$stmt = $conexion->prepare("
-    SELECT u.ID, u.Nombre, u.Apellido, u.Email, p.DNI, p.Fecha_nacimiento
-    FROM Usuario u
-    JOIN Profesor p ON p.ID_user = u.ID
-    WHERE u.ID = ?
-");
-$stmt->bind_param("i", $id_profesor);
-$stmt->execute();
-$profesor = $stmt->get_result()->fetch_assoc();
-$stmt->close();
+$res = $conexion->query("SELECT ID, Nombre, Apellido, Email FROM Usuario WHERE ID = " . $id_profesor);
+$profesor = $res->fetch_assoc();
 
-if (!$profesor) {
+$res = $conexion->query("SELECT DNI, Fecha_nacimiento FROM Profesor WHERE ID_user = " . $id_profesor);
+$datos_profesor = $res->fetch_assoc();
+
+if (!$profesor || !$datos_profesor) {
     echo '<p class="sin-datos">Profesor no encontrado.</p>';
     return;
 }
 
-$stmt = $conexion->prepare("
-    SELECT asig.ID, asig.Nombre, c.Nombre AS nombre_curso, g.Nombre AS nombre_grado
-    FROM Asignatura asig
-    JOIN Curso c ON c.ID = asig.ID_curso
-    JOIN Grado g ON g.ID = c.ID_grado
-    JOIN Profesor_Asignatura pa ON pa.ID_asignatura = asig.ID
-    WHERE pa.ID_profesor = ?
-    ORDER BY g.Nombre ASC, c.Nombre ASC, asig.Nombre ASC
-");
-$stmt->bind_param("i", $id_profesor);
-$stmt->execute();
-$asignaturas = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-$stmt->close();
+$profesor['DNI'] = $datos_profesor['DNI'];
+$profesor['Fecha_nacimiento'] = $datos_profesor['Fecha_nacimiento'];
 
-$todasAsignaturas = $conexion->query("
-    SELECT asig.ID, asig.Nombre, c.Nombre AS nombre_curso, g.Nombre AS nombre_grado
-    FROM Asignatura asig
-    JOIN Curso c ON c.ID = asig.ID_curso
-    JOIN Grado g ON g.ID = c.ID_grado
-    ORDER BY g.Nombre ASC, c.Nombre ASC, asig.Nombre ASC
-")->fetch_all(MYSQLI_ASSOC);
+// materias del profesor, primero los ids y luego el detalle de cada una
+$asignaturas = [];
+$res = $conexion->query("SELECT ID_asignatura FROM Profesor_Asignatura WHERE ID_profesor = " . $id_profesor);
+while ($fila = $res->fetch_row()) {
+    $res2 = $conexion->query("SELECT ID, Nombre, ID_curso FROM Asignatura WHERE ID = " . $fila[0]);
+    $asig = $res2->fetch_assoc();
 
-$idsAsigProfesor = array_column($asignaturas, 'ID');
+    $asig['nombre_curso'] = '';
+    $asig['nombre_grado'] = '';
+    if ($asig['ID_curso']) {
+        $res2 = $conexion->query("SELECT Nombre, ID_grado FROM Curso WHERE ID = " . $asig['ID_curso']);
+        $curso = $res2->fetch_assoc();
+        $asig['nombre_curso'] = $curso['Nombre'];
+        if ($curso['ID_grado']) {
+            $res3 = $conexion->query("SELECT Nombre FROM Grado WHERE ID = " . $curso['ID_grado']);
+            $fila2 = $res3->fetch_row();
+            $asig['nombre_grado'] = $fila2[0];
+        }
+    }
+
+    $asignaturas[] = $asig;
+}
+
+// todas las asignaturas para el modal de materias
+$todasAsignaturas = [];
+$res = $conexion->query("SELECT ID, Nombre, ID_curso FROM Asignatura ORDER BY Nombre ASC");
+while ($asig = $res->fetch_assoc()) {
+    $asig['nombre_curso'] = '';
+    $asig['nombre_grado'] = '';
+    if ($asig['ID_curso']) {
+        $res2 = $conexion->query("SELECT Nombre, ID_grado FROM Curso WHERE ID = " . $asig['ID_curso']);
+        $curso = $res2->fetch_assoc();
+        $asig['nombre_curso'] = $curso['Nombre'];
+        if ($curso['ID_grado']) {
+            $res3 = $conexion->query("SELECT Nombre FROM Grado WHERE ID = " . $curso['ID_grado']);
+            $fila = $res3->fetch_row();
+            $asig['nombre_grado'] = $fila[0];
+        }
+    }
+    $todasAsignaturas[] = $asig;
+}
+
+$idsAsigProfesor = [];
+foreach ($asignaturas as $asig) {
+    $idsAsigProfesor[] = $asig['ID'];
+}
 ?>
 
 <div class="bloque">
     <div class="bloque-cabecera">
         <div class="cabecera-izq">
-            <a href="/pages/dashboard-admin.php?seccion=profesores" class="btn-volver">‹ Profesores</a>
-            <h3><?= htmlspecialchars($profesor['Nombre'] . ' ' . $profesor['Apellido']) ?></h3>
+            <a href="pages/dashboard-admin.php?seccion=profesores" class="btn-volver">‹ Profesores</a>
+            <h3><?= $profesor['Nombre'] . ' ' . $profesor['Apellido'] ?></h3>
         </div>
         <div class="cabecera-acciones">
             <button class="btn-nuevo" id="btnEditarProfesor">Editar</button>
@@ -55,23 +76,23 @@ $idsAsigProfesor = array_column($asignaturas, 'ID');
     <div class="info-card">
         <div class="info-fila">
             <span class="info-label">Nombre</span>
-            <span class="info-valor"><?= htmlspecialchars($profesor['Nombre']) ?></span>
+            <span class="info-valor"><?= $profesor['Nombre'] ?></span>
         </div>
         <div class="info-fila">
             <span class="info-label">Apellido</span>
-            <span class="info-valor"><?= htmlspecialchars($profesor['Apellido']) ?></span>
+            <span class="info-valor"><?= $profesor['Apellido'] ?></span>
         </div>
         <div class="info-fila">
             <span class="info-label">Email</span>
-            <span class="info-valor"><?= htmlspecialchars($profesor['Email']) ?></span>
+            <span class="info-valor"><?= $profesor['Email'] ?></span>
         </div>
         <div class="info-fila">
             <span class="info-label">DNI</span>
-            <span class="info-valor"><?= htmlspecialchars($profesor['DNI']) ?></span>
+            <span class="info-valor"><?= $profesor['DNI'] ?></span>
         </div>
         <div class="info-fila">
             <span class="info-label">Fecha de nacimiento</span>
-            <span class="info-valor"><?= htmlspecialchars($profesor['Fecha_nacimiento'] ?? '—') ?></span>
+            <span class="info-valor"><?= $profesor['Fecha_nacimiento'] ?? '—' ?></span>
         </div>
     </div>
 </div>
@@ -97,9 +118,9 @@ $idsAsigProfesor = array_column($asignaturas, 'ID');
                 <tbody>
                     <?php foreach ($asignaturas as $asig): ?>
                         <tr>
-                            <td><?= htmlspecialchars($asig['Nombre']) ?></td>
-                            <td><?= htmlspecialchars($asig['nombre_curso']) ?></td>
-                            <td><?= htmlspecialchars($asig['nombre_grado']) ?></td>
+                            <td><?= $asig['Nombre'] ?></td>
+                            <td><?= $asig['nombre_curso'] ?></td>
+                            <td><?= $asig['nombre_grado'] ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -114,19 +135,19 @@ $idsAsigProfesor = array_column($asignaturas, 'ID');
             <h4>Editar profesor</h4>
             <button class="btn-cerrar-modal" id="btnCerrarModalEditarProfesor">✕</button>
         </div>
-        <form method="POST" action="/utils/editar-profesor.php">
+        <form method="POST" action="utils/editar-profesor.php">
             <input type="hidden" name="id" value="<?= $profesor['ID'] ?>">
             <div class="campo">
                 <label>Nombre</label>
-                <input type="text" name="nombre" value="<?= htmlspecialchars($profesor['Nombre']) ?>">
+                <input type="text" name="nombre" value="<?= $profesor['Nombre'] ?>">
             </div>
             <div class="campo">
                 <label>Apellido</label>
-                <input type="text" name="apellido" value="<?= htmlspecialchars($profesor['Apellido']) ?>">
+                <input type="text" name="apellido" value="<?= $profesor['Apellido'] ?>">
             </div>
             <div class="campo">
                 <label>Email</label>
-                <input type="email" name="email" value="<?= htmlspecialchars($profesor['Email']) ?>">
+                <input type="email" name="email" value="<?= $profesor['Email'] ?>">
             </div>
             <div class="modal-botones">
                 <button type="button" class="btn-cancelar" id="btnCancelarModalEditarProfesor">Cancelar</button>
@@ -142,14 +163,14 @@ $idsAsigProfesor = array_column($asignaturas, 'ID');
             <h4>Editar materias</h4>
             <button class="btn-cerrar-modal" id="btnCerrarModalMaterias">✕</button>
         </div>
-        <form method="POST" action="/utils/editar-materias-profesor.php">
+        <form method="POST" action="utils/editar-materias-profesor.php">
             <input type="hidden" name="id_profesor" value="<?= $profesor['ID'] ?>">
             <div class="campo">
                 <?php foreach ($todasAsignaturas as $asig): ?>
                     <label class="campo-checkbox">
                         <input type="checkbox" name="asignaturas[]" value="<?= $asig['ID'] ?>"
                             <?= in_array($asig['ID'], $idsAsigProfesor) ? 'checked' : '' ?>>
-                        <?= htmlspecialchars($asig['nombre_grado'] . ' › ' . $asig['nombre_curso'] . ' › ' . $asig['Nombre']) ?>
+                        <?= $asig['nombre_grado'] . ' › ' . $asig['nombre_curso'] . ' › ' . $asig['Nombre'] ?>
                     </label>
                 <?php endforeach; ?>
             </div>

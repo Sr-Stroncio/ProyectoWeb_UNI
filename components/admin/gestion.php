@@ -5,7 +5,7 @@
 
     <div class="gestion-grid">
 
-        <a href="/pages/dashboard-admin.php?seccion=grados" class="gestion-card">
+        <a href="pages/dashboard-admin.php?seccion=grados" class="gestion-card">
             <div class="gestion-icono">
                 <img src="assets/iconos/book.svg" alt="Grados">
             </div>
@@ -16,7 +16,7 @@
             <span class="gestion-flecha">›</span>
         </a>
 
-        <a href="/pages/dashboard-admin.php?seccion=alumnos" class="gestion-card">
+        <a href="pages/dashboard-admin.php?seccion=alumnos" class="gestion-card">
             <div class="gestion-icono">
                 <img src="assets/iconos/user-circle.svg" alt="Alumnos">
             </div>
@@ -27,7 +27,7 @@
             <span class="gestion-flecha">›</span>
         </a>
 
-        <a href="/pages/dashboard-admin.php?seccion=profesores" class="gestion-card">
+        <a href="pages/dashboard-admin.php?seccion=profesores" class="gestion-card">
             <div class="gestion-icono">
                 <img src="assets/iconos/school.svg" alt="Profesores">
             </div>
@@ -38,7 +38,7 @@
             <span class="gestion-flecha">›</span>
         </a>
 
-        <a href="/pages/dashboard-admin.php?seccion=anuncios" class="gestion-card">
+        <a href="pages/dashboard-admin.php?seccion=anuncios" class="gestion-card">
             <div class="gestion-icono">
                 <img src="assets/iconos/speakerphone.svg" alt="Anuncios">
             </div>

@@ -23,7 +23,7 @@ function routerHash() {
         if (window.filtrarTareasPorAsignatura) {
             window.filtrarTareasPorAsignatura('todas');
         }
-        const linkT = document.querySelector('a[href="/pages/dashboard-profesor.php#tareas"]');
+        const linkT = document.querySelector('a[href="pages/dashboard-profesor.php#tareas"]');
         if (linkT) {
             linkT.parentNode.classList.add('activo');
         }
@@ -41,13 +41,13 @@ function routerHash() {
         }
     } else if (hash === '#calendario') {
         document.getElementById('sec-calendario').style.display = 'flex';
-        const linkC = document.querySelector('a[href="/pages/dashboard-profesor.php#calendario"]');
+        const linkC = document.querySelector('a[href="pages/dashboard-profesor.php#calendario"]');
         if (linkC) {
             linkC.parentNode.classList.add('activo');
         }
     } else if (hash === '#anuncios' || hash === '#anuncios-nuevo') {
         document.getElementById('sec-anuncios').style.display = 'flex';
-        const linkA = document.querySelector('a[href="/pages/dashboard-profesor.php#anuncios"]');
+        const linkA = document.querySelector('a[href="pages/dashboard-profesor.php#anuncios"]');
         if (linkA) {
             linkA.parentNode.classList.add('activo');
         }
@@ -59,7 +59,7 @@ function routerHash() {
         }
     } else {
         document.getElementById('sec-inicio').style.display = 'flex';
-        const linkI = document.querySelector('a[href="/pages/dashboard-profesor.php"]');
+        const linkI = document.querySelector('a[href="pages/dashboard-profesor.php"]');
         if (linkI) {
             linkI.parentNode.classList.add('activo');
         }

@@ -14,12 +14,12 @@ $grados = $res->fetch_all(MYSQLI_ASSOC);
     <?php else: ?>
         <div class="lista-grados">
             <?php foreach ($grados as $grado): ?>
-                <a href="/pages/dashboard-admin.php?seccion=grados&id=<?= $grado['ID'] ?>" class="grado-card">
+                <a href="pages/dashboard-admin.php?seccion=grados&id=<?= $grado['ID'] ?>" class="grado-card">
                     <div class="grado-icono">
                         <img src="assets/iconos/book.svg" alt="">
                     </div>
                     <div class="grado-info">
-                        <p class="grado-nombre"><?= htmlspecialchars($grado['Nombre']) ?></p>
+                        <p class="grado-nombre"><?= $grado['Nombre'] ?></p>
                     </div>
                     <span class="grado-flecha">›</span>
                 </a>
@@ -34,7 +34,7 @@ $grados = $res->fetch_all(MYSQLI_ASSOC);
             <h4>Nuevo grado</h4>
             <button class="btn-cerrar-modal" id="btnCerrarModal">✕</button>
         </div>
-        <form method="POST" action="/utils/crear-grado.php">
+        <form method="POST" action="utils/crear-grado.php">
             <div class="campo">
                 <label for="nombreGrado">Nombre del grado</label>
                 <input type="text" id="nombreGrado" name="nombre" placeholder="Ej: Desarrollo de Aplicaciones Web">

@@ -1,63 +1,78 @@
 <?php
-$stmt = $conexion->prepare("
-    SELECT u.ID, u.Nombre, u.Apellido, u.Email, a.DNI, a.Fecha_nacimiento
-    FROM Usuario u
-    JOIN Alumno a ON a.ID_user = u.ID
-    WHERE u.ID = ?
-");
-$stmt->bind_param("i", $id_alumno);
-$stmt->execute();
-$alumno = $stmt->get_result()->fetch_assoc();
-$stmt->close();
+$res = $conexion->query("SELECT ID, Nombre, Apellido, Email FROM Usuario WHERE ID = " . $id_alumno);
+$alumno = $res->fetch_assoc();
 
-if (!$alumno) {
+$res = $conexion->query("SELECT DNI, Fecha_nacimiento FROM Alumno WHERE ID_user = " . $id_alumno);
+$datos_alumno = $res->fetch_assoc();
+
+if (!$alumno || !$datos_alumno) {
     echo '<p class="sin-datos">Alumno no encontrado.</p>';
     return;
 }
 
-$stmt = $conexion->prepare("
-    SELECT DISTINCT g.ID, g.Nombre
-    FROM Grado g
-    JOIN Curso c ON c.ID_grado = g.ID
-    JOIN Asignatura asig ON asig.ID_curso = c.ID
-    JOIN Alumno_Asignatura aa ON aa.ID_asignatura = asig.ID
-    WHERE aa.ID_alumno = ?
-");
-$stmt->bind_param("i", $id_alumno);
-$stmt->execute();
-$grados = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-$stmt->close();
+$alumno['DNI'] = $datos_alumno['DNI'];
+$alumno['Fecha_nacimiento'] = $datos_alumno['Fecha_nacimiento'];
 
-$stmt = $conexion->prepare("
-    SELECT asig.ID, asig.Nombre, c.Nombre AS nombre_curso
-    FROM Asignatura asig
-    JOIN Curso c ON c.ID = asig.ID_curso
-    JOIN Alumno_Asignatura aa ON aa.ID_asignatura = asig.ID
-    WHERE aa.ID_alumno = ?
-    ORDER BY c.Nombre ASC, asig.Nombre ASC
-");
-$stmt->bind_param("i", $id_alumno);
-$stmt->execute();
-$asignaturas = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-$stmt->close();
+// asignaturas del alumno, primero los ids y luego los datos de cada una
+$asignaturas = [];
+$res = $conexion->query("SELECT ID_asignatura FROM Alumno_Asignatura WHERE ID_alumno = " . $id_alumno);
+while ($fila = $res->fetch_row()) {
+    $res2 = $conexion->query("SELECT ID, Nombre, ID_curso FROM Asignatura WHERE ID = " . $fila[0]);
+    $asig = $res2->fetch_assoc();
+
+    $asig['nombre_curso'] = '';
+    if ($asig['ID_curso']) {
+        $res2 = $conexion->query("SELECT Nombre FROM Curso WHERE ID = " . $asig['ID_curso']);
+        $curso = $res2->fetch_row();
+        $asig['nombre_curso'] = $curso[0];
+    }
+
+    $asignaturas[] = $asig;
+}
+
+// el grado se saca encadenando la primera asignatura con su curso
+$grados = [];
+if (count($asignaturas) > 0 && $asignaturas[0]['ID_curso']) {
+    $res = $conexion->query("SELECT ID_grado FROM Curso WHERE ID = " . $asignaturas[0]['ID_curso']);
+    $fila = $res->fetch_row();
+    if ($fila[0]) {
+        $res = $conexion->query("SELECT ID, Nombre FROM Grado WHERE ID = " . $fila[0]);
+        $grados[] = $res->fetch_assoc();
+    }
+}
 
 $todosGrados = $conexion->query("SELECT ID, Nombre FROM Grado ORDER BY Nombre ASC")->fetch_all(MYSQLI_ASSOC);
-$todasAsignaturas = $conexion->query("
-    SELECT asig.ID, asig.Nombre, c.Nombre AS nombre_curso, g.Nombre AS nombre_grado
-    FROM Asignatura asig
-    JOIN Curso c ON c.ID = asig.ID_curso
-    JOIN Grado g ON g.ID = c.ID_grado
-    ORDER BY g.Nombre ASC, c.Nombre ASC, asig.Nombre ASC
-")->fetch_all(MYSQLI_ASSOC);
 
-$idsAsigAlumno = array_column($asignaturas, 'ID');
+// todas las asignaturas para el modal, con su curso y su grado
+$todasAsignaturas = [];
+$res = $conexion->query("SELECT ID, Nombre, ID_curso FROM Asignatura ORDER BY Nombre ASC");
+while ($asig = $res->fetch_assoc()) {
+    $asig['nombre_curso'] = '';
+    $asig['nombre_grado'] = '';
+    if ($asig['ID_curso']) {
+        $res2 = $conexion->query("SELECT Nombre, ID_grado FROM Curso WHERE ID = " . $asig['ID_curso']);
+        $curso = $res2->fetch_assoc();
+        $asig['nombre_curso'] = $curso['Nombre'];
+        if ($curso['ID_grado']) {
+            $res3 = $conexion->query("SELECT Nombre FROM Grado WHERE ID = " . $curso['ID_grado']);
+            $fila = $res3->fetch_row();
+            $asig['nombre_grado'] = $fila[0];
+        }
+    }
+    $todasAsignaturas[] = $asig;
+}
+
+$idsAsigAlumno = [];
+foreach ($asignaturas as $asig) {
+    $idsAsigAlumno[] = $asig['ID'];
+}
 ?>
 
 <div class="bloque">
     <div class="bloque-cabecera">
         <div class="cabecera-izq">
-            <a href="/pages/dashboard-admin.php?seccion=alumnos" class="btn-volver">‹ Alumnos</a>
-            <h3><?= htmlspecialchars($alumno['Nombre'] . ' ' . $alumno['Apellido']) ?></h3>
+            <a href="pages/dashboard-admin.php?seccion=alumnos" class="btn-volver">‹ Alumnos</a>
+            <h3><?= $alumno['Nombre'] . ' ' . $alumno['Apellido'] ?></h3>
         </div>
         <div class="cabecera-acciones">
             <button class="btn-nuevo" id="btnEditarAlumno">Editar</button>
@@ -68,27 +83,27 @@ $idsAsigAlumno = array_column($asignaturas, 'ID');
     <div class="info-card">
         <div class="info-fila">
             <span class="info-label">Nombre</span>
-            <span class="info-valor"><?= htmlspecialchars($alumno['Nombre']) ?></span>
+            <span class="info-valor"><?= $alumno['Nombre'] ?></span>
         </div>
         <div class="info-fila">
             <span class="info-label">Apellido</span>
-            <span class="info-valor"><?= htmlspecialchars($alumno['Apellido']) ?></span>
+            <span class="info-valor"><?= $alumno['Apellido'] ?></span>
         </div>
         <div class="info-fila">
             <span class="info-label">Email</span>
-            <span class="info-valor"><?= htmlspecialchars($alumno['Email']) ?></span>
+            <span class="info-valor"><?= $alumno['Email'] ?></span>
         </div>
         <div class="info-fila">
             <span class="info-label">DNI</span>
-            <span class="info-valor"><?= htmlspecialchars($alumno['DNI']) ?></span>
+            <span class="info-valor"><?= $alumno['DNI'] ?></span>
         </div>
         <div class="info-fila">
             <span class="info-label">Fecha de nacimiento</span>
-            <span class="info-valor"><?= htmlspecialchars($alumno['Fecha_nacimiento'] ?? '—') ?></span>
+            <span class="info-valor"><?= $alumno['Fecha_nacimiento'] ?? '—' ?></span>
         </div>
         <div class="info-fila">
             <span class="info-label">Grado</span>
-            <span class="info-valor"><?= count($grados) > 0 ? htmlspecialchars($grados[0]['Nombre']) : '—' ?></span>
+            <span class="info-valor"><?= count($grados) > 0 ? $grados[0]['Nombre'] : '—' ?></span>
         </div>
     </div>
 </div>
@@ -113,8 +128,8 @@ $idsAsigAlumno = array_column($asignaturas, 'ID');
                 <tbody>
                     <?php foreach ($asignaturas as $asig): ?>
                         <tr>
-                            <td><?= htmlspecialchars($asig['Nombre']) ?></td>
-                            <td><?= htmlspecialchars($asig['nombre_curso']) ?></td>
+                            <td><?= $asig['Nombre'] ?></td>
+                            <td><?= $asig['nombre_curso'] ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -129,19 +144,19 @@ $idsAsigAlumno = array_column($asignaturas, 'ID');
             <h4>Editar alumno</h4>
             <button class="btn-cerrar-modal" id="btnCerrarModalEditar">✕</button>
         </div>
-        <form method="POST" action="/utils/editar-alumno.php">
+        <form method="POST" action="utils/editar-alumno.php">
             <input type="hidden" name="id" value="<?= $alumno['ID'] ?>">
             <div class="campo">
                 <label>Nombre</label>
-                <input type="text" name="nombre" value="<?= htmlspecialchars($alumno['Nombre']) ?>">
+                <input type="text" name="nombre" value="<?= $alumno['Nombre'] ?>">
             </div>
             <div class="campo">
                 <label>Apellido</label>
-                <input type="text" name="apellido" value="<?= htmlspecialchars($alumno['Apellido']) ?>">
+                <input type="text" name="apellido" value="<?= $alumno['Apellido'] ?>">
             </div>
             <div class="campo">
                 <label>Email</label>
-                <input type="email" name="email" value="<?= htmlspecialchars($alumno['Email']) ?>">
+                <input type="email" name="email" value="<?= $alumno['Email'] ?>">
             </div>
             <div class="campo">
                 <label>Grado</label>
@@ -149,7 +164,7 @@ $idsAsigAlumno = array_column($asignaturas, 'ID');
                     <option value="">Sin grado</option>
                     <?php foreach ($todosGrados as $g): ?>
                         <option value="<?= $g['ID'] ?>" <?= (count($grados) > 0 && $grados[0]['ID'] == $g['ID']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($g['Nombre']) ?>
+                            <?= $g['Nombre'] ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -168,14 +183,14 @@ $idsAsigAlumno = array_column($asignaturas, 'ID');
             <h4>Editar asignaturas</h4>
             <button class="btn-cerrar-modal" id="btnCerrarModalAsig">✕</button>
         </div>
-        <form method="POST" action="/utils/editar-asignaturas-alumno.php">
+        <form method="POST" action="utils/editar-asignaturas-alumno.php">
             <input type="hidden" name="id_alumno" value="<?= $alumno['ID'] ?>">
             <div class="campo">
                 <?php foreach ($todasAsignaturas as $asig): ?>
                     <label class="campo-checkbox">
                         <input type="checkbox" name="asignaturas[]" value="<?= $asig['ID'] ?>"
                             <?= in_array($asig['ID'], $idsAsigAlumno) ? 'checked' : '' ?>>
-                        <?= htmlspecialchars($asig['nombre_grado'] . ' › ' . $asig['nombre_curso'] . ' › ' . $asig['Nombre']) ?>
+                        <?= $asig['nombre_grado'] . ' › ' . $asig['nombre_curso'] . ' › ' . $asig['Nombre'] ?>
                     </label>
                 <?php endforeach; ?>
             </div>

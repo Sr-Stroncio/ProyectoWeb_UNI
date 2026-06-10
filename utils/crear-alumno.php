@@ -1,11 +1,12 @@
 <?php
 session_start();
 require_once '../database/conexion.php';
+require_once '../utils/rutas.php';
 include '../utils/check-usuario.php';
 comprobarUsuario('admin');
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    header('Location: /pages/dashboard-admin.php?seccion=alumnos');
+    header('Location: ' . $base_url . 'pages/dashboard-admin.php?seccion=alumnos');
     exit;
 }
 
@@ -16,7 +17,7 @@ $dni      = trim($_POST['dni'] ?? '');
 $id_grado = intval($_POST['id_grado'] ?? 0);
 
 if ($nombre == '' || $email == '') {
-    header('Location: /pages/dashboard-admin.php?seccion=alumnos');
+    header('Location: ' . $base_url . 'pages/dashboard-admin.php?seccion=alumnos');
     exit;
 }
 
@@ -52,9 +53,9 @@ if ($id_grado > 0) {
         $stmt->close();
     }
     // si venimos desde detalle-grado, volvemos ahí
-    header('Location: /pages/dashboard-admin.php?seccion=grados&id=' . $id_grado);
+    header('Location: ' . $base_url . 'pages/dashboard-admin.php?seccion=grados&id=' . $id_grado);
     exit;
 }
 
-header('Location: /pages/dashboard-admin.php?seccion=alumnos');
+header('Location: ' . $base_url . 'pages/dashboard-admin.php?seccion=alumnos');
 exit;
