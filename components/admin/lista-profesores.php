@@ -81,6 +81,10 @@ for ($i = 0; $i < count($profesores); $i++) {
                 <label for="dniProfesor">DNI</label>
                 <input type="text" id="dniProfesor" name="dni" placeholder="DNI del profesor">
             </div>
+            <div class="campo">
+                <label for="passwordProfesor">Contraseña</label>
+                <input type="text" id="passwordProfesor" name="password" placeholder="Si se deja vacía será profesor123">
+            </div>
             <div class="modal-botones">
                 <button type="button" class="btn-cancelar" id="btnCancelarModalProfesor">Cancelar</button>
                 <button type="submit" class="btn-guardar">Guardar</button>

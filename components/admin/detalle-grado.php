@@ -225,6 +225,10 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
                 <label for="addDniAlumno">DNI</label>
                 <input type="text" id="addDniAlumno" name="dni" placeholder="DNI del alumno">
             </div>
+            <div class="campo">
+                <label for="addPasswordAlumno">Contraseña</label>
+                <input type="text" id="addPasswordAlumno" name="password" placeholder="Si se deja vacía será alumno123">
+            </div>
             <div class="modal-botones">
                 <button type="button" class="btn-cancelar" id="btnCancelarAddAlumno">Cancelar</button>
                 <button type="submit" class="btn-guardar">Guardar</button>
@@ -257,6 +261,10 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
             <div class="campo">
                 <label for="addDniProfesor">DNI</label>
                 <input type="text" id="addDniProfesor" name="dni" placeholder="DNI del profesor">
+            </div>
+            <div class="campo">
+                <label for="addPasswordProfesor">Contraseña</label>
+                <input type="text" id="addPasswordProfesor" name="password" placeholder="Si se deja vacía será profesor123">
             </div>
             <div class="modal-botones">
                 <button type="button" class="btn-cancelar" id="btnCancelarAddProfesor">Cancelar</button>

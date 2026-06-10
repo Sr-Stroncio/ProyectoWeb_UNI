@@ -90,6 +90,10 @@ for ($i = 0; $i < count($alumnos); $i++) {
                 <input type="text" id="dniAlumno" name="dni" placeholder="DNI del alumno">
             </div>
             <div class="campo">
+                <label for="passwordAlumno">Contraseña</label>
+                <input type="text" id="passwordAlumno" name="password" placeholder="Si se deja vacía será alumno123">
+            </div>
+            <div class="campo">
                 <label for="gradoAlumno">Grado</label>
                 <select id="gradoAlumno" name="id_grado" class="campo-select">
                     <option value="">Sin grado</option>

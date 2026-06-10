@@ -21,7 +21,11 @@ if ($nombre == '' || $email == '') {
     exit;
 }
 
-$password = password_hash('alumno123', PASSWORD_DEFAULT);
+// la contraseña la escribe el admin en el formulario, si la deja vacia se pone la de defecto
+$password = trim($_POST['password'] ?? '');
+if ($password == '') {
+    $password = 'alumno123';
+}
 
 $stmt = $conexion->prepare("INSERT INTO Usuario (Rol, Nombre, Apellido, Email, Password) VALUES ('alumno', ?, ?, ?, ?)");
 $stmt->bind_param("ssss", $nombre, $apellido, $email, $password);
