@@ -1,11 +1,12 @@
 <?php
 session_start();
 require_once '../database/conexion.php';
+require_once '../utils/rutas.php';
 include '../utils/check-usuario.php';
 comprobarUsuario('admin');
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    header('Location: /pages/dashboard-admin.php?seccion=alumnos');
+    header('Location: ' . $base_url . 'pages/dashboard-admin.php?seccion=alumnos');
     exit;
 }
 
@@ -15,7 +16,7 @@ $apellido = trim($_POST['apellido'] ?? '');
 $email = trim($_POST['email'] ?? '');
 
 if ($id <= 0 || $nombre == '' || $email == '') {
-    header('Location: /pages/dashboard-admin.php?seccion=alumnos&id=' . $id);
+    header('Location: ' . $base_url . 'pages/dashboard-admin.php?seccion=alumnos&id=' . $id);
     exit;
 }
 
@@ -24,5 +25,5 @@ $stmt->bind_param("sssi", $nombre, $apellido, $email, $id);
 $stmt->execute();
 $stmt->close();
 
-header('Location: /pages/dashboard-admin.php?seccion=alumnos&id=' . $id);
+header('Location: ' . $base_url . 'pages/dashboard-admin.php?seccion=alumnos&id=' . $id);
 exit;

@@ -16,45 +16,41 @@ $stmt->execute();
 $cursos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
-$ids_cursos = array_column($cursos, 'ID');
-
 $alumnos = [];
 $profesores = [];
 $asignaturas = [];
 
-if (count($ids_cursos) > 0) {
-    $ids_str = implode(',', $ids_cursos);
+$ids_alumnos = [];
+$ids_profesores = [];
 
-    $res = $conexion->query("
-        SELECT DISTINCT u.ID, u.Nombre, u.Apellido, u.Email
-        FROM Usuario u
-        JOIN Alumno a ON a.ID_user = u.ID
-        JOIN Alumno_Asignatura aa ON aa.ID_alumno = a.ID_user
-        JOIN Asignatura asig ON asig.ID = aa.ID_asignatura
-        WHERE asig.ID_curso IN ($ids_str)
-        ORDER BY u.Apellido ASC
-    ");
+// se recorren los cursos del grado para sacar sus materias y la gente apuntada
+foreach ($cursos as $curso) {
+    $res = $conexion->query("SELECT ID, Nombre FROM Asignatura WHERE ID_curso = " . $curso['ID'] . " ORDER BY Nombre ASC");
+    while ($asig = $res->fetch_assoc()) {
+        $asig['nombre_curso'] = $curso['Nombre'];
+        $asignaturas[] = $asig;
+
+        $res2 = $conexion->query("SELECT ID_alumno FROM Alumno_Asignatura WHERE ID_asignatura = " . $asig['ID']);
+        while ($fila = $res2->fetch_row()) {
+            $ids_alumnos[] = $fila[0];
+        }
+
+        $res2 = $conexion->query("SELECT ID_profesor FROM Profesor_Asignatura WHERE ID_asignatura = " . $asig['ID']);
+        while ($fila = $res2->fetch_row()) {
+            $ids_profesores[] = $fila[0];
+        }
+    }
+}
+
+// con los ids juntados se sacan los datos de los usuarios
+if (count($ids_alumnos) > 0) {
+    $res = $conexion->query("SELECT ID, Nombre, Apellido, Email FROM Usuario WHERE ID IN (" . implode(',', $ids_alumnos) . ") ORDER BY Apellido ASC");
     $alumnos = $res->fetch_all(MYSQLI_ASSOC);
+}
 
-    $res = $conexion->query("
-        SELECT DISTINCT u.ID, u.Nombre, u.Apellido, u.Email
-        FROM Usuario u
-        JOIN Profesor p ON p.ID_user = u.ID
-        JOIN Profesor_Asignatura pa ON pa.ID_profesor = p.ID_user
-        JOIN Asignatura asig ON asig.ID = pa.ID_asignatura
-        WHERE asig.ID_curso IN ($ids_str)
-        ORDER BY u.Apellido ASC
-    ");
+if (count($ids_profesores) > 0) {
+    $res = $conexion->query("SELECT ID, Nombre, Apellido, Email FROM Usuario WHERE ID IN (" . implode(',', $ids_profesores) . ") ORDER BY Apellido ASC");
     $profesores = $res->fetch_all(MYSQLI_ASSOC);
-
-    $res = $conexion->query("
-        SELECT asig.ID, asig.Nombre, c.Nombre AS nombre_curso
-        FROM Asignatura asig
-        JOIN Curso c ON c.ID = asig.ID_curso
-        WHERE asig.ID_curso IN ($ids_str)
-        ORDER BY c.Nombre ASC, asig.Nombre ASC
-    ");
-    $asignaturas = $res->fetch_all(MYSQLI_ASSOC);
 }
 
 // para los selects de los modales de grado
@@ -65,8 +61,8 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
 <div class="bloque">
     <div class="bloque-cabecera">
         <div class="cabecera-izq">
-            <a href="/pages/dashboard-admin.php?seccion=grados" class="btn-volver">‹ Grados</a>
-            <h3><?= htmlspecialchars($grado['Nombre']) ?></h3>
+            <a href="pages/dashboard-admin.php?seccion=grados" class="btn-volver">‹ Grados</a>
+            <h3><?= $grado['Nombre'] ?></h3>
         </div>
     </div>
 
@@ -115,9 +111,9 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
                 <tbody>
                     <?php foreach ($alumnos as $alumno): ?>
                         <tr>
-                            <td><?= htmlspecialchars($alumno['Nombre']) ?></td>
-                            <td><?= htmlspecialchars($alumno['Apellido']) ?></td>
-                            <td><?= htmlspecialchars($alumno['Email']) ?></td>
+                            <td><?= $alumno['Nombre'] ?></td>
+                            <td><?= $alumno['Apellido'] ?></td>
+                            <td><?= $alumno['Email'] ?></td>
                             <td>
                                 <button class="btn-eliminar" onclick="eliminarAlumno(<?= $alumno['ID'] ?>, <?= $id_grado ?>)">
                                     <img src="assets/iconos/trash.svg" alt="eliminar">
@@ -153,9 +149,9 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
                 <tbody>
                     <?php foreach ($profesores as $prof): ?>
                         <tr>
-                            <td><?= htmlspecialchars($prof['Nombre']) ?></td>
-                            <td><?= htmlspecialchars($prof['Apellido']) ?></td>
-                            <td><?= htmlspecialchars($prof['Email']) ?></td>
+                            <td><?= $prof['Nombre'] ?></td>
+                            <td><?= $prof['Apellido'] ?></td>
+                            <td><?= $prof['Email'] ?></td>
                             <td>
                                 <button class="btn-eliminar" onclick="eliminarProfesor(<?= $prof['ID'] ?>, <?= $id_grado ?>)">
                                     <img src="assets/iconos/trash.svg" alt="eliminar">
@@ -189,8 +185,8 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
                 <tbody>
                     <?php foreach ($asignaturas as $asig): ?>
                         <tr>
-                            <td><?= htmlspecialchars($asig['Nombre']) ?></td>
-                            <td><?= htmlspecialchars($asig['nombre_curso']) ?></td>
+                            <td><?= $asig['Nombre'] ?></td>
+                            <td><?= $asig['nombre_curso'] ?></td>
                             <td>
                                 <button class="btn-eliminar" onclick="eliminarMateria(<?= $asig['ID'] ?>, <?= $id_grado ?>)">
                                     <img src="assets/iconos/trash.svg" alt="eliminar">
@@ -211,7 +207,7 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
             <h4>Nuevo alumno</h4>
             <button class="btn-cerrar-modal" id="btnCerrarAddAlumno">✕</button>
         </div>
-        <form method="POST" action="/utils/crear-alumno.php">
+        <form method="POST" action="utils/crear-alumno.php">
             <input type="hidden" name="id_grado" value="<?= $id_grado ?>">
             <div class="campo">
                 <label for="addNombreAlumno">Nombre</label>
@@ -229,6 +225,10 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
                 <label for="addDniAlumno">DNI</label>
                 <input type="text" id="addDniAlumno" name="dni" placeholder="DNI del alumno">
             </div>
+            <div class="campo">
+                <label for="addPasswordAlumno">Contraseña</label>
+                <input type="text" id="addPasswordAlumno" name="password" placeholder="Si se deja vacía será alumno123">
+            </div>
             <div class="modal-botones">
                 <button type="button" class="btn-cancelar" id="btnCancelarAddAlumno">Cancelar</button>
                 <button type="submit" class="btn-guardar">Guardar</button>
@@ -244,7 +244,7 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
             <h4>Nuevo profesor</h4>
             <button class="btn-cerrar-modal" id="btnCerrarAddProfesor">✕</button>
         </div>
-        <form method="POST" action="/utils/crear-profesor.php">
+        <form method="POST" action="utils/crear-profesor.php">
             <input type="hidden" name="id_grado" value="<?= $id_grado ?>">
             <div class="campo">
                 <label for="addNombreProfesor">Nombre</label>
@@ -261,6 +261,10 @@ $todosGrados = $res->fetch_all(MYSQLI_ASSOC);
             <div class="campo">
                 <label for="addDniProfesor">DNI</label>
                 <input type="text" id="addDniProfesor" name="dni" placeholder="DNI del profesor">
+            </div>
+            <div class="campo">
+                <label for="addPasswordProfesor">Contraseña</label>
+                <input type="text" id="addPasswordProfesor" name="password" placeholder="Si se deja vacía será profesor123">
             </div>
             <div class="modal-botones">
                 <button type="button" class="btn-cancelar" id="btnCancelarAddProfesor">Cancelar</button>
