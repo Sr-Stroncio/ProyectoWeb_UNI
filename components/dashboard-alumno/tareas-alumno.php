@@ -76,7 +76,7 @@ if (!$resultado_tareas) {
 
                 <?php while ($tarea = mysqli_fetch_assoc($resultado_tareas)): ?>
 
-                    <a href="/pages/dashboard-alumno.php?seccion=beta">
+                    <a href="pages/dashboard-alumno.php?seccion=beta">
                         <article class="anuncio-card tarea-card">
 
                             <div class="anuncio-info">
