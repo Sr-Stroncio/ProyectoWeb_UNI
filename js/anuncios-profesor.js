@@ -1,88 +1,35 @@
-if (typeof anuncios === 'undefined') {
-    var anuncios = [
-        {
-            id: 1,
-            propio: true,
-            autor: 'Tú · Programación',
-            asig: 'Programación',
-            tiempo: 'Hace 2h',
-            titulo: 'Examen parcial – cambio de fecha',
-            desc: 'El examen del día 20 se traslada al 22. Misma aula.',
-            tipo: 'mios'
-        },
-        {
-            id: 2,
-            propio: false,
-            autor: 'Secretaría',
-            asig: '',
-            tiempo: 'Ayer',
-            titulo: 'Período de matrícula abierto',
-            desc: 'Del 15 al 30 de mayo podéis formalizar la matrícula.',
-            tipo: 'general'
-        },
-        {
-            id: 3,
-            propio: true,
-            autor: 'Tú · BD',
-            asig: 'BD',
-            tiempo: 'Hace 2d',
-            titulo: 'Material adicional unidad 3',
-            desc: 'He subido los apuntes de la sesión del martes.',
-            tipo: 'mios'
-        },
-        {
-            id: 4,
-            propio: true,
-            autor: 'Tú · HCI',
-            asig: 'HCI',
-            tiempo: 'Hace 3d',
-            titulo: 'Recordatorio entrega prototipo',
-            desc: 'La fecha límite es el 20 de mayo a las 23:59.',
-            tipo: 'mios'
-        },
-        {
-            id: 5,
-            propio: false,
-            autor: 'Dirección',
-            asig: '',
-            tiempo: 'Hace 5d',
-            titulo: 'Semana cultural — participación voluntaria',
-            desc: 'Del 27 al 31 de mayo se celebra la semana cultural del centro.',
-            tipo: 'general'
-        }
-    ];
-}
+// los anuncios llegan inyectados desde dashboard-profesor.php
 
-var nextIdAnu = 6;
-var filtroActivoAnu = 'todos';
-var anuncioIdAnu = null;
+let filtroActivoAnu = 'todos';
+let anuncioIdAnu = null;
 
-var listaAnunciosAnu = document.getElementById('listaAnuncios');
-var modalFondoAnu = document.getElementById('modalFondoAnu');
-var modalTituloAnu = document.getElementById('modalTituloAnu');
-var inputTituloAnu = document.getElementById('inputTituloAnu');
-var inputDescAnu = document.getElementById('inputDescAnu');
-var inputAsigAnu = document.getElementById('inputAsigAnu');
-var inputTipoAnu = document.getElementById('inputTipoAnu');
-var btnBorrarAnu = document.getElementById('btnBorrarAnuncioAnu');
-var btnGuardarAnu = document.getElementById('btnGuardarAnu');
+const listaAnunciosAnu = document.getElementById('listaAnuncios');
+const modalFondoAnu = document.getElementById('modalFondoAnu');
+const modalTituloAnu = document.getElementById('modalTituloAnu');
+const inputTituloAnu = document.getElementById('inputTituloAnu');
+const inputDescAnu = document.getElementById('inputDescAnu');
+const inputAsigAnu = document.getElementById('inputAsigAnu');
+const inputTipoAnu = document.getElementById('inputTipoAnu');
+const btnBorrarAnu = document.getElementById('btnBorrarAnuncioAnu');
+const btnGuardarAnu = document.getElementById('btnGuardarAnu');
 
-// se renderiza la lista de anuncios usando forEach
+// se pinta la lista de anuncios
 function renderListaAnu() {
     listaAnunciosAnu.innerHTML = '';
 
-    anuncios.forEach(function(anuncio) {
-        if (filtroActivoAnu !== 'todos' && anuncio.tipo !== filtroActivoAnu) return;
+    for (let i = 0; i < anuncios.length; i++) {
+        const anuncio = anuncios[i];
+        if (filtroActivoAnu !== 'todos' && anuncio.tipo !== filtroActivoAnu) continue;
 
-        var tagClase = anuncio.tipo === 'mios' ? 'tag-asignatura' : 'tag-general';
-        var tagTexto = anuncio.tipo === 'mios' ? 'Asignatura' : 'General';
+        const tagClase = anuncio.tipo === 'mios' ? 'tag-asignatura' : 'tag-general';
+        const tagTexto = anuncio.tipo === 'mios' ? 'Asignatura' : 'General';
 
-        var btnEditar = '';
+        let btnEditar = '';
         if (anuncio.propio) {
             btnEditar = '<button class="btn-editar-anuncio"><img src="assets/iconos/pencil.svg" alt="editar"></button>';
         }
 
-        var card = document.createElement('div');
+        const card = document.createElement('div');
         card.className = 'anuncio-card' + (anuncio.propio ? ' propio' : '');
         card.setAttribute('data-id', anuncio.id);
         
@@ -111,7 +58,7 @@ function renderListaAnu() {
         }
 
         listaAnunciosAnu.appendChild(card);
-    });
+    }
 }
 
 function abrirNuevoAnu() {
@@ -127,8 +74,14 @@ function abrirNuevoAnu() {
 }
 
 function abrirEditarAnu(id) {
-    // se busca el anuncio usando find
-    var anuncio = anuncios.find(function(a) { return a.id === id; });
+    // se busca el anuncio
+    let anuncio = null;
+    for (let i = 0; i < anuncios.length; i++) {
+        if (anuncios[i].id === id) {
+            anuncio = anuncios[i];
+            break;
+        }
+    }
     if (!anuncio) return;
 
     anuncioIdAnu = id;
@@ -148,19 +101,19 @@ function cerrarModalAnu() {
 }
 
 function guardarAnu() {
-    var titulo = inputTituloAnu.value.trim();
+    let titulo = inputTituloAnu.value.trim();
     if (!titulo) {
         alert('El título no puede estar vacío.');
         return;
     }
 
-    var asig = inputAsigAnu.value;
-    var tipo = inputTipoAnu.value;
-    var desc = inputDescAnu.value.trim();
-    var autorTexto = tipo === 'mios' ? 'Tú · ' + asig : 'Tú';
-    var idEnviar = anuncioIdAnu !== null ? anuncioIdAnu : '';
+    let asig = inputAsigAnu.value;
+    let tipo = inputTipoAnu.value;
+    let desc = inputDescAnu.value.trim();
+    const autorTexto = tipo === 'mios' ? 'Tú · ' + asig : 'Tú';
+    const idEnviar = anuncioIdAnu !== null ? anuncioIdAnu : '';
 
-    var params = 'id=' + idEnviar +
+    const params = 'id=' + idEnviar +
                  '&titulo=' + encodeURIComponent(titulo) +
                  '&desc=' + encodeURIComponent(desc) +
                  '&asig=' + encodeURIComponent(asig) +
@@ -185,7 +138,13 @@ function guardarAnu() {
                 tipo: tipo
             });
         } else {
-            var anuncio = anuncios.find(function(a) { return a.id === anuncioIdAnu; });
+            let anuncio = null;
+            for (let i = 0; i < anuncios.length; i++) {
+                if (anuncios[i].id === anuncioIdAnu) {
+                    anuncio = anuncios[i];
+                    break;
+                }
+            }
             if (anuncio) {
                 anuncio.titulo = titulo;
                 anuncio.desc = desc;
@@ -203,7 +162,7 @@ function borrarAnuncioAnu() {
     if (anuncioIdAnu === null) return;
     if (!confirm('¿Seguro que quieres eliminar este anuncio?')) return;
 
-    var idBorrar = anuncioIdAnu;
+    const idBorrar = anuncioIdAnu;
 
     fetch('utils/borrar-anuncio.php', {
         method: 'POST',
@@ -228,17 +187,17 @@ modalFondoAnu.addEventListener('click', function(e) {
 });
 
 // se configuran los botones de filtro
-var botonesFiltroAnu = document.querySelectorAll('.filtro');
-botonesFiltroAnu.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        botonesFiltroAnu.forEach(function(b) {
-            b.classList.remove('activo');
-        });
-        btn.classList.add('activo');
-        filtroActivoAnu = btn.getAttribute('data-filtro');
+const botonesFiltroAnu = document.querySelectorAll('.filtro');
+for (let i = 0; i < botonesFiltroAnu.length; i++) {
+    botonesFiltroAnu[i].addEventListener('click', function() {
+        for (let j = 0; j < botonesFiltroAnu.length; j++) {
+            botonesFiltroAnu[j].classList.remove('activo');
+        }
+        this.classList.add('activo');
+        filtroActivoAnu = this.getAttribute('data-filtro');
         renderListaAnu();
     });
-});
+}
 
 // se realiza el arranque inicial
 renderListaAnu();

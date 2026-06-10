@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . "/../utils/rutas.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -9,7 +10,7 @@ session_start();
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Página de compra</title>
-    <base href="/">
+    <base href="<?= $base_url ?>">
     <link rel="stylesheet" href="css/pagina_servicios.css">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
 
@@ -78,7 +79,7 @@ session_start();
                     </li>
                 </ul>
                 <hr class="separador">
-                <a href="/pages/log-in-producto.php" class="btn-demo btn-demo-secundario">Ir a la prueba</a>
+                <a href="pages/log-in-producto.php" class="btn-demo btn-demo-secundario">Ir a la prueba</a>
             </div>
         </div>
     </section>

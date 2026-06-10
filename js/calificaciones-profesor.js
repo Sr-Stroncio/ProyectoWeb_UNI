@@ -1,28 +1,21 @@
-// calificaciones
-if (typeof calificaciones === 'undefined') {
-    var calificaciones = { prog: [], bd: [], hci: [] };
-}
+// calificaciones y examenes llegan inyectados desde dashboard-profesor.php
 
-if (typeof examenes === 'undefined') {
-    var examenes = { prog: [], bd: [], hci: [] };
-}
-
-var subtitulosCal = {
+const subtitulosCal = {
     prog: 'Programación',
     bd: 'Bases de Datos',
     hci: 'HCI'
 };
 
-var asigActivaCal = 'prog';
-var alumnoIdCal = null;
+let asigActivaCal = 'prog';
+let alumnoIdCal = null;
 
 // se calcula la media sobre todas las notas del alumno
 function calcularMediaCal(notas) {
-    var suma = 0;
-    var total = 0;
-    for (var idEx in notas) {
-        var val = notas[idEx];
-        if (val !== null && val !== '' && !isNaN(val)) {
+    let suma = 0;
+    let total = 0;
+    for (const idEx in notas) {
+        const val = notas[idEx];
+        if (val !== null && !isNaN(val)) {
             suma = suma + parseFloat(val);
             total = total + 1;
         }
@@ -32,36 +25,34 @@ function calcularMediaCal(notas) {
 }
 
 function mostrarNotaCal(val) {
-    if (val === null || val === '' || isNaN(val)) return '—';
+    if (val === null || val === '') return '—';
+    if (isNaN(val)) return '—';
     return val;
 }
 
 // se pinta la lista de alumnos
 function renderTablaCal() {
-    var cuerpo = document.getElementById('cuerpoTablaAlumnos');
-    if (!cuerpo) return;
+    const cuerpo = document.getElementById('cuerpoTablaAlumnos');
     cuerpo.innerHTML = '';
 
-    var lista = calificaciones[asigActivaCal];
-    if (!lista) return;
+    const lista = calificaciones[asigActivaCal];
 
-    for (var i = 0; i < lista.length; i++) {
-        (function(alumno) {
-            var fila = document.createElement('div');
-            fila.className = 'tabla-fila';
-            fila.style.cursor = 'pointer';
+    for (let i = 0; i < lista.length; i++) {
+        const alumno = lista[i];
+        const fila = document.createElement('div');
+        fila.className = 'tabla-fila';
+        fila.style.cursor = 'pointer';
 
-            fila.innerHTML =
-                '<span class="col-alumno">' + alumno.nombre + '</span>' +
-                '<span class="col-email" style="flex: 2;">' + alumno.email + '</span>' +
-                '<span class="col-accion"><button class="btn-editar" style="background: none; border: none; color: #ff9e00; cursor: pointer; font-weight: 600;">&#9998; Ver/Editar</button></span>';
+        fila.innerHTML =
+            '<span class="col-alumno">' + alumno.nombre + '</span>' +
+            '<span class="col-email" style="flex: 2;">' + alumno.email + '</span>' +
+            '<span class="col-accion"><button class="btn-editar" style="background: none; border: none; color: #ff9e00; cursor: pointer; font-weight: 600;">&#9998; Ver/Editar</button></span>';
 
-            fila.addEventListener('click', function() {
-                mostrarDetalleCal(alumno.id);
-            });
+        fila.addEventListener('click', function() {
+            mostrarDetalleCal(alumno.id);
+        });
 
-            cuerpo.appendChild(fila);
-        })(lista[i]);
+        cuerpo.appendChild(fila);
     }
 }
 
@@ -69,8 +60,8 @@ function renderTablaCal() {
 window.seleccionarAsignaturaHash = function(asig) {
     asigActivaCal = asig;
 
-    var pestanas = document.querySelectorAll('.pill');
-    for (var i = 0; i < pestanas.length; i++) {
+    const pestanas = document.querySelectorAll('.pill');
+    for (let i = 0; i < pestanas.length; i++) {
         if (pestanas[i].getAttribute('data-asig') === asig) {
             pestanas[i].classList.add('activo');
         } else {
@@ -78,26 +69,20 @@ window.seleccionarAsignaturaHash = function(asig) {
         }
     }
 
-    if (document.getElementById('subtitulo')) {
-        document.getElementById('subtitulo').textContent = subtitulosCal[asig];
-    }
+    document.getElementById('subtitulo').textContent = subtitulosCal[asig];
 
     // se vuelve al listado
-    if (document.getElementById('vista-detalle-alumno')) {
-        document.getElementById('vista-detalle-alumno').style.display = 'none';
-    }
-    if (document.getElementById('vista-lista-alumnos')) {
-        document.getElementById('vista-lista-alumnos').style.display = 'block';
-    }
+    document.getElementById('vista-detalle-alumno').style.display = 'none';
+    document.getElementById('vista-lista-alumnos').style.display = 'block';
 
     renderTablaCal();
 };
 
 // se muestran los detalles del alumno (filas dinamicas por examen)
 function mostrarDetalleCal(id) {
-    var lista = calificaciones[asigActivaCal];
-    var alumno = null;
-    for (var i = 0; i < lista.length; i++) {
+    const lista = calificaciones[asigActivaCal];
+    let alumno = null;
+    for (let i = 0; i < lista.length; i++) {
         if (lista[i].id === id) {
             alumno = lista[i];
             break;
@@ -111,17 +96,17 @@ function mostrarDetalleCal(id) {
     document.getElementById('detalleEmailAlumno').textContent = alumno.email;
 
     // se pintan las filas de notas dinamicamente
-    var filasCont = document.getElementById('detalleNotasFilas');
+    const filasCont = document.getElementById('detalleNotasFilas');
     filasCont.innerHTML = '';
 
-    var examsAsig = examenes[asigActivaCal];
+    const examsAsig = examenes[asigActivaCal];
     if (examsAsig.length === 0) {
         filasCont.innerHTML = '<div class="tabla-fila" style="cursor: default;"><span style="flex: 1; color: #888;">No hay examenes creados todavia. Usa "Gestionar exámenes".</span></div>';
     } else {
-        for (var j = 0; j < examsAsig.length; j++) {
-            var ex = examsAsig[j];
-            var nota = alumno.notas[ex.id];
-            var fila = document.createElement('div');
+        for (let j = 0; j < examsAsig.length; j++) {
+            const ex = examsAsig[j];
+            const nota = alumno.notas[ex.id];
+            const fila = document.createElement('div');
             fila.className = 'tabla-fila';
             fila.style.cursor = 'default';
             fila.innerHTML =
@@ -139,11 +124,11 @@ function mostrarDetalleCal(id) {
 
 // se recalcula la media en vivo mientras se editan los inputs
 function actualizarMediaCal() {
-    var inputs = document.querySelectorAll('.input-nota-ex');
-    var notas = {};
-    for (var i = 0; i < inputs.length; i++) {
-        var idEx = inputs[i].getAttribute('data-id');
-        var val = inputs[i].value;
+    const inputs = document.querySelectorAll('.input-nota-ex');
+    const notas = {};
+    for (let i = 0; i < inputs.length; i++) {
+        const idEx = inputs[i].getAttribute('data-id');
+        const val = inputs[i].value;
         notas[idEx] = val !== '' ? parseFloat(val) : null;
     }
     document.getElementById('mediaPreview').textContent = calcularMediaCal(notas);
@@ -152,9 +137,9 @@ function actualizarMediaCal() {
 function abrirEditarCal() {
     if (alumnoIdCal === null) return;
 
-    var lista = calificaciones[asigActivaCal];
-    var alumno = null;
-    for (var i = 0; i < lista.length; i++) {
+    const lista = calificaciones[asigActivaCal];
+    let alumno = null;
+    for (let i = 0; i < lista.length; i++) {
         if (lista[i].id === alumnoIdCal) {
             alumno = lista[i];
             break;
@@ -165,18 +150,21 @@ function abrirEditarCal() {
     document.getElementById('modalNombreAlumno').textContent = alumno.nombre;
 
     // se generan los inputs de notas dinamicamente
-    var contInputs = document.getElementById('notasInputs');
+    const contInputs = document.getElementById('notasInputs');
     contInputs.innerHTML = '';
 
-    var examsAsig = examenes[asigActivaCal];
+    const examsAsig = examenes[asigActivaCal];
     if (examsAsig.length === 0) {
         contInputs.innerHTML = '<p style="color: #888;">No hay examenes. Crea uno desde "Gestionar exámenes".</p>';
     } else {
-        for (var j = 0; j < examsAsig.length; j++) {
-            var ex = examsAsig[j];
-            var nota = alumno.notas[ex.id];
-            var valor = nota !== null && nota !== undefined ? nota : '';
-            var grupo = document.createElement('div');
+        for (let j = 0; j < examsAsig.length; j++) {
+            const ex = examsAsig[j];
+            const nota = alumno.notas[ex.id];
+            let valor = '';
+            if (nota || nota === 0) {
+                valor = nota;
+            }
+            const grupo = document.createElement('div');
             grupo.className = 'nota-grupo';
             grupo.innerHTML =
                 '<label class="campo-label">' + ex.titulo + '</label>' +
@@ -185,8 +173,8 @@ function abrirEditarCal() {
         }
 
         // se enganchan los listeners de los nuevos inputs
-        var inputs = document.querySelectorAll('.input-nota-ex');
-        for (var k = 0; k < inputs.length; k++) {
+        const inputs = document.querySelectorAll('.input-nota-ex');
+        for (let k = 0; k < inputs.length; k++) {
             inputs[k].addEventListener('input', actualizarMediaCal);
         }
     }
@@ -202,10 +190,10 @@ function cerrarModalCal() {
 function guardarCal() {
     if (alumnoIdCal === null) return;
 
-    var inputs = document.querySelectorAll('.input-nota-ex');
-    var lista = calificaciones[asigActivaCal];
-    var alumno = null;
-    for (var i = 0; i < lista.length; i++) {
+    const inputs = document.querySelectorAll('.input-nota-ex');
+    const lista = calificaciones[asigActivaCal];
+    let alumno = null;
+    for (let i = 0; i < lista.length; i++) {
         if (lista[i].id === alumnoIdCal) {
             alumno = lista[i];
             break;
@@ -213,16 +201,16 @@ function guardarCal() {
     }
 
     // se monta el body con notas[id]=valor
-    var partes = ['alumno_id=' + alumnoIdCal];
-    for (var k = 0; k < inputs.length; k++) {
-        var idEx = inputs[k].getAttribute('data-id');
-        var val = inputs[k].value;
+    const partes = ['alumno_id=' + alumnoIdCal];
+    for (let k = 0; k < inputs.length; k++) {
+        const idEx = inputs[k].getAttribute('data-id');
+        const val = inputs[k].value;
         partes.push('notas[' + idEx + ']=' + (val !== '' ? val : ''));
         if (alumno) {
             alumno.notas[idEx] = val !== '' ? parseFloat(val) : null;
         }
     }
-    var params = partes.join('&');
+    const params = partes.join('&');
 
     fetch('utils/guardar-notas-profesor.php', {
         method: 'POST',
@@ -234,45 +222,44 @@ function guardarCal() {
     mostrarDetalleCal(alumnoIdCal);
 }
 
-// --- gestion de examenes ---
+// gestion de examenes
 
 function renderListaExamenesEx() {
-    var cont = document.getElementById('listaExamenesEx');
+    const cont = document.getElementById('listaExamenesEx');
     cont.innerHTML = '';
 
-    var lista = examenes[asigActivaCal];
+    const lista = examenes[asigActivaCal];
     if (lista.length === 0) {
         cont.innerHTML = '<p style="color: #888; margin: 0;">No hay examenes creados.</p>';
         return;
     }
 
-    for (var i = 0; i < lista.length; i++) {
-        (function(ex) {
-            var fila = document.createElement('div');
-            fila.className = 'examen-fila';
-            fila.innerHTML =
-                '<input class="campo-input examen-titulo-input" type="text" value="' + ex.titulo + '" data-id="' + ex.id + '">' +
-                '<button class="btn-accion examen-guardar" data-id="' + ex.id + '">Guardar</button>' +
-                '<button class="btn-modal-borrar examen-borrar" data-id="' + ex.id + '" style="padding: 6px 10px;">Eliminar</button>';
+    for (let i = 0; i < lista.length; i++) {
+        const ex = lista[i];
+        const fila = document.createElement('div');
+        fila.className = 'examen-fila';
+        fila.innerHTML =
+            '<input class="campo-input examen-titulo-input" type="text" value="' + ex.titulo + '" data-id="' + ex.id + '">' +
+            '<button class="btn-accion examen-guardar" data-id="' + ex.id + '">Guardar</button>' +
+            '<button class="btn-modal-borrar examen-borrar" data-id="' + ex.id + '" style="padding: 6px 10px;">Eliminar</button>';
 
-            cont.appendChild(fila);
-        })(lista[i]);
+        cont.appendChild(fila);
     }
 
     // listeners de cada boton
-    var botonesGuardar = cont.querySelectorAll('.examen-guardar');
-    for (var g = 0; g < botonesGuardar.length; g++) {
+    const botonesGuardar = cont.querySelectorAll('.examen-guardar');
+    for (let g = 0; g < botonesGuardar.length; g++) {
         botonesGuardar[g].addEventListener('click', function() {
-            var id = parseInt(this.getAttribute('data-id'));
-            var input = cont.querySelector('.examen-titulo-input[data-id="' + id + '"]');
+            let id = parseInt(this.getAttribute('data-id'));
+            const input = cont.querySelector('.examen-titulo-input[data-id="' + id + '"]');
             renombrarExamenEx(id, input.value.trim());
         });
     }
 
-    var botonesBorrar = cont.querySelectorAll('.examen-borrar');
-    for (var b = 0; b < botonesBorrar.length; b++) {
+    const botonesBorrar = cont.querySelectorAll('.examen-borrar');
+    for (let b = 0; b < botonesBorrar.length; b++) {
         botonesBorrar[b].addEventListener('click', function() {
-            var id = parseInt(this.getAttribute('data-id'));
+            let id = parseInt(this.getAttribute('data-id'));
             borrarExamenEx(id);
         });
     }
@@ -289,13 +276,13 @@ function cerrarGestionarExamenesEx() {
 }
 
 function anadirExamenEx() {
-    var titulo = document.getElementById('inputNuevoExamen').value.trim();
+    let titulo = document.getElementById('inputNuevoExamen').value.trim();
     if (!titulo) {
         alert('El titulo no puede estar vacio.');
         return;
     }
 
-    var params = 'id=&titulo=' + encodeURIComponent(titulo) + '&asig=' + asigActivaCal;
+    const params = 'id=&titulo=' + encodeURIComponent(titulo) + '&asig=' + asigActivaCal;
 
     fetch('utils/guardar-examen.php', {
         method: 'POST',
@@ -306,8 +293,8 @@ function anadirExamenEx() {
     .then(function(nuevoId) {
         examenes[asigActivaCal].push({ id: parseInt(nuevoId), titulo: titulo, fecha: '' });
         // se inicializa la nota null para todos los alumnos
-        var lista = calificaciones[asigActivaCal];
-        for (var i = 0; i < lista.length; i++) {
+        const lista = calificaciones[asigActivaCal];
+        for (let i = 0; i < lista.length; i++) {
             lista[i].notas[nuevoId] = null;
         }
         document.getElementById('inputNuevoExamen').value = '';
@@ -320,7 +307,7 @@ function renombrarExamenEx(id, titulo) {
         alert('El titulo no puede estar vacio.');
         return;
     }
-    var params = 'id=' + id + '&titulo=' + encodeURIComponent(titulo) + '&asig=' + asigActivaCal;
+    const params = 'id=' + id + '&titulo=' + encodeURIComponent(titulo) + '&asig=' + asigActivaCal;
 
     fetch('utils/guardar-examen.php', {
         method: 'POST',
@@ -328,8 +315,8 @@ function renombrarExamenEx(id, titulo) {
         body: params
     })
     .then(function() {
-        var lista = examenes[asigActivaCal];
-        for (var i = 0; i < lista.length; i++) {
+        const lista = examenes[asigActivaCal];
+        for (let i = 0; i < lista.length; i++) {
             if (lista[i].id === id) {
                 lista[i].titulo = titulo;
                 break;
@@ -348,15 +335,15 @@ function borrarExamenEx(id) {
         body: 'id=' + id
     })
     .then(function() {
-        var lista = examenes[asigActivaCal];
-        var nuevos = [];
-        for (var i = 0; i < lista.length; i++) {
+        const lista = examenes[asigActivaCal];
+        const nuevos = [];
+        for (let i = 0; i < lista.length; i++) {
             if (lista[i].id !== id) nuevos.push(lista[i]);
         }
         examenes[asigActivaCal] = nuevos;
         // se quita la nota de todos los alumnos
-        var alums = calificaciones[asigActivaCal];
-        for (var j = 0; j < alums.length; j++) {
+        const alums = calificaciones[asigActivaCal];
+        for (let j = 0; j < alums.length; j++) {
             delete alums[j].notas[id];
         }
         renderListaExamenesEx();
@@ -364,31 +351,31 @@ function borrarExamenEx(id) {
 }
 
 function exportarCSVCal() {
-    var lista = calificaciones[asigActivaCal];
-    var examsAsig = examenes[asigActivaCal];
+    const lista = calificaciones[asigActivaCal];
+    const examsAsig = examenes[asigActivaCal];
 
     // cabecera dinamica
-    var cabecera = ['Alumno', 'Correo'];
-    for (var c = 0; c < examsAsig.length; c++) {
+    const cabecera = ['Alumno', 'Correo'];
+    for (let c = 0; c < examsAsig.length; c++) {
         cabecera.push(examsAsig[c].titulo);
     }
     cabecera.push('Media');
 
-    var filas = [cabecera.join(',')];
+    const filas = [cabecera.join(',')];
 
-    for (var i = 0; i < lista.length; i++) {
-        var alumno = lista[i];
-        var linea = [alumno.nombre, alumno.email];
-        for (var e = 0; e < examsAsig.length; e++) {
+    for (let i = 0; i < lista.length; i++) {
+        let alumno = lista[i];
+        const linea = [alumno.nombre, alumno.email];
+        for (let e = 0; e < examsAsig.length; e++) {
             linea.push(mostrarNotaCal(alumno.notas[examsAsig[e].id]));
         }
         linea.push(calcularMediaCal(alumno.notas));
         filas.push(linea.join(','));
     }
 
-    var blob = new Blob([filas.join('\n')], { type: 'text/csv;charset=utf-8;' });
-    var url = URL.createObjectURL(blob);
-    var enlace = document.createElement('a');
+    const blob = new Blob([filas.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const enlace = document.createElement('a');
     enlace.href = url;
     enlace.download = 'calificaciones-' + asigActivaCal + '.csv';
     enlace.click();
@@ -406,7 +393,7 @@ document.getElementById('modalCerrar').addEventListener('click', cerrarModalCal)
 document.getElementById('btnCancelar').addEventListener('click', cerrarModalCal);
 document.getElementById('btnGuardar').addEventListener('click', guardarCal);
 
-var modalFondoCal = document.getElementById('modalFondo');
+const modalFondoCal = document.getElementById('modalFondo');
 modalFondoCal.addEventListener('click', function(e) {
     if (e.target === modalFondoCal) cerrarModalCal();
 });
@@ -417,15 +404,15 @@ document.getElementById('modalCerrarEx').addEventListener('click', cerrarGestion
 document.getElementById('btnCerrarEx').addEventListener('click', cerrarGestionarExamenesEx);
 document.getElementById('btnAnadirExamen').addEventListener('click', anadirExamenEx);
 
-var modalFondoExCal = document.getElementById('modalFondoEx');
+const modalFondoExCal = document.getElementById('modalFondoEx');
 modalFondoExCal.addEventListener('click', function(e) {
     if (e.target === modalFondoExCal) cerrarGestionarExamenesEx();
 });
 
-var pestanasCal = document.querySelectorAll('.pill');
-for (var p = 0; p < pestanasCal.length; p++) {
+const pestanasCal = document.querySelectorAll('.pill');
+for (let p = 0; p < pestanasCal.length; p++) {
     pestanasCal[p].addEventListener('click', function() {
-        for (var q = 0; q < pestanasCal.length; q++) {
+        for (let q = 0; q < pestanasCal.length; q++) {
             pestanasCal[q].classList.remove('activo');
         }
         this.classList.add('activo');

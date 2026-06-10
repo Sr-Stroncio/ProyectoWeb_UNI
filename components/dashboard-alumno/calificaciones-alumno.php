@@ -101,7 +101,7 @@ if (!$resultado_calificaciones) {
 
             <?php } ?>
 
-            <a href="/pages/dashboard-alumno.php?seccion=beta">
+            <a href="pages/dashboard-alumno.php?seccion=beta">
                 <article class="tarjeta-calificacion">
 
                     <div class="info-calificacion">

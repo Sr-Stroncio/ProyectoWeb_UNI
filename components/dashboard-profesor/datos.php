@@ -39,7 +39,13 @@ foreach ($anuncios_raw as $an) {
         $row_as = mysqli_fetch_row(mysqli_stmt_get_result($stmt_as));
         $asig_nombre = $row_as[0];
         if ($propio) {
-            $autor = 'Tú · ' . ($asig_nombre === 'Programación' ? 'Prog' : ($asig_nombre === 'Bases de Datos' ? 'BD' : 'HCI'));
+            if ($asig_nombre === 'Programación') {
+                $autor = 'Tú · Prog';
+            } elseif ($asig_nombre === 'Bases de Datos') {
+                $autor = 'Tú · BD';
+            } else {
+                $autor = 'Tú · HCI';
+            }
         }
     }
 
@@ -64,6 +70,15 @@ foreach ($asignaturas_ids as $asig_id) {
     $row_as = mysqli_fetch_row(mysqli_stmt_get_result($stmt_as));
     $nombre_asig = $row_as[0];
 
+    // nombre corto de la asignatura para la tabla
+    if ($nombre_asig === 'Programación') {
+        $asig_corta = 'Programación';
+    } elseif ($nombre_asig === 'Bases de Datos') {
+        $asig_corta = 'BD';
+    } else {
+        $asig_corta = 'HCI';
+    }
+
     $stmt_t = mysqli_prepare($conexion, "SELECT * FROM Tarea WHERE ID_asignatura = ?");
     mysqli_stmt_bind_param($stmt_t, "i", $asig_id);
     mysqli_stmt_execute($stmt_t);
@@ -87,12 +102,13 @@ foreach ($asignaturas_ids as $asig_id) {
         $tareas_js[] = [
             'id' => (int)$t['ID'],
             'nombre' => $t['Titulo'],
-            'asig' => $nombre_asig === 'Programación' ? 'Programación' : ($nombre_asig === 'Bases de Datos' ? 'BD' : 'HCI'),
+            'asig' => $asig_corta,
             'cierre' => substr($t['Fecha_limite'], 0, 10),
             'total' => $total_cnt,
             'entregas' => $entregas_cnt,
             'estado' => $estado,
-            'desc' => $t['Descripcion']
+            'desc' => $t['Descripcion'],
+            'archivo' => $t['Archivo_URL'] ? $t['Archivo_URL'] : ''
         ];
     }
 }
@@ -106,6 +122,15 @@ foreach ($asignaturas_ids as $asig_id) {
     $row_as = mysqli_fetch_row(mysqli_stmt_get_result($stmt_as));
     $nombre_asig = $row_as[0];
 
+    // nombre corto igual que en las tareas
+    if ($nombre_asig === 'Programación') {
+        $asig_corta = 'Programación';
+    } elseif ($nombre_asig === 'Bases de Datos') {
+        $asig_corta = 'BD';
+    } else {
+        $asig_corta = 'HCI';
+    }
+
     $stmt_r = mysqli_prepare($conexion, "SELECT * FROM Recurso WHERE ID_asignatura = ?");
     mysqli_stmt_bind_param($stmt_r, "i", $asig_id);
     mysqli_stmt_execute($stmt_r);
@@ -116,7 +141,7 @@ foreach ($asignaturas_ids as $asig_id) {
             'id' => (int)$r['ID'],
             'titulo' => $r['Titulo'],
             'desc' => $r['Descripcion'],
-            'asig' => $nombre_asig === 'Programación' ? 'Programación' : ($nombre_asig === 'Bases de Datos' ? 'BD' : 'HCI'),
+            'asig' => $asig_corta,
             'estado' => $r['Estado'],
             'url' => $r['Archivo_URL']
         ];
@@ -199,6 +224,50 @@ foreach ($asignaturas_ids as $asig_id) {
             'nombre' => $u['Nombre'] . ' ' . $u['Apellido'],
             'email' => $u['Email'],
             'notas' => $notas
+        ];
+    }
+}
+
+// se montan los eventos del calendario a partir de las tareas y los examenes
+$eventos_js = [];
+foreach ($asignaturas_ids as $asig_id) {
+    $stmt_as = mysqli_prepare($conexion, "SELECT Nombre FROM Asignatura WHERE ID = ?");
+    mysqli_stmt_bind_param($stmt_as, "i", $asig_id);
+    mysqli_stmt_execute($stmt_as);
+    $row_as = mysqli_fetch_row(mysqli_stmt_get_result($stmt_as));
+    $nombre_asig = $row_as[0];
+
+    // cada tarea es un evento en su fecha limite
+    $stmt_te = mysqli_prepare($conexion, "SELECT ID, Titulo, Fecha_limite FROM Tarea WHERE ID_asignatura = ? AND Fecha_limite IS NOT NULL");
+    mysqli_stmt_bind_param($stmt_te, "i", $asig_id);
+    mysqli_stmt_execute($stmt_te);
+    $tareas_ev = mysqli_fetch_all(mysqli_stmt_get_result($stmt_te), MYSQLI_ASSOC);
+
+    foreach ($tareas_ev as $te) {
+        $eventos_js[] = [
+            'id' => (int)$te['ID'],
+            'titulo' => $te['Titulo'],
+            'asig' => $nombre_asig,
+            'fecha' => substr($te['Fecha_limite'], 0, 10),
+            'hora' => '',
+            'tipo' => 'tarea'
+        ];
+    }
+
+    // cada examen es un evento en su fecha
+    $stmt_exe = mysqli_prepare($conexion, "SELECT ID, Titulo, Fecha_examen FROM Examen WHERE ID_asignatura = ? AND Fecha_examen IS NOT NULL");
+    mysqli_stmt_bind_param($stmt_exe, "i", $asig_id);
+    mysqli_stmt_execute($stmt_exe);
+    $examenes_ev = mysqli_fetch_all(mysqli_stmt_get_result($stmt_exe), MYSQLI_ASSOC);
+
+    foreach ($examenes_ev as $exe) {
+        $eventos_js[] = [
+            'id' => (int)$exe['ID'],
+            'titulo' => $exe['Titulo'],
+            'asig' => $nombre_asig,
+            'fecha' => substr($exe['Fecha_examen'], 0, 10),
+            'hora' => substr($exe['Fecha_examen'], 11, 5),
+            'tipo' => 'examen'
         ];
     }
 }

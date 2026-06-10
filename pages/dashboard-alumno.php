@@ -1,9 +1,10 @@
 <?php
 
-include '../utils/check-usuario.php';
+include __DIR__ . '/../utils/check-usuario.php';
 comprobarUsuario('alumno');
 
 require_once __DIR__ . "/../database/conexion.php";
+require_once __DIR__ . "/../utils/rutas.php";
 
 $id_alumno = $_SESSION['usuario_id'];
 
@@ -34,7 +35,9 @@ if (!$resultado_asignaturas) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="/">
+
+    <base href="<?= $base_url ?>">
+
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/dashboard-alumno.css">
     <link rel="stylesheet" href="css/inicio-alumno.css">
@@ -43,38 +46,39 @@ if (!$resultado_asignaturas) {
     <link rel="stylesheet" href="css/alumno-anuncios.css">
     <link rel="stylesheet" href="css/alumno-tareas.css">
     <link rel="stylesheet" href="css/beta.css">
+
     <title>Dashboard alumno</title>
 </head>
 
 <body>
 
-    <?php include '../components/dashboard-alumno/header-alumno.php'; ?>
+    <?php include __DIR__ . '/../components/dashboard-alumno/header-alumno.php'; ?>
 
     <section class="section-principal">
 
-        <?php include '../components/dashboard-alumno/aside-alumno.php'; ?>
+        <?php include __DIR__ . '/../components/dashboard-alumno/aside-alumno.php'; ?>
 
         <main>
             <?php
 
             if ($seccion === 'inicio') {
-                include '../components/dashboard-alumno/Inicio-alumno.php';
+                include __DIR__ . '/../components/dashboard-alumno/Inicio-alumno.php';
             } elseif ($seccion === 'calificaciones') {
-                include '../components/dashboard-alumno/calificaciones-alumno.php';
+                include __DIR__ . '/../components/dashboard-alumno/calificaciones-alumno.php';
             } elseif ($seccion === 'anuncios') {
-                include '../components/dashboard-alumno/anuncios-alumno.php';
+                include __DIR__ . '/../components/dashboard-alumno/anuncios-alumno.php';
             } elseif ($seccion === 'calendario') {
-                include '../components/dashboard-profesor/calendario.php';
+                include __DIR__ . '/../components/dashboard-profesor/calendario.php';
             } elseif ($seccion === 'recursos') {
-                include '../components/dashboard-alumno/tareas-alumno.php';
+                include __DIR__ . '/../components/dashboard-alumno/tareas-alumno.php';
             } elseif ($seccion === 'examenes') {
-                include '../components/dashboard-alumno/tareas-alumno.php';
+                include __DIR__ . '/../components/dashboard-alumno/tareas-alumno.php';
             } elseif ($seccion === 'tareas') {
-                include '../components/dashboard-alumno/tareas-alumno.php';
+                include __DIR__ . '/../components/dashboard-alumno/tareas-alumno.php';
             } elseif ($seccion === 'beta') {
-                include '../components/beta.php';
+                include __DIR__ . '/../components/beta.php';
             } else {
-                include '../components/dashboard-alumno/Inicio-alumno.php';
+                include __DIR__ . '/../components/dashboard-alumno/Inicio-alumno.php';
             }
 
             ?>

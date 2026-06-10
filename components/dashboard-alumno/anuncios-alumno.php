@@ -40,7 +40,7 @@ if (!$resultado_anuncios) {
             <h3>Anuncios</h3>
         </div>
 
-        <a href="/pages/dashboard-alumno.php?seccion=beta">
+        <a href="pages/dashboard-alumno.php?seccion=beta">
             <div class="contenedor-anuncios">
 
                 <?php if (mysqli_num_rows($resultado_anuncios) > 0): ?>
