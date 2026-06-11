@@ -53,16 +53,25 @@ header {
 
 .btn-menu {
     display: none;
-    background: none;
-    border: none;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+    border: 1px solid #d6d6d6;
+    border-radius: 12px;
     cursor: pointer;
-    margin-right: 10px;
-    padding: 4px;
+    margin-right: 12px;
+    padding: 11px;
+}
+
+.btn-menu:hover {
+    background-color: #ffce74;
+    border-color: #ffce74;
 }
 
 .btn-menu img {
-    width: 22px;
-    height: 22px;
+    width: 32px;
+    height: 32px;
+    display: block;
 }
 
 .div-nav {
@@ -118,7 +127,6 @@ header {
     font-size: 14px;
     font-weight: 600;
     white-space: nowrap;
-    transition: all 0.25s ease;
 }
 
 .btn-logout:hover {
@@ -158,14 +166,14 @@ header {
     aside.abierto {
         left: 0;
     }
+
+    .btn-menu {
+        display: flex;
+    }
 }
 
 /* tablet */
 @media (max-width: 900px) {
-    .btn-menu {
-        display: flex;
-    }
-
     .div-izquierdo h2 {
         display: none;
     }

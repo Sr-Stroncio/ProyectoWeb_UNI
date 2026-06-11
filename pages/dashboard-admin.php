@@ -2,6 +2,7 @@
 session_start();
 
 require_once '../database/conexion.php';
+require_once '../utils/rutas.php';
 
 include '../utils/check-usuario.php';
 comprobarUsuario('admin');
@@ -27,7 +28,7 @@ if ($seccion == 'grados') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, ini  tial-scale=1.0">
-    <base href="/">
+    <base href="<?= $base_url ?>">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/profesor-header.css">
     <link rel="stylesheet" href="css/dashboard-admin.css">

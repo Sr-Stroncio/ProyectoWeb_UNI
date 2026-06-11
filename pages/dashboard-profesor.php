@@ -3,6 +3,7 @@ include '../utils/check-usuario.php';
 comprobarUsuario('profesor');
 
 require_once __DIR__ . "/../database/conexion.php";
+require_once __DIR__ . "/../utils/rutas.php";
 
 // se obtienen los datos del profesor de la sesion
 $id_profesor = (int)$_SESSION['usuario_id'];
@@ -14,6 +15,7 @@ $tareas_js = [];
 $calificaciones_js = [];
 $examenes_js = [];
 $recursos_js = [];
+$eventos_js = [];
 
 include '../components/dashboard-profesor/datos.php';
 ?>
@@ -23,7 +25,7 @@ include '../components/dashboard-profesor/datos.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="/">
+    <base href="<?= $base_url ?>">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/dashboard-profesor.css">
     <title>Dashboard — Profesor</title>
@@ -68,6 +70,7 @@ include '../components/dashboard-profesor/datos.php';
     var examenes = <?= json_encode($examenes_js) ?>;
     var tareas = <?= json_encode($tareas_js) ?>;
     var recursos = <?= json_encode($recursos_js) ?>;
+    var eventos = <?= json_encode($eventos_js) ?>;
 </script>
 
 <script src="js/header-profesor.js"></script>
@@ -75,6 +78,7 @@ include '../components/dashboard-profesor/datos.php';
 <script src="js/tareas-profesor.js"></script>
 <script src="js/calificaciones-profesor.js"></script>
 <script src="js/recursos-profesor.js"></script>
+<script src="js/calendario-profesor.js"></script>
 <script src="js/router-profesor.js"></script>
 
 </body>

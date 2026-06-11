@@ -3,6 +3,7 @@
 session_start();
 
 require_once __DIR__ . "/../database/conexion.php";
+require_once __DIR__ . "/../utils/rutas.php";
 
 $error = $_SESSION['error_login'] ?? '';
 $correo_guardado = $_SESSION['correo_login'] ?? '';
@@ -10,10 +11,14 @@ $correo_guardado = $_SESSION['correo_login'] ?? '';
 unset($_SESSION['error_login']);
 unset($_SESSION['correo_login']);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (
+    isset($_POST['correo'], $_POST['password']) &&
+    $_POST['correo'] !== '' &&
+    $_POST['password'] !== ''
+) {
 
-    $correo = trim($_POST['correo'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $correo = $_POST['correo'];
+    $password = $_POST['password'];
 
     $sql = "SELECT ID, Rol, Nombre, Email, Password
             FROM Usuario
@@ -41,8 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['empresa_usuario'] = $usuario['Email'];
             $_SESSION['empresa_rol'] = $usuario['Rol'];
             $_SESSION['empresa_nombre'] = $usuario['Nombre'];
-
-            header('Location: /index.php');
+            header('Location: ' . $base_url . 'index.php');
             exit;
         }
     }
@@ -50,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['error_login'] = 'Correo o contraseña incorrectos.';
     $_SESSION['correo_login'] = $correo;
 
-    header('Location: /pages/log-in-app.php');
+    header('Location: ' . $base_url . 'pages/log-in-app.php');
     exit;
 }
 
@@ -65,11 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOA — Iniciar sesión</title>
+    <base href="<?= $base_url ?>">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/lading_page.css">
-    <link rel="stylesheet" href="../css/estilos-login-app.css">
+    <link rel="stylesheet" href="css/lading_page.css">
+    <link rel="stylesheet" href="css/estilos-login-app.css">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
-    <base href="/">
 </head>
 
 <body>
@@ -79,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="tarjeta">
 
             <div class="panel-institucion">
-                <img src="../assets/logoGTI.svg" alt="GTI" class="logo-gti-grande">
+                <img src="assets/logoGTI.svg" alt="GTI" class="logo-gti-grande">
                 <p class="nombre-grado">Grado en Tecnologías Interactivas</p>
                 <p class="campus">Campus de Gandia — Universitat Politècnica de València</p>
 
@@ -108,11 +112,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="texto-campo">correo</p>
                     <input class="caja-input" type="text" name="correo"
                         placeholder="usuario@gti.doa.edu"
-                        value="<?= htmlspecialchars($correo_guardado) ?>">
+                        value="<?= htmlspecialchars($correo_guardado) ?>"
+                        required>
 
                     <p class="texto-campo">Contraseña</p>
                     <input class="caja-input" type="password" name="password"
-                        placeholder="••••••••">
+                        placeholder="••••••••"
+                        required>
 
                     <div class="fila-opciones">
                         <label class="label-recordar">
@@ -126,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
 
                 <p class="texto-soporte">
-                    ¿No tienes cuenta? <a href="/pages/registro.php">Registrate</a>
+                    ¿No tienes cuenta? <a href="pages/registro.php">Registrate</a>
                 </p>
             </div>
 

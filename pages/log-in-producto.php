@@ -1,8 +1,10 @@
 <?php
 
-include '../utils/check-empresa.php';
+session_start();
 
 require_once __DIR__ . "/../database/conexion.php";
+require_once __DIR__ . "/../utils/rutas.php";
+require_once __DIR__ . "/../utils/check-empresa.php";
 
 $error = $_SESSION['error_login'] ?? '';
 $correo_guardado = $_SESSION['correo_login'] ?? '';
@@ -19,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error_login'] = 'Debes introducir correo y contraseña.';
         $_SESSION['correo_login'] = $correo;
 
-        header('Location: /pages/log-in-producto.php');
+        header('Location: ' . $base_url . 'pages/log-in-producto.php');
         exit;
     }
 
@@ -56,17 +58,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             if ($usuario['Rol'] === 'admin') {
-                header('Location: /pages/dashboard-admin.php');
+                header('Location: ' . $base_url . 'pages/dashboard-admin.php');
                 exit;
             }
 
             if ($usuario['Rol'] === 'profesor') {
-                header('Location: /pages/dashboard-profesor.php');
+                header('Location: ' . $base_url . 'pages/dashboard-profesor.php');
                 exit;
             }
 
             if ($usuario['Rol'] === 'alumno') {
-                header('Location: /pages/dashboard-alumno.php');
+                header('Location: ' . $base_url . 'pages/dashboard-alumno.php');
                 exit;
             }
         }
@@ -75,8 +77,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['error_login'] = 'Correo o contraseña incorrectos.';
     $_SESSION['correo_login'] = $correo;
 
-    header('Location: /pages/log-in-producto.php');
+    header('Location: ' . $base_url . 'pages/log-in-producto.php');
     exit;
+}
+
+// cuentas para el desplegable de demo, se saca tambien la password
+// para rellenarla al elegir la cuenta (cada usuario tiene la suya)
+$cuentas_demo = [];
+$sql_demo = "SELECT Nombre, Apellido, Email, Rol, Password
+                FROM Usuario
+                WHERE Rol IN ('alumno', 'profesor', 'admin')
+                ORDER BY Rol, Nombre";
+$res_demo = mysqli_query($conexion, $sql_demo);
+if ($res_demo) {
+    while ($fila = mysqli_fetch_assoc($res_demo)) {
+        $cuentas_demo[] = $fila;
+    }
 }
 
 ?>
@@ -90,21 +106,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOA — Accede a tu cuenta</title>
+
+    <base href="<?= $base_url ?>">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/lading_page.css">
-    <link rel="stylesheet" href="../css/estilos-login.css">
+    <link rel="stylesheet" href="css/lading_page.css">
+    <link rel="stylesheet" href="css/estilos-login.css">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
-    <base href="/">
+
 </head>
 
 <body>
     <!-- include del header general (se usa en las paginas de producto) -->
-    <?php include '../components/header.php'; ?>
+    <?php include __DIR__ . '/../components/header.php'; ?>
 
     <div class="cuerpo">
 
         <div class="panel-oscuro">
-            <img src="../assets/DoA color.svg" alt="DOA" class="logo-panel">
+            <img src="assets/DoA color.svg" alt="DOA" class="logo-panel">
             <h1 class="titulo-panel">La plataforma académica de GTI</h1>
             <p class="descripcion-panel">
                 Gestión de calificaciones, comunicación y
@@ -136,14 +154,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="texto-error"><?= $error ?></p>
             <?php endif; ?>
 
+            <?php if (!empty($cuentas_demo)): ?>
+                <div class="demo-cuentas" id="demoCuentas">
+                    <button type="button" class="demo-toggle" id="demoToggle">
+                        <span>Cuentas de demostración</span>
+                        <span class="demo-flecha">&#9662;</span>
+                    </button>
+                    <ul class="demo-lista">
+                        <?php foreach ($cuentas_demo as $cuenta): ?>
+                            <li class="demo-item"
+                                data-email="<?= htmlspecialchars($cuenta['Email']) ?>"
+                                data-password="<?= htmlspecialchars($cuenta['Password']) ?>">
+                                <span class="demo-nombre"><?= htmlspecialchars(trim($cuenta['Nombre'] . ' ' . $cuenta['Apellido'])) ?></span>
+                                <span class="demo-rol"><?= ucfirst($cuenta['Rol']) ?></span>
+                                <span class="demo-email"><?= htmlspecialchars($cuenta['Email']) ?></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
             <form method="POST" action="">
                 <p class="texto-campo">Correo institucional</p>
-                <input class="caja-input" type="email" name="correo"
+                <input class="caja-input" type="email" name="correo" id="campoCorreo"
                     placeholder="correo@institución.es"
                     value="<?= htmlspecialchars($correo_guardado) ?>">
 
                 <p class="texto-campo">Contraseña</p>
-                <input class="caja-input" type="password" name="password"
+                <input class="caja-input" type="password" name="password" id="campoPassword"
                     placeholder="••••••••">
 
                 <p class="olvide">
@@ -166,6 +204,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setTimeout(() => {
                 mensajeError.style.display = "none";
             }, 2000);
+        }
+
+        // se rellena el formulario al elegir una cuenta del desplegable
+        var demoCuentas = document.getElementById('demoCuentas');
+
+        if (demoCuentas) {
+            var demoToggle = document.getElementById('demoToggle');
+            var campoCorreo = document.getElementById('campoCorreo');
+            var campoPassword = document.getElementById('campoPassword');
+            var demoItems = demoCuentas.querySelectorAll('.demo-item');
+
+            demoToggle.addEventListener('click', function() {
+                demoCuentas.classList.toggle('abierto');
+            });
+
+            for (var i = 0; i < demoItems.length; i++) {
+                demoItems[i].addEventListener('click', function() {
+                    // cada cuenta lleva su correo y su clave en los data
+                    campoCorreo.value = this.getAttribute('data-email');
+                    campoPassword.value = this.getAttribute('data-password');
+                    demoCuentas.classList.remove('abierto');
+                });
+            }
+
+            document.addEventListener('click', function(evento) {
+                if (!demoCuentas.contains(evento.target)) {
+                    demoCuentas.classList.remove('abierto');
+                }
+            });
         }
     </script>
 </body>

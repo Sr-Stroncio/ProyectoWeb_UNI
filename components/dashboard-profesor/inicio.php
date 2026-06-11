@@ -3,9 +3,10 @@
     <div class="bloque">
         <div class="bloque-cabecera">
             <h3>Anuncios</h3>
-            <a class="btn-nuevo" href="/pages/dashboard-profesor.php#anuncios-nuevo">+ Nuevo anuncio</a>
+            <a class="btn-nuevo" href="pages/dashboard-profesor.php#anuncios-nuevo">+ Nuevo anuncio</a>
         </div>
 
+        <div class="lista-anuncios">
         <?php
         $count = 0;
         if (!empty($anuncios_js)) {
@@ -22,7 +23,7 @@
                     <p class="anuncio-desc"><?= htmlspecialchars($an['desc']) ?></p>
                     <div class="anuncio-botones">
                         <?php if ($an['propio']): ?>
-                            <a class="btn-icono" href="/pages/dashboard-profesor.php#anuncios">
+                            <a class="btn-icono" href="pages/dashboard-profesor.php#anuncios">
                                 <img src="assets/iconos/pencil.svg" alt="editar">
                             </a>
                         <?php endif; ?>
@@ -34,6 +35,7 @@
             echo '<p style="padding: 20px; color: #888;">No hay anuncios disponibles.</p>';
         }
         ?>
+        </div>
     </div>
 
     <!-- vista general -->

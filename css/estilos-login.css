@@ -1,6 +1,4 @@
-/* ==============================
-   ESTILOS GENERALES
-============================== */
+/* estilos generales */
 
 * {
   margin: 0;
@@ -16,9 +14,7 @@ body {
   padding: 0;
 }
 
-/* ==============================
-   CABECERA
-============================== */
+/* cabecera */
 
 .cabecera {
   background-color: white;
@@ -68,18 +64,14 @@ body {
   padding: 7px 16px;
 }
 
-/* ==============================
-   CUERPO
-============================== */
+/* cuerpo */
 
 .cuerpo {
   height: 100%;
   display: flex;
 }
 
-/* ==============================
-   PANEL OSCURO
-============================== */
+/* panel oscuro */
 
 .panel-oscuro {
   width: 40%;
@@ -148,9 +140,7 @@ body {
   color: #888888;
 }
 
-/* ==============================
-   PANEL FORMULARIO
-============================== */
+/* panel del formulario */
 
 .panel-formulario {
   width: 60%;
@@ -214,6 +204,88 @@ body {
   margin-bottom: 16px;
 }
 
+/* desplegable de cuentas demo */
+
+.demo-cuentas {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.demo-toggle {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background-color: white;
+  border: 1px dashed #d4cfc6;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  color: #6b6860;
+  cursor: pointer;
+}
+
+.demo-toggle:hover {
+  border-color: #b89a30;
+}
+
+.demo-flecha {
+  color: #b89a30;
+}
+
+.demo-lista {
+  list-style: none;
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  border: 1px solid #d4cfc6;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 50;
+  display: none;
+}
+
+.demo-cuentas.abierto .demo-lista {
+  display: block;
+}
+
+.demo-item {
+  padding: 10px 14px;
+  border-bottom: 1px solid #efece6;
+  cursor: pointer;
+}
+
+.demo-item:hover {
+  background-color: #f5f3ee;
+}
+
+.demo-nombre {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1c1c1a;
+}
+
+.demo-rol {
+  font-family: "Open Sans", sans-serif;
+  font-size: 11px;
+  color: #6b6860;
+  margin-left: 6px;
+}
+
+.demo-email {
+  display: block;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  color: #6b6860;
+  margin-top: 2px;
+}
+
 .olvide {
   text-align: right;
   font-family: "Open Sans", sans-serif;
@@ -242,58 +314,40 @@ body {
   color: #6b6860;
 }
 
-/* ==============================
-   RESPONSIVE — MÓVIL
-   
-   Todo lo que está dentro de este bloque
-   solo se aplica cuando la pantalla es
-   más pequeña de 768px (móvil y tablet).
-   
-   Fuera de este bloque, el CSS de arriba
-   sigue funcionando normal en pantallas grandes.
-============================== */
+/* responsive movil */
 
 @media (max-width: 768px) {
-  /* el cuerpo pasa de fila a columna */
   .cuerpo {
     flex-direction: column;
   }
 
-  /* el panel oscuro ocupa todo el ancho
-       y se hace más pequeño verticalmente */
-  /* order: 2 lo manda al final, el formulario queda arriba */
+  /* con order el formulario queda arriba y el panel oscuro abajo */
   .panel-oscuro {
     width: 100%;
     padding: 30px 24px;
     order: 2;
   }
 
-  /* escondemos la lista de características
-       en móvil para no ocupar tanto espacio */
+  /* se esconde la lista de caracteristicas en movil */
   .lista-caracteristicas {
     display: none;
   }
 
-  /* el título también lo hacemos más pequeño */
   .titulo-panel {
     font-size: 20px;
   }
 
-  /* el panel del formulario ocupa todo el ancho */
-  /* order: 1 lo pone primero, antes que el panel oscuro */
   .panel-formulario {
     width: 100%;
     padding: 40px 24px;
     order: 1;
   }
 
-  /* el título del formulario también más pequeño */
   .titulo-formulario {
     font-size: 24px;
   }
 
-  /* en la cabecera escondemos los enlaces de texto
-       para que no se amontone todo */
+  /* se esconden los enlaces de texto de la cabecera */
   .texto-nav {
     display: none;
   }

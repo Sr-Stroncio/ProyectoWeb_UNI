@@ -23,6 +23,7 @@
 
 .panel-institucion {
     width: 40%;
+    box-sizing: border-box;
     border-right: 1px solid #D4CFC6;
     padding: 44px 36px;
     display: flex;
@@ -95,6 +96,7 @@
 
 .panel-form {
     width: 60%;
+    box-sizing: border-box;
     padding: 44px 40px;
     display: flex;
     flex-direction: column;
@@ -139,6 +141,7 @@
 .caja-input {
     width: 100%;
     height: 44px;
+    box-sizing: border-box;
     border: 1px solid #D4CFC6;
     background-color: #FAFAF8;
     font-family: 'Open Sans', sans-serif;
@@ -220,7 +223,7 @@
         align-items: center;
     }
 
-    /* escondemos lo que no cabe en movil */
+    /* se esconde lo que no cabe en movil */
     .separador,
     .texto-credenciales,
     .caja-instancia {

@@ -1,8 +1,8 @@
 // sidebar movil
 
-var sidebar = document.getElementById('sidebar');
-var btnMenu = document.getElementById('btnMenu');
-var overlay = document.getElementById('overlay');
+const sidebar = document.getElementById('sidebar');
+const btnMenu = document.getElementById('btnMenu');
+const overlay = document.getElementById('overlay');
 
 btnMenu.addEventListener('click', function() {
     sidebar.classList.toggle('abierto');
@@ -15,23 +15,23 @@ overlay.addEventListener('click', function() {
 });
 
 // abrir y cerrar submenus de asignaturas
-var asigs = document.querySelectorAll('.nav-asig');
+const asigs = document.querySelectorAll('.nav-asig');
 
-for (var i = 0; i < asigs.length; i++) {
+for (let i = 0; i < asigs.length; i++) {
     asigs[i].addEventListener('click', function() {
-        var item = this;
-        var id = item.getAttribute('data-id');
-        var sub = document.getElementById('sub-' + id);
+        const item = this;
+        const id = item.getAttribute('data-id');
+        const sub = document.getElementById('sub-' + id);
 
         // cierra los otros
-        var submenus = document.querySelectorAll('.submenu');
-        for (var j = 0; j < submenus.length; j++) {
+        const submenus = document.querySelectorAll('.submenu');
+        for (let j = 0; j < submenus.length; j++) {
             if (submenus[j] !== sub) {
                 submenus[j].classList.remove('visible');
             }
         }
-        var navAsigs = document.querySelectorAll('.nav-asig');
-        for (var k = 0; k < navAsigs.length; k++) {
+        const navAsigs = document.querySelectorAll('.nav-asig');
+        for (let k = 0; k < navAsigs.length; k++) {
             if (navAsigs[k] !== item) {
                 navAsigs[k].classList.remove('abierto');
             }
