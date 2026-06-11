@@ -1,5 +1,7 @@
 <?php
 
+$id_alumno = intval($_SESSION['usuario_id']);
+
 $filtro = $_GET['filtro'] ?? 'recientes';
 
 if ($filtro !== 'recientes' && $filtro !== 'materia') {
@@ -10,6 +12,7 @@ $sql_calificaciones = "
     SELECT 
         'Tarea' AS Tipo,
         Tarea.ID AS ID_Actividad,
+        Tarea.ID_asignatura AS ID_Asignatura,
         Tarea.Titulo AS Titulo,
         Asignatura.Nombre AS Asignatura,
         Entrega_Tarea.Nota AS Nota,
@@ -28,6 +31,7 @@ $sql_calificaciones = "
     SELECT 
         'Examen' AS Tipo,
         Examen.ID AS ID_Actividad,
+        Examen.ID_asignatura AS ID_Asignatura,
         Examen.Titulo AS Titulo,
         Asignatura.Nombre AS Asignatura,
         Nota_Examen.Nota AS Nota,
@@ -41,6 +45,7 @@ $sql_calificaciones = "
     WHERE Nota_Examen.ID_alumno = $id_alumno
     AND Nota_Examen.Nota IS NOT NULL
 ";
+
 if ($filtro === 'materia') {
     $sql_calificaciones .= " ORDER BY Asignatura ASC, Fecha DESC";
 } else {
@@ -101,7 +106,15 @@ if (!$resultado_calificaciones) {
 
             <?php } ?>
 
-            <a href="pages/dashboard-alumno.php?seccion=beta">
+            <?php
+            if ($calificacion['Tipo'] === 'Examen') {
+                $url_detalle = "pages/dashboard-alumno.php?seccion=detalle-examen&id=" . $calificacion['ID_Actividad'] . "&asignatura=" . $calificacion['ID_Asignatura'] . "&volver=calificaciones";
+            } else {
+                $url_detalle = "pages/dashboard-alumno.php?seccion=detalle-tarea&id=" . $calificacion['ID_Actividad'] . "&asignatura=" . $calificacion['ID_Asignatura'] . "&volver=calificaciones";
+            }
+            ?>
+
+            <a href="<?= $url_detalle ?>">
                 <article class="tarjeta-calificacion">
 
                     <div class="info-calificacion">
@@ -138,6 +151,7 @@ if (!$resultado_calificaciones) {
 
                 </article>
             </a>
+
         <?php } ?>
 
     <?php } ?>
