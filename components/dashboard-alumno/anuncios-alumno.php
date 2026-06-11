@@ -40,13 +40,13 @@ if (!$resultado_anuncios) {
             <h3>Anuncios</h3>
         </div>
 
-        <a href="pages/dashboard-alumno.php?seccion=beta">
-            <div class="contenedor-anuncios">
 
-                <?php if (mysqli_num_rows($resultado_anuncios) > 0): ?>
+        <div class="contenedor-anuncios">
 
-                    <?php while ($anuncio = mysqli_fetch_assoc($resultado_anuncios)): ?>
+            <?php if (mysqli_num_rows($resultado_anuncios) > 0): ?>
 
+                <?php while ($anuncio = mysqli_fetch_assoc($resultado_anuncios)): ?>
+                    <a href="pages/dashboard-alumno.php?seccion=detalle-anuncio&id=<?= $anuncio['ID'] ?>&volver=anuncios">
                         <article class="anuncio-card">
 
                             <div class="anuncio-info">
@@ -86,19 +86,19 @@ if (!$resultado_anuncios) {
                             </div>
 
                         </article>
+                    </a>
+                <?php endwhile; ?>
 
-                    <?php endwhile; ?>
+            <?php else: ?>
 
-                <?php else: ?>
+                <div class="anuncio-vacio">
+                    <p>No hay anuncios disponibles por ahora.</p>
+                </div>
 
-                    <div class="anuncio-vacio">
-                        <p>No hay anuncios disponibles por ahora.</p>
-                    </div>
+            <?php endif; ?>
 
-                <?php endif; ?>
+        </div>
 
-            </div>
-        </a>
     </div>
 
 </section>

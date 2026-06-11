@@ -190,22 +190,23 @@ main {
 }
 
 .gestion-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .gestion-card {
     display: flex;
     align-items: center;
+    width: 49%;
+    box-sizing: border-box;
+    margin-bottom: 16px;
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 20px 24px;
     text-decoration: none;
     color: inherit;
-    transition: all 0.2s ease;
-    gap: 16px;
 }
 
 .gestion-card:hover {
@@ -221,6 +222,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 16px;
 }
 
 .gestion-icono img {
@@ -254,7 +256,6 @@ main {
 .cabecera-izq {
     display: flex;
     align-items: center;
-    gap: 12px;
 }
 
 .btn-volver {
@@ -262,6 +263,7 @@ main {
     color: #9a6500;
     text-decoration: none;
     font-weight: 600;
+    margin-right: 12px;
 }
 
 .btn-volver:hover {
@@ -283,7 +285,6 @@ main {
     margin-bottom: 10px;
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.2s ease;
 }
 
 .grado-card:hover {
@@ -479,8 +480,11 @@ main {
 .modal-botones {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
     margin-top: 20px;
+}
+
+.modal-botones .btn-guardar {
+    margin-left: 10px;
 }
 
 .btn-cancelar {
@@ -525,8 +529,8 @@ main {
         border-radius: 0 0 12px 12px;
     }
 
-    .gestion-grid {
-        grid-template-columns: 1fr;
+    .gestion-card {
+        width: 100%;
     }
 }
 
@@ -549,8 +553,11 @@ main {
 
 .cabecera-acciones {
     display: flex;
-    gap: 10px;
     align-items: center;
+}
+
+.cabecera-acciones .btn-eliminar-rojo {
+    margin-left: 10px;
 }
 
 .btn-eliminar-rojo {
@@ -613,7 +620,6 @@ main {
 .campo-checkbox {
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 8px 0;
     font-size: 13px;
     color: #444444;
