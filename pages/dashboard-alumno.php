@@ -9,8 +9,8 @@ require_once __DIR__ . "/../utils/rutas.php";
 $id_alumno = $_SESSION['usuario_id'];
 
 $seccion = $_GET['seccion'] ?? 'inicio';
-$id_asignatura = $_GET['id'] ?? null;
-$vista = $_GET['vista'] ?? null;
+$id_asignatura = $_GET['id'];
+$vista = $_GET['vista'];
 
 $sql_asignaturas = "SELECT 
                         Asignatura.ID,
@@ -75,7 +75,11 @@ if (!$resultado_asignaturas) {
             } elseif ($seccion === 'recursos') {
                 include __DIR__ . '/../components/dashboard-alumno/tareas-alumno.php';
             } elseif ($seccion === 'examenes') {
-                include __DIR__ . '/../components/dashboard-alumno/tareas-alumno.php';
+                include __DIR__ . '/../components/dashboard-alumno/examen-alumno.php';
+            } elseif ($seccion === 'detalle-tarea') {
+                include __DIR__ . '/../components/dashboard-alumno/detalle-tarea.php';
+            } elseif ($seccion === 'detalle-examen') {
+                include __DIR__ . '/../components/dashboard-alumno/detalle-examen.php';
             } elseif ($seccion === 'tareas') {
                 include __DIR__ . '/../components/dashboard-alumno/tareas-alumno.php';
             } elseif ($seccion === 'beta') {
