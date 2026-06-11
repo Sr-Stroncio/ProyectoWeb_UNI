@@ -153,19 +153,19 @@ Comienzo del HTML del inicio del dashboard
 
     <div class="resumen-inicio">
 
-        <a href="">
-            <div class="resumen-card">
-                <div class="resumen-info">
-                    <p class="resumen-label">Tareas por entregar</p>
-                    <h3 class="resumen-titulo">Tareas activas</h3>
-                </div>
 
-                <p class="resumen-numero rojo">
-                    <?= $total_tareas_pendientes ?>
-                </p>
+        <div class="resumen-card">
+            <div class="resumen-info">
+                <p class="resumen-label">Tareas por entregar</p>
+                <h3 class="resumen-titulo">Tareas activas</h3>
             </div>
-        </a>
-        <a href="">
+
+            <p class="resumen-numero rojo">
+                <?= $total_tareas_pendientes ?>
+            </p>
+        </div>
+
+        <a href="pages/dashboard-alumno.php?seccion=calificaciones">
             <div class="resumen-card">
                 <div class="resumen-info">
                     <p class="resumen-label">Exámenes revisados</p>
