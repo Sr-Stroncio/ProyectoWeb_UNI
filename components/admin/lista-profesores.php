@@ -1,15 +1,19 @@
 <?php
-$res = $conexion->query("
-    SELECT u.ID, u.Nombre, u.Apellido, u.Email,
-        GROUP_CONCAT(DISTINCT asig.Nombre ORDER BY asig.Nombre ASC SEPARATOR ', ') AS materias
-    FROM Usuario u
-    JOIN Profesor p ON p.ID_user = u.ID
-    LEFT JOIN Profesor_Asignatura pa ON pa.ID_profesor = u.ID
-    LEFT JOIN Asignatura asig ON asig.ID = pa.ID_asignatura
-    GROUP BY u.ID
-    ORDER BY u.Apellido ASC
-");
+$res = $conexion->query("SELECT ID, Nombre, Apellido, Email FROM Usuario WHERE Rol = 'profesor' ORDER BY Apellido ASC");
 $profesores = $res->fetch_all(MYSQLI_ASSOC);
+
+// se juntan los nombres de las materias de cada profesor
+for ($i = 0; $i < count($profesores); $i++) {
+    $nombres = [];
+    $res2 = $conexion->query("SELECT ID_asignatura FROM Profesor_Asignatura WHERE ID_profesor = " . $profesores[$i]['ID']);
+    while ($fila = $res2->fetch_row()) {
+        $res3 = $conexion->query("SELECT Nombre FROM Asignatura WHERE ID = " . $fila[0]);
+        $fila3 = $res3->fetch_row();
+        $nombres[] = $fila3[0];
+    }
+    sort($nombres);
+    $profesores[$i]['materias'] = implode(', ', $nombres);
+}
 ?>
 
 <div class="bloque">
@@ -39,12 +43,12 @@ $profesores = $res->fetch_all(MYSQLI_ASSOC);
                 <tbody>
                     <?php foreach ($profesores as $prof): ?>
                         <tr>
-                            <td><?= htmlspecialchars($prof['Nombre']) ?></td>
-                            <td><?= htmlspecialchars($prof['Apellido']) ?></td>
-                            <td><?= htmlspecialchars($prof['Email']) ?></td>
-                            <td><?= $prof['materias'] ? htmlspecialchars($prof['materias']) : '—' ?></td>
+                            <td><?= $prof['Nombre'] ?></td>
+                            <td><?= $prof['Apellido'] ?></td>
+                            <td><?= $prof['Email'] ?></td>
+                            <td><?= $prof['materias'] ? $prof['materias'] : '—' ?></td>
                             <td>
-                                <a href="/pages/dashboard-admin.php?seccion=profesores&id=<?= $prof['ID'] ?>" class="btn-ver">Ver</a>
+                                <a href="pages/dashboard-admin.php?seccion=profesores&id=<?= $prof['ID'] ?>" class="btn-ver">Ver</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -60,7 +64,7 @@ $profesores = $res->fetch_all(MYSQLI_ASSOC);
             <h4>Nuevo profesor</h4>
             <button class="btn-cerrar-modal" id="btnCerrarModalProfesor">✕</button>
         </div>
-        <form method="POST" action="/utils/crear-profesor.php">
+        <form method="POST" action="utils/crear-profesor.php">
             <div class="campo">
                 <label for="nombreProfesor">Nombre</label>
                 <input type="text" id="nombreProfesor" name="nombre" placeholder="Nombre del profesor">
@@ -76,6 +80,10 @@ $profesores = $res->fetch_all(MYSQLI_ASSOC);
             <div class="campo">
                 <label for="dniProfesor">DNI</label>
                 <input type="text" id="dniProfesor" name="dni" placeholder="DNI del profesor">
+            </div>
+            <div class="campo">
+                <label for="passwordProfesor">Contraseña</label>
+                <input type="text" id="passwordProfesor" name="password" placeholder="Si se deja vacía será profesor123">
             </div>
             <div class="modal-botones">
                 <button type="button" class="btn-cancelar" id="btnCancelarModalProfesor">Cancelar</button>

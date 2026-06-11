@@ -1,16 +1,27 @@
 <?php
-$res = $conexion->query("
-    SELECT u.ID, u.Nombre, u.Apellido, u.Email, g.Nombre AS nombre_grado
-    FROM Usuario u
-    JOIN Alumno a ON a.ID_user = u.ID
-    LEFT JOIN Alumno_Asignatura aa ON aa.ID_alumno = u.ID
-    LEFT JOIN Asignatura asig ON asig.ID = aa.ID_asignatura
-    LEFT JOIN Curso c ON c.ID = asig.ID_curso
-    LEFT JOIN Grado g ON g.ID = c.ID_grado
-    GROUP BY u.ID
-    ORDER BY u.Apellido ASC
-");
+$res = $conexion->query("SELECT ID, Nombre, Apellido, Email FROM Usuario WHERE Rol = 'alumno' ORDER BY Apellido ASC");
 $alumnos = $res->fetch_all(MYSQLI_ASSOC);
+
+// se busca el grado de cada alumno pasando por asignatura y curso
+for ($i = 0; $i < count($alumnos); $i++) {
+    $alumnos[$i]['nombre_grado'] = null;
+
+    $res2 = $conexion->query("SELECT ID_asignatura FROM Alumno_Asignatura WHERE ID_alumno = " . $alumnos[$i]['ID'] . " LIMIT 1");
+    $fila = $res2->fetch_row();
+    if ($fila) {
+        $res2 = $conexion->query("SELECT ID_curso FROM Asignatura WHERE ID = " . $fila[0]);
+        $fila = $res2->fetch_row();
+    }
+    if ($fila && $fila[0]) {
+        $res2 = $conexion->query("SELECT ID_grado FROM Curso WHERE ID = " . $fila[0]);
+        $fila = $res2->fetch_row();
+    }
+    if ($fila && $fila[0]) {
+        $res2 = $conexion->query("SELECT Nombre FROM Grado WHERE ID = " . $fila[0]);
+        $fila = $res2->fetch_row();
+        $alumnos[$i]['nombre_grado'] = $fila[0];
+    }
+}
 ?>
 
 <div class="bloque">
@@ -40,12 +51,12 @@ $alumnos = $res->fetch_all(MYSQLI_ASSOC);
                 <tbody>
                     <?php foreach ($alumnos as $alumno): ?>
                         <tr>
-                            <td><?= htmlspecialchars($alumno['Nombre']) ?></td>
-                            <td><?= htmlspecialchars($alumno['Apellido']) ?></td>
-                            <td><?= htmlspecialchars($alumno['Email']) ?></td>
-                            <td><?= $alumno['nombre_grado'] ? htmlspecialchars($alumno['nombre_grado']) : '—' ?></td>
+                            <td><?= $alumno['Nombre'] ?></td>
+                            <td><?= $alumno['Apellido'] ?></td>
+                            <td><?= $alumno['Email'] ?></td>
+                            <td><?= $alumno['nombre_grado'] ? $alumno['nombre_grado'] : '—' ?></td>
                             <td>
-                                <a href="/pages/dashboard-admin.php?seccion=alumnos&id=<?= $alumno['ID'] ?>" class="btn-ver">Ver</a>
+                                <a href="pages/dashboard-admin.php?seccion=alumnos&id=<?= $alumno['ID'] ?>" class="btn-ver">Ver</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -61,7 +72,7 @@ $alumnos = $res->fetch_all(MYSQLI_ASSOC);
             <h4>Nuevo alumno</h4>
             <button class="btn-cerrar-modal" id="btnCerrarModalAlumno">✕</button>
         </div>
-        <form method="POST" action="/utils/crear-alumno.php">
+        <form method="POST" action="utils/crear-alumno.php">
             <div class="campo">
                 <label for="nombreAlumno">Nombre</label>
                 <input type="text" id="nombreAlumno" name="nombre" placeholder="Nombre del alumno">
@@ -79,6 +90,10 @@ $alumnos = $res->fetch_all(MYSQLI_ASSOC);
                 <input type="text" id="dniAlumno" name="dni" placeholder="DNI del alumno">
             </div>
             <div class="campo">
+                <label for="passwordAlumno">Contraseña</label>
+                <input type="text" id="passwordAlumno" name="password" placeholder="Si se deja vacía será alumno123">
+            </div>
+            <div class="campo">
                 <label for="gradoAlumno">Grado</label>
                 <select id="gradoAlumno" name="id_grado" class="campo-select">
                     <option value="">Sin grado</option>
@@ -86,7 +101,7 @@ $alumnos = $res->fetch_all(MYSQLI_ASSOC);
                     $grados = $conexion->query("SELECT ID, Nombre FROM Grado ORDER BY Nombre ASC");
                     while ($g = $grados->fetch_assoc()):
                     ?>
-                        <option value="<?= $g['ID'] ?>"><?= htmlspecialchars($g['Nombre']) ?></option>
+                        <option value="<?= $g['ID'] ?>"><?= $g['Nombre'] ?></option>
                     <?php endwhile; ?>
                 </select>
             </div>

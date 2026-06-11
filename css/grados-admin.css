@@ -138,7 +138,6 @@ main {
 .cabecera-izq {
     display: flex;
     align-items: center;
-    gap: 12px;
 }
 
 .btn-volver {
@@ -146,6 +145,7 @@ main {
     color: #9a6500;
     text-decoration: none;
     font-weight: 600;
+    margin-right: 12px;
 }
 
 .btn-volver:hover {
@@ -182,7 +182,6 @@ main {
     margin-bottom: 10px;
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.2s ease;
 }
 
 .grado-card:hover {
@@ -417,8 +416,11 @@ main {
 .modal-botones {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
     margin-top: 20px;
+}
+
+.modal-botones .btn-guardar {
+    margin-left: 10px;
 }
 
 .btn-cancelar {

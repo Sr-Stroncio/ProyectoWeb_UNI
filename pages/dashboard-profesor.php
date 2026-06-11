@@ -3,6 +3,7 @@ include '../utils/check-usuario.php';
 comprobarUsuario('profesor');
 
 require_once __DIR__ . "/../database/conexion.php";
+require_once __DIR__ . "/../utils/rutas.php";
 
 // se obtienen los datos del profesor de la sesion
 $id_profesor = (int)$_SESSION['usuario_id'];
@@ -24,7 +25,7 @@ include '../components/dashboard-profesor/datos.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="/">
+    <base href="<?= $base_url ?>">
     <link rel="shortcut icon" href="assets/DoA color.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/dashboard-profesor.css">
     <title>Dashboard — Profesor</title>
