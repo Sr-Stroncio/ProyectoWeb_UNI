@@ -46,6 +46,7 @@ if (!$resultado_asignaturas) {
     <link rel="stylesheet" href="css/alumno-anuncios.css">
     <link rel="stylesheet" href="css/alumno-tareas.css">
     <link rel="stylesheet" href="css/beta.css">
+    <link rel="stylesheet" href="css/detalle.css">
 
     <title>Dashboard alumno</title>
 </head>
@@ -67,6 +68,8 @@ if (!$resultado_asignaturas) {
                 include __DIR__ . '/../components/dashboard-alumno/calificaciones-alumno.php';
             } elseif ($seccion === 'anuncios') {
                 include __DIR__ . '/../components/dashboard-alumno/anuncios-alumno.php';
+            } elseif ($seccion === 'detalle-anuncio') {
+                include __DIR__ . '/../components/dashboard-alumno/detalle-anuncio.php';
             } elseif ($seccion === 'calendario') {
                 include __DIR__ . '/../components/dashboard-profesor/calendario.php';
             } elseif ($seccion === 'recursos') {

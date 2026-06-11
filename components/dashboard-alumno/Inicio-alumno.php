@@ -98,7 +98,8 @@ Comienzo del HTML del inicio del dashboard
             <?php if (mysqli_num_rows($resultado_anuncios) > 0): ?>
 
                 <?php while ($anuncio = mysqli_fetch_assoc($resultado_anuncios)): ?>
-                    <a href="pages/dashboard-alumno.php?seccion=beta">
+                    <a href="pages/dashboard-alumno.php?seccion=detalle-anuncio&id=<?= $anuncio['ID'] ?>&volver=inicio">
+
                         <article class="anuncio-card">
 
                             <div class="anuncio-info">
@@ -152,31 +153,33 @@ Comienzo del HTML del inicio del dashboard
 
     <div class="resumen-inicio">
 
-        <div class="resumen-card">
-            <div class="resumen-info">
-                <p class="resumen-label">Tareas por entregar</p>
-                <h3 class="resumen-titulo">Tareas activas</h3>
+        <a href="">
+            <div class="resumen-card">
+                <div class="resumen-info">
+                    <p class="resumen-label">Tareas por entregar</p>
+                    <h3 class="resumen-titulo">Tareas activas</h3>
+                </div>
+
+                <p class="resumen-numero rojo">
+                    <?= $total_tareas_pendientes ?>
+                </p>
             </div>
+        </a>
+        <a href="">
+            <div class="resumen-card">
+                <div class="resumen-info">
+                    <p class="resumen-label">Exámenes revisados</p>
+                    <h3 class="resumen-titulo">Promedio general</h3>
+                </div>
 
-            <p class="resumen-numero rojo">
-                <?= $total_tareas_pendientes ?>
-            </p>
-        </div>
-
-        <div class="resumen-card">
-            <div class="resumen-info">
-                <p class="resumen-label">Exámenes revisados</p>
-                <h3 class="resumen-titulo">Promedio general</h3>
+                <p class="resumen-numero">
+                    <?php if ($promedio_examenes === null): ?>
+                        -
+                    <?php else: ?>
+                        <?= number_format($promedio_examenes, 2) ?>
+                    <?php endif; ?>
+                </p>
             </div>
-
-            <p class="resumen-numero">
-                <?php if ($promedio_examenes === null): ?>
-                    -
-                <?php else: ?>
-                    <?= number_format($promedio_examenes, 2) ?>
-                <?php endif; ?>
-            </p>
-        </div>
-
+        </a>
     </div>
 </section>
