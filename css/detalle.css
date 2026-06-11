@@ -1,0 +1,140 @@
+.pagina-detalle {
+  width: 100%;
+  min-height: auto;
+  padding: 35px 25px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detalle-volver {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 20px;
+}
+
+.detalle-volver a {
+  text-decoration: none;
+  color: #111827;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.detalle-volver a:hover {
+  color: #b6a400;
+}
+
+.detalle-card {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 900px;
+  min-height: auto;
+  border-radius: 22px;
+  padding: 35px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+}
+
+.detalle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 25px;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 22px;
+}
+
+.detalle-header > div {
+  min-width: 0;
+  flex: 1;
+}
+
+.detalle-titulo {
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 12px 0;
+  line-height: 1.2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.detalle-subtitulo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.detalle-etiqueta {
+  color: #9a6500;
+  background-color: #fff3d6;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.detalle-global {
+  background-color: #e8efff;
+  color: #2451b2;
+}
+
+.detalle-meta {
+  margin-top: 22px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.detalle-meta p {
+  margin: 0;
+}
+
+.detalle-contenido {
+  margin-top: 32px;
+  font-size: 17px;
+  line-height: 1.8;
+  color: #1f2937;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.detalle-vacio {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 22px;
+  padding: 40px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pagina-detalle {
+    padding: 25px 15px;
+  }
+
+  .detalle-card {
+    padding: 25px;
+  }
+
+  .detalle-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .detalle-titulo {
+    font-size: 26px;
+  }
+
+  .detalle-etiqueta {
+    align-self: flex-start;
+  }
+}
