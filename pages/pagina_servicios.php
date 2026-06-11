@@ -24,6 +24,32 @@ require_once __DIR__ . "/../utils/rutas.php";
     <section>
         <h2 class="titulo_dos">Seleccionar producto</h2>
         <div class="seleccionar_producto">
+            <!-- caja prueba -->
+            <div class="caja">
+                <img class="GTI_logo" src="assets/DoA color.svg" alt="DOA">
+                <p class="producto-etiqueta">Prueba gratuita</p>
+                <p class="producto-precio">Gratis</p>
+                <p class="producto-nota">Sin compromiso · Sin tarjeta</p>
+                <hr class="separador">
+                <p class="producto-tagline">Prueba DOA sin compromiso y comprueba todo lo que puede hacer por tu institución.</p>
+                <p class="producto-incluye-titulo">Incluye</p>
+                <ul class="producto-lista">
+                    <li>
+                        <p class="producto-li-titulo">Acceso completo a la plataforma</p>
+                        <p class="producto-li-sub">Explora todas las funcionalidades antes de elegir un producto.</p>
+                    </li>
+                    <li>
+                        <p class="producto-li-titulo">Todos los roles disponibles</p>
+                        <p class="producto-li-sub">Prueba la experiencia de Alumno, Profesor y Administrador.</p>
+                    </li>
+                    <li>
+                        <p class="producto-li-titulo">Sin tarjeta ni contrato</p>
+                        <p class="producto-li-sub">Completamente gratis, empieza en segundos.</p>
+                    </li>
+                </ul>
+                <hr class="separador">
+                <a href="pages/log-in-producto.php" class="btn-demo btn-demo-secundario">Ir a la prueba</a>
+            </div>
             <!-- caja plan estándar -->
             <div class="caja">
                 <img class="GTI_logo" src="assets/DoA color.svg" alt="DOA">
@@ -53,33 +79,6 @@ require_once __DIR__ . "/../utils/rutas.php";
                 </ul>
                 <hr class="separador">
                 <a class="btn-demo" onclick="seleccionarProducto('Producto estándar (5000€)')">Seleccionar producto</a>
-            </div>
-
-            <!-- caja prueba -->
-            <div class="caja">
-                <img class="GTI_logo" src="assets/DoA color.svg" alt="DOA">
-                <p class="producto-etiqueta">Prueba gratuita</p>
-                <p class="producto-precio">Gratis</p>
-                <p class="producto-nota">Sin compromiso · Sin tarjeta</p>
-                <hr class="separador">
-                <p class="producto-tagline">Prueba DOA sin compromiso y comprueba todo lo que puede hacer por tu institución.</p>
-                <p class="producto-incluye-titulo">Incluye</p>
-                <ul class="producto-lista">
-                    <li>
-                        <p class="producto-li-titulo">Acceso completo a la plataforma</p>
-                        <p class="producto-li-sub">Explora todas las funcionalidades antes de elegir un producto.</p>
-                    </li>
-                    <li>
-                        <p class="producto-li-titulo">Todos los roles disponibles</p>
-                        <p class="producto-li-sub">Prueba la experiencia de Alumno, Profesor y Administrador.</p>
-                    </li>
-                    <li>
-                        <p class="producto-li-titulo">Sin tarjeta ni contrato</p>
-                        <p class="producto-li-sub">Completamente gratis, empieza en segundos.</p>
-                    </li>
-                </ul>
-                <hr class="separador">
-                <a href="pages/log-in-producto.php" class="btn-demo btn-demo-secundario">Ir a la prueba</a>
             </div>
         </div>
     </section>
