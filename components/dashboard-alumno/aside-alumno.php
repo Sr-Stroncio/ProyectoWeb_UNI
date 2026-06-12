@@ -73,7 +73,7 @@
 
                 <ul class="submenu <?= $asignatura_activa ? 'abierto' : '' ?>" id="sub-<?= $id_actual ?>">
 
-                    <a class="nav-item-link" href="pages/dashboard-alumno.php?seccion=recursos&id=<?= $id_actual ?>">
+                    <a class="nav-item-link" href="pages/dashboard-alumno.php?seccion=beta">
                         <li class="nav-item nav-sub <?= ($seccion === 'recursos' && $id_asignatura == $id_actual) ? 'activo' : '' ?>">
 
                             Recursos
